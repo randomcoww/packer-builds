@@ -3,7 +3,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "docker5",
+    "hostname": "docker6",
     "chef_environment": "testing"
   },
 
@@ -85,7 +85,7 @@
           }
         },
         "docker": {
-          "version": "1.6.0",
+          "version": "1.6.2",
           "storage_driver": "devicemapper"
         },
         "set_fqdn": "*.static.local"
