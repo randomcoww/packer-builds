@@ -3,7 +3,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "docker6",
+    "hostname": "docker7",
     "chef_environment": "testing"
   },
 
@@ -85,7 +85,7 @@
           }
         },
         "docker": {
-          "version": "1.6.2",
+          "version": "1.7.1",
           "storage_driver": "devicemapper"
         },
         "set_fqdn": "*.static.local"
@@ -95,7 +95,8 @@
         "recipe[runit]",
         "recipe[chef-client]",
         "recipe[chef-client::config]",
-        "recipe[docker]"
+        "recipe[docker]",
+        "recipe[ntp]"
       ]
     },
     {
