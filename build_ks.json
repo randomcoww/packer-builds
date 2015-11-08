@@ -9,7 +9,18 @@
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
-    "set_fqdn": "*.dyn.local"
+    "set_fqdn": "*.dyn.local",
+    "network_interfaces": {
+      "eth0": {
+        "bootproto": "dhcp",
+        "reload": false
+      },
+      "eth1": {
+        "bootproto": "ipv4ll",
+        "post_up": "ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; while [ $? -ne 0 ]; do sleep 1; ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; done"
+        "reload": false
+      }
+    }
   },
 
   "builders": [
@@ -70,17 +81,7 @@
       "cookbook_paths": ["cookbooks"],
       "json": {
         "set_fqdn": "{{ user `set_fqdn`}}",
-        "network_interfaces": {
-          "eth0": {
-            "bootproto": "dhcp",
-            "reload": false,
-          },
-          "eth1": {
-            "bootproto": "ipv4ll",
-            "post_up": "ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; while [ $? -ne 0 ]; do sleep 1; ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; done"
-            "reload": false,
-          }
-        }
+        "network_interfaces": "{{ user `network_interfaces`}}
       },
       "run_list": [
         "recipe[hostname]",
