@@ -1,0 +1,13 @@
+DEPENDENCIES
+  fake
+    path: test/fixtures/cookbooks/fake
+  network_interfaces_v2
+    path: .
+    metadata: true
+
+GRAPH
+  fake (0.1.0)
+    network_interfaces_v2 (>= 0.0.0)
+  modules (0.2.0)
+  network_interfaces_v2 (2.4.0)
+    modules (~> 0.2.0)
