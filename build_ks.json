@@ -3,24 +3,13 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "docker7",
+    "hostname": "docker8",
     "chef_environment": "testing",
-    "encrypted_data_bag_file": "/etc/chef/encrypted_data_bag",
+    "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
-    "set_fqdn": "*.dyn.local",
-    "network_interfaces": {
-      "eth0": {
-        "bootproto": "dhcp",
-        "reload": false
-      },
-      "eth1": {
-        "bootproto": "ipv4ll",
-        "post_up": "ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; while [ $? -ne 0 ]; do sleep 1; ps -ef | grep -q \"avahi-autoipd: \[$IFACE\] bound\"; done"
-        "reload": false
-      }
-    }
+    "set_fqdn": "*.dyn.local"
   },
 
   "builders": [
@@ -81,23 +70,34 @@
       "cookbook_paths": ["cookbooks"],
       "json": {
         "set_fqdn": "{{ user `set_fqdn`}}",
-        "network_interfaces": "{{ user `network_interfaces`}}
+        "network_interfaces": {
+          "eth0": {
+            "bootproto": "dhcp",
+            "reload": false
+          },
+          "eth1": {
+            "bootproto": "ipv4ll",
+            "post_up": "ps -ef | grep -q \"avahi-autoipd: [$IFACE] bound\"; while [ $? -ne 0 ]; do sleep 1; ps -ef | grep -q \"avahi-autoipd: [$IFACE] bound\"; done",
+            "reload": false
+          }
+        }
       },
       "run_list": [
         "recipe[hostname]",
         "recipe[docker_wrapper]",
         "recipe[ntp]",
-        "recipe[network_interfaces_wrapper]"
+        "recipe[network_interfaces_wrapper::debian]"
       ],
       "staging_directory": "/etc/chef"
     },
     {
       "type": "file",
-      "source": "{{ user `encrypted_data_bag_file` }}",
+      "source": "{{ user `encrypted_data_bag_secret_path` }}",
       "destination": "/etc/chef/encrypted_data_bag_secret"
     },
     {
       "type": "chef-client",
+      "skip_install": true,
       "server_url": "{{ user `server_url`}}",
       "chef_environment": "{{user `chef_environment`}}",
       "prevent_sudo": true,
