@@ -21,7 +21,7 @@ GRAPH
   hostname (0.3.0)
     hostsfile (>= 0.0.0)
   hostsfile (2.4.5)
-  modules (0.1.0)
+  modules (0.2.0)
   ms_dotnet2 (1.0.0)
     windows (>= 0.0.0)
   ms_dotnet4 (1.0.2)
