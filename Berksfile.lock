@@ -2,8 +2,6 @@ DEPENDENCIES
   docker_wrapper
     path: ../cookbooks/docker_wrapper
   hostname
-  modules
-    path: ../cookbooks/modules
   network_interfaces_wrapper
     path: ../cookbooks/network_interfaces_wrapper
   ntp
@@ -37,7 +35,6 @@ GRAPH
   packer_docker (0.1.0)
     docker_wrapper (>= 0.0.0)
     hostname (>= 0.0.0)
-    modules (>= 0.0.0)
     network_interfaces_wrapper (>= 0.0.0)
     ntp (>= 0.0.0)
   powershell (3.1.0)
