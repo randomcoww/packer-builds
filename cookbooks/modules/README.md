@@ -1,65 +1,42 @@
-modules-cookbook
-================
+# modules-cookbook
 
-= DESCRIPTION:
-Chef cookbook to manage linux modules with /etc/modules and modprobe (linux 2.6 +)
+TODO: Enter the cookbook description here.
 
-= REQUIREMENTS:
+## Supported Platforms
 
-Linux 2.6+
-Ubuntu >9.10 (for the moment. use upstart and not init, any contribution is welcome)
+TODO: List your supported platforms.
 
-= ATTRIBUTES:
-node['modules'] = A namespace for modules settings.
+## Attributes
 
-= USAGE:
-There are two ways of setting sysctl values:
-1. Set chef attributes, E.G.:
-   default['modules']['loop']
-2. With Ressource/Provider
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['modules']['bacon']</tt></td>
+    <td>Boolean</td>
+    <td>whether to include bacon</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
 
-Resource/Provider
-=================
+## Usage
 
-This cookbook includes LWRPs for managing:
-* modules
-* modules_multi
+### modules::default
 
-modules
---------
+Include `modules` in your node's `run_list`:
 
-# Actions
-
-- :save: save and load a module (default)
-- :load: load a module
-- :remove: remove a (previously saved or load) module.
-
-# Attribute Parameters
-
-- module
-- options
-- path
-
-
-# Examples
-
-```
-modules "8021q" do
-  action :load
-end
+```json
+{
+  "run_list": [
+    "recipe[modules::default]"
+  ]
+}
 ```
 
-modules_multi
-------------
+## License and Authors
 
-#Actions
-
-- :save: save and load modules (default)
-- :remove: remove (previously saved or load) modules.
-
-# Attribute Parameters
-
-- modules
-- path
-
-# Examples
+Author:: YOUR_NAME (<YOUR_EMAIL>)
