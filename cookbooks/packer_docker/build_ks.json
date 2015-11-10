@@ -89,7 +89,7 @@
         "recipe[docker_wrapper]",
         "recipe[ntp]",
         "recipe[serial_console::ubuntu]",
-        "recipe[network_interfaces_wrapper::debian]"
+        "recipe[network_interfaces_wrapper::ubuntu]"
       ],
       "staging_directory": "/etc/chef"
     },
