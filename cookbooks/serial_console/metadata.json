@@ -1,18 +1,13 @@
 {
-  "name": "packer_docker",
-  "description": "Installs/Configures packer_docker",
-  "long_description": "Installs/Configures packer_docker",
+  "name": "serial_console",
+  "description": "Installs/Configures serial_console",
+  "long_description": "Installs/Configures serial_console",
   "maintainer": "YOUR_NAME",
   "maintainer_email": "YOUR_EMAIL",
   "license": "All rights reserved",
   "platforms": {
   },
   "dependencies": {
-    "hostname": ">= 0.0.0",
-    "docker_wrapper": ">= 0.0.0",
-    "ntp": ">= 0.0.0",
-    "serial_console": ">= 0.0.0",
-    "network_interfaces_wrapper": ">= 0.0.0"
   },
   "recommendations": {
   },

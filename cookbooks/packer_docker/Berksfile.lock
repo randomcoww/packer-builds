@@ -8,6 +8,8 @@ DEPENDENCIES
   packer_docker
     path: .
     metadata: true
+  serial_console
+    path: ../cookbooks/serial_console
 
 GRAPH
   chef_handler (1.2.0)
@@ -37,11 +39,13 @@ GRAPH
     hostname (>= 0.0.0)
     network_interfaces_wrapper (>= 0.0.0)
     ntp (>= 0.0.0)
+    serial_console (>= 0.0.0)
   powershell (3.1.0)
     chef_handler (>= 0.0.0)
     ms_dotnet2 (>= 0.0.0)
     ms_dotnet4 (>= 0.0.0)
     ms_dotnet45 (>= 0.0.0)
     windows (>= 1.2.8)
+  serial_console (0.1.0)
   windows (1.38.3)
     chef_handler (>= 0.0.0)
