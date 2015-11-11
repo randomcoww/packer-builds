@@ -3,7 +3,7 @@ source "https://supermarket.chef.io"
 metadata
 
 cookbook 'hostname'
-cookbook 'docker_wrapper', path: '~/cookbooks/docker_wrapper'
+cookbook 'docker_wrapper', git: 'git@github.com:randomcoww/chef-docker_wrapper.git'
 cookbook 'ntp'
-cookbook 'serial_console',  path: '~/cookbooks/serial_console'
-cookbook 'network_interfaces_wrapper',  path: '~/cookbooks/network_interfaces_wrapper'
+cookbook 'serial_console',  git: 'git@github.com:randomcoww/chef-serial_console.git'
+cookbook 'network_interfaces_wrapper',  git: 'git@github.com:randomcoww/chef-network_interfaces_wrapper.git'

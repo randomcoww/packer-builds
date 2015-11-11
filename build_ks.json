@@ -86,7 +86,7 @@
       },
       "run_list": [
         "recipe[hostname]",
-        "recipe[docker_wrapper]",
+        "recipe[docker_wrapper::service]",
         "recipe[ntp]",
         "recipe[serial_console::ubuntu]",
         "recipe[network_interfaces_wrapper::ubuntu]"
