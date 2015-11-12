@@ -1,0 +1,131 @@
+{
+  "variables": {
+    "user": "randomcoww",
+    "uid": "10000",
+    "password": "password",
+    "hostname": "docker8",
+    "chef_environment": "testing",
+    "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
+    "server_url": "https://api.opscode.com/organizations/madcoww",
+    "validation_key_path": "/etc/chef/madcoww-validator.pem",
+    "validation_client_name": "madcoww-validator",
+    "set_fqdn": "*.dyn.local",
+    "timezone": "America/Los_Angeles"
+  },
+
+  "builders": [
+    {
+      "name": "{{user `hostname`}}",
+
+      "type": "qemu",
+      "format": "qcow2",
+      "accelerator": "kvm",
+
+      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.3-server-amd64.iso",
+      "iso_checksum": "9e5fecc94b3925bededed0fdca1bd417",
+      "iso_checksum_type": "md5",
+
+      "http_directory": "http",
+
+      "ssh_username": "root",
+      "ssh_key_path": "files/packer.key",
+      "shutdown_command": "shutdown -P now",
+
+      "boot_wait": "2s",
+      "qemuargs": [
+        [ "-display", "none" ]
+      ],
+
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-1404minimalvm.cfg ",
+        "hostname={{user `hostname`}} ",
+          
+        "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-password-again={{user `password`}} ",
+        "passwd/user-password={{user `password`}} ",
+        "passwd/user-uid={{user `uid`}} ",
+        "passwd/username={{user `user`}} ",
+
+        "initrd=/install/initrd.gz -- <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir /etc/chef",
+        "apt-get -qq -y autoremove",
+        "apt-get clean",
+        "rm -rf /var/cache/apt/*cache.bin",
+        "rm -rf /var/lib/apt/lists/*",
+        "echo \"{{user `timezone`}}\" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata",
+        "apt-get -y remove nano",
+        "apt-get -y update",
+        "apt-get -y upgrade",
+        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd"
+      ]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks"],
+      "json": {
+        "set_fqdn": "{{user `set_fqdn`}}",
+        "network_interfaces": {
+          "eth0": {
+            "bootproto": "dhcp",
+            "reload": false
+          },
+          "eth1": {
+            "bootproto": "ipv4ll",
+            "post_up": "ip addr show $IFACE | grep -q \"inet 169.254\"; while [ $? -ne 0 ]; do sleep 1; ip addr show $IFACE | grep -q \"inet 169.254\"; done",
+            "reload": false
+          }
+        }
+      },
+      "run_list": [
+        "recipe[hostname]",
+        "recipe[docker_wrapper::service]",
+        "recipe[ntp]",
+        "recipe[serial_console::ubuntu]",
+        "recipe[network_interfaces_wrapper::ubuntu]"
+      ],
+      "staging_directory": "/etc/chef"
+    },
+    {
+      "type": "file",
+      "source": "{{user `encrypted_data_bag_secret_path` }}",
+      "destination": "/etc/chef/encrypted_data_bag_secret"
+    },
+    {
+      "type": "chef-client",
+      "skip_install": true,
+      "server_url": "{{user `server_url`}}",
+      "chef_environment": "{{user `chef_environment`}}",
+      "prevent_sudo": true,
+      "node_name": "{{user `hostname`}}",
+      "skip_clean_node": true,
+      "skip_clean_client": true,
+      "config_template": "files/config_template",
+      "validation_client_name": "{{user `validation_client_name`}}",
+      "validation_key_path": "{{user `validation_key_path`}}",
+      "json": {
+        "chef_client": {
+          "daemon_options": ["-E", "{{user `chef_environment`}}"],
+          "config": {
+            "node_name": "{{user `hostname`}}"
+          }
+        }
+      },
+      "run_list": [
+        "recipe[chef-client]",
+        "recipe[chef-client::config]"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": ["rm /root/.ssh/authorized_keys"]
+    }
+  ]
+}
