@@ -109,7 +109,7 @@
       "skip_clean_client": true,
       "config_template": "files/config_template",
       "validation_client_name": "{{user `validation_client_name`}}",
-      "validation_key_path": "{{user `validation_key_path`}}"
+      "validation_key_path": "{{user `validation_key_path`}}",
       "json": {
         "chef_client": {
           "daemon_options": ["-E", "{{user `chef_environment`}}"],
