@@ -7,3 +7,4 @@ cookbook 'docker_wrapper', git: 'https://github.com/randomcoww/chef-docker_wrapp
 cookbook 'ntp'
 cookbook 'serial_console',  git: 'https://github.com/randomcoww/chef-serial_console.git'
 cookbook 'network_interfaces_wrapper',  git: 'https://github.com/randomcoww/chef-network_interfaces_wrapper.git'
+cookbook 'chef-client'
