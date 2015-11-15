@@ -82,6 +82,12 @@
             "post_up": "ip addr show $IFACE | grep -q \"inet 169.254\"; while [ $? -ne 0 ]; do sleep 1; ip addr show $IFACE | grep -q \"inet 169.254\"; done",
             "reload": false
           }
+        },
+        "chef_client": {
+          "daemon_options": ["-E", "{{user `chef_environment`}}"],
+          "config": {
+            "node_name": "{{user `hostname`}}"
+          }
         }
       },
       "run_list": [
@@ -89,7 +95,9 @@
         "recipe[docker_wrapper::service]",
         "recipe[ntp]",
         "recipe[serial_console::ubuntu]",
-        "recipe[network_interfaces_wrapper::ubuntu]"
+        "recipe[network_interfaces_wrapper::ubuntu]",
+        "recipe[chef-client]",
+        "recipe[chef-client::config]"
       ],
       "staging_directory": "/etc/chef"
     },
@@ -109,19 +117,7 @@
       "skip_clean_client": true,
       "config_template": "files/config_template",
       "validation_client_name": "{{user `validation_client_name`}}",
-      "validation_key_path": "{{user `validation_key_path`}}",
-      "json": {
-        "chef_client": {
-          "daemon_options": ["-E", "{{user `chef_environment`}}"],
-          "config": {
-            "node_name": "{{user `hostname`}}"
-          }
-        }
-      },
-      "run_list": [
-        "recipe[chef-client]",
-        "recipe[chef-client::config]"
-      ]
+      "validation_key_path": "{{user `validation_key_path`}}"
     },
     {
       "type": "shell",
