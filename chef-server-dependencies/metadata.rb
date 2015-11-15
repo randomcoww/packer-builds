@@ -1,0 +1,8 @@
+name             'chef-server-dependencies'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures chef-server-dependencies'
+long_description 'Installs/Configures chef-server-dependencies'
+version          '0.1.0'
+depends          'chef-client'
