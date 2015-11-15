@@ -3,7 +3,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "unifi",
+    "hostname": "docker-s01",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
