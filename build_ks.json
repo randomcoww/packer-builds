@@ -29,6 +29,7 @@
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
+      "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
 
       "boot_wait": "2s",
