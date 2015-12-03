@@ -80,7 +80,7 @@
           },
           "eth1": {
             "bootproto": "static",
-            "address": "169.254.63.10",
+            "address": "169.254.62.242",
             "netmask": "255.255.0.0",
             "reload": false
           }
