@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>docker5</name>
+  <name>docker</name>
   <memory unit='KiB'>4194304</memory>
   <currentMemory unit='KiB'>4194304</currentMemory>
   <vcpu placement='static'>3</vcpu>
@@ -20,9 +20,10 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/img/kvm/docker5.qcow2'/>
-      <target dev='vda' bus='virtio'/>
+      <source file='/img/kvm/docker.qcow2'/>
+      <target dev='sda' bus='scsi'/>
     </disk>
+    <controller type='scsi' index='0' model='virtio-scsi'/>
     <interface type='bridge'>
       <source bridge='br0'/>
       <model type='virtio'/>

@@ -1,6 +1,7 @@
 Docker Cookbook
 ===============
-[![Build Status](https://secure.travis-ci.org/someara/chef-docker.png?branch=master)](http://travis-ci.org/someara/chef-docker)
+[![Build Status](https://travis-ci.org/chef-cookbooks/docker.svg?branch=master)](https://travis-ci.org/chef-cookbooks/docker) 
+[![Cookbook Version](https://img.shields.io/cookbook/v/docker.svg)](https://supermarket.chef.io/cookbooks/docker)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/someara/chef-docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Docker Cookbook is a library cookbook that provides resources
@@ -350,6 +351,9 @@ the options found in the
 - `bridge` - Attach containers to a network bridge
 - `bip` - Specify network bridge IP
 - `debug` - Enable debug mode
+- `cluster_store` - Cluster store to use
+- `cluster_advertise` - Ip and port that this daemon should advertise to the cluster
+- `cluster_store_opts` - Cluster store options
 - `daemon` - Enable daemon mode
 - `dns` - DNS server(s) to use
 - `dns_search` - DNS search domains to use

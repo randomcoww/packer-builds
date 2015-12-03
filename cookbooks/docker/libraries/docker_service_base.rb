@@ -15,11 +15,15 @@ module DockerCookbook
     property :api_cors_header, [String, nil]
     property :bridge, [IPV4_ADDR, IPV6_ADDR, nil]
     property :bip, [IPV4_ADDR, IPV4_CIDR, IPV6_ADDR, IPV6_CIDR, nil]
+    property :cluster_store, [String, nil]
+    property :cluster_advertise, [String, nil]
+    property :cluster_store_opts, ArrayType
     property :debug, [Boolean, nil]
     property :daemon, Boolean, default: true
     property :dns, ArrayType
     property :dns_search, [Array, nil]
     property :exec_driver, ['native', 'lxc', nil]
+    property :exec_opts, ArrayType
     property :fixed_cidr, [String, nil]
     property :fixed_cidr_v6, [String, nil]
     property :group, [String, nil]
