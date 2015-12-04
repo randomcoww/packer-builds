@@ -10,7 +10,7 @@
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
     "set_fqdn": "*.dyn.local",
-    "timezone": "America/Los_Angeles"
+    "timezone": "Etc/UTC"
   },
 
   "builders": [
