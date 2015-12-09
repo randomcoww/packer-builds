@@ -8,6 +8,7 @@ Supported Platforms
 ===================
 
 * RHEL 6.x
+* RHEL 7.x
 * Ubuntu >= 12.x
 * Windows 2012R2
 
@@ -89,6 +90,7 @@ Attributes
 * devicetype - Set the type of device (e.g. 'ovs')
 * ovs_bridge - OVS Bridge to bind ovs port to (primarily used when `type` is set as 'OVSPort')
 * dns_domain - DNS domain
+* zone - FirewallD zone
 
 #### Windows Only Attributes
 * hw_address - Can be used to define what device to manage
@@ -166,12 +168,13 @@ end
 
 Testing
 =======
+Requires [ChefDK](https://downloads.chef.io/chef-dk/) 0.10.0.
 
 ```
-bundle exec rubocop
-bundle exec foodcritic -f any -X spec .
-bundle exec rspec --color --format progress
-bundle exec kitchen test
+rubocop
+foodcritic -f any -X spec .
+rspec --color --format progress
+kitchen test
 ```
 
 License and Authors

@@ -25,17 +25,9 @@ require 'chef_compat/copied_from_chef/chef/delayed_evaluator'
 
 class Chef < (defined?(::Chef) ? ::Chef : Object)
   module Mixin
-    if defined?(::Chef::Mixin)
-      require 'chef_compat/delegating_class'
-      extend DelegatingClass
-      @delegates_to = ::Chef::Mixin
-    end
+    CopiedFromChef.extend_chef_module(::Chef::Mixin, self) if defined?(::Chef::Mixin)
     module ParamsValidate
-      if defined?(::Chef::Mixin::ParamsValidate)
-        require 'chef_compat/delegating_class'
-        extend DelegatingClass
-        @delegates_to = ::Chef::Mixin::ParamsValidate
-      end
+      CopiedFromChef.extend_chef_module(::Chef::Mixin::ParamsValidate, self) if defined?(::Chef::Mixin::ParamsValidate)
 
       # Takes a hash of options, along with a map to validate them.  Returns the original
       # options hash, plus any changes that might have been made (through things like setting

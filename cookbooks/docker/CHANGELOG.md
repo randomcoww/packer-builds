@@ -1,3 +1,34 @@
+v2.3.5
+--------------------
+- fixing desired_state on docker_container force property
+
+v2.3.4
+--------------------
+- Fixing up ports logic
+- Supporting multiple ip/ports
+
+v2.3.3
+--------------------
+- vendoring docker-api-1.24.1
+
+v2.3.2
+--------------------
+- vendoring docker-api-1.24.0
+- setting desired_state:false for tls properties
+
+v2.3.1
+--------------------
+- Support for multiple docker_service instances with docker_service_manager_upstart
+- Support for multiple docker_service instances with docker_service_manager_systemd
+  
+v2.3.0
+--------------------
+- Support for multiple docker_service instances with docker_service_manager_sysvinit
+
+v2.2.11
+--------------------
+- Support for multiple docker_service instances with docker_service_manager_execute
+
 v2.2.10
 --------------------
 - #565 - Add support for --exec-opt to docker daemon

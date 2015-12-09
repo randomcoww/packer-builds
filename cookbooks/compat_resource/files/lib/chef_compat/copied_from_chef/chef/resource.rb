@@ -3,6 +3,7 @@ class Chef
 module ::ChefCompat
 module CopiedFromChef
 require 'chef_compat/copied_from_chef/chef/resource/action_class'
+require 'chef_compat/copied_from_chef/chef/provider'
 require 'chef_compat/copied_from_chef/chef/mixin/properties'
 class Chef < (defined?(::Chef) ? ::Chef : Object)
   class Resource < (defined?(::Chef::Resource) ? ::Chef::Resource : Object)
@@ -70,6 +71,20 @@ super if defined?(::Chef::Resource)
         result[property.name] = send(property.name)
       end
       return result.values.first if identity_properties.size == 1
+      result
+    end
+    def to_hash
+      # Grab all current state, then any other ivars (backcompat)
+      result = {}
+      self.class.state_properties.each do |p|
+        result[p.name] = p.get(self)
+      end
+      safe_ivars = instance_variables.map { |ivar| ivar.to_sym } - FORBIDDEN_IVARS
+      safe_ivars.each do |iv|
+        key = iv.to_s.sub(/^@/,'').to_sym
+        next if result.has_key?(key)
+        result[key] = instance_variable_get(iv)
+      end
       result
     end
     def self.identity_property(name=nil)

@@ -10,7 +10,7 @@
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
     "set_fqdn": "*.dyn.local",
-    "timezone": "America/Los_Angeles"
+    "timezone": "Etc/UTC"
   },
 
   "builders": [
@@ -65,7 +65,7 @@
         "apt-get -y remove nano",
         "apt-get -y update",
         "apt-get -y upgrade",
-        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd"
+        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd bridge-utils"
       ]
     },
     {
@@ -75,11 +75,21 @@
         "set_fqdn": "{{user `set_fqdn`}}",
         "network_interfaces": {
           "eth0": {
-            "bootproto": "dhcp",
+            "bootproto": "manual",
             "reload": false
           },
           "eth1": {
+            "bootproto": "manual",
+            "reload": false
+          },
+          "br0": {
+            "bootproto": "dhcp",
+            "bridge_ports": [ "eth0" ],
+            "reload": false
+          },
+          "br1": {
             "bootproto": "ipv4ll",
+            "bridge_ports": [ "eth1" ],
             "post_up": "ip addr show $IFACE | grep -q \"inet 169.254\"; while [ $? -ne 0 ]; do sleep 1; ip addr show $IFACE | grep -q \"inet 169.254\"; done",
             "reload": false
           }

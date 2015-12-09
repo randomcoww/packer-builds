@@ -8,23 +8,11 @@ require 'chef_compat/copied_from_chef/chef/property'
 
 class Chef < (defined?(::Chef) ? ::Chef : Object)
   module Mixin
-    if defined?(::Chef::Mixin)
-      require 'chef_compat/delegating_class'
-      extend DelegatingClass
-      @delegates_to = ::Chef::Mixin
-    end
+    CopiedFromChef.extend_chef_module(::Chef::Mixin, self) if defined?(::Chef::Mixin)
     module Properties
-      if defined?(::Chef::Mixin::Properties)
-        require 'chef_compat/delegating_class'
-        extend DelegatingClass
-        @delegates_to = ::Chef::Mixin::Properties
-      end
+      CopiedFromChef.extend_chef_module(::Chef::Mixin::Properties, self) if defined?(::Chef::Mixin::Properties)
       module ClassMethods
-        if defined?(::Chef::Mixin::Properties::ClassMethods)
-          require 'chef_compat/delegating_class'
-          extend DelegatingClass
-          @delegates_to = ::Chef::Mixin::Properties::ClassMethods
-        end
+        CopiedFromChef.extend_chef_module(::Chef::Mixin::Properties::ClassMethods, self) if defined?(::Chef::Mixin::Properties::ClassMethods)
         #
         # The list of properties defined on this resource.
         #
