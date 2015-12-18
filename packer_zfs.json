@@ -1,0 +1,182 @@
+{
+  "variables": {
+    "user": "randomcoww",
+    "uid": "10000",
+    "password": "password",
+    "hostname": "zfs-fs101",
+    "set_fqdn": "*.dyn.local",
+    "timezone": "Etc/UTC",
+    "static_ip": "169.254.127.20"
+  },
+  "builders": [
+    {
+      "name": "{{user `hostname`}}",
+
+      "type": "qemu",
+      "format": "raw",
+      "accelerator": "kvm",
+
+      "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.3-server-amd64.iso",
+      "iso_checksum": "9e5fecc94b3925bededed0fdca1bd417",
+      "iso_checksum_type": "md5",
+
+      "http_directory": "http",
+
+      "ssh_username": "root",
+      "ssh_key_path": "files/packer.key",
+      "ssh_wait_timeout": "600s",
+      "shutdown_command": "shutdown -P now",
+
+      "boot_wait": "2s",
+      "qemuargs": [
+        [ "-display", "none" ]
+      ],
+
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-ubuntu1404.cfg ",
+        "hostname={{user `hostname`}} ",
+          
+        "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-password-again={{user `password`}} ",
+        "passwd/user-password={{user `password`}} ",
+        "passwd/user-uid={{user `uid`}} ",
+        "passwd/username={{user `user`}} ",
+
+        "initrd=/install/initrd.gz -- <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir /etc/chef",
+        "apt-get -qq -y autoremove",
+        "apt-get clean",
+        "rm -rf /var/cache/apt/*cache.bin",
+        "rm -rf /var/lib/apt/lists/*",
+        "echo \"{{user `timezone`}}\" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata",
+        "apt-get -y remove nano",
+        "apt-get -y update",
+        "apt-get -y install software-properties-common python-software-properties",
+        "apt-get -y update",
+        "apt-add-repository --yes ppa:zfs-native/stable",
+        "apt-get -y update",
+        "apt-get -y upgrade",
+        "apt-get -y install build-essential curl vim wget cgroup-bin nfs-server iftop screen pigz avahi-autoipd",
+        "apt-get -y install ubuntu-zfs"
+      ]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks"],
+      "json": {
+        "set_fqdn": "{{user `set_fqdn`}}",
+        "network_interfaces": {
+          "eth0": {
+            "bootproto": "dhcp",
+            "reload": false
+          },
+          "eth1": {
+            "bootproto": "static",
+            "address": "{{user `static_ip`}}",
+            "netmask": "255.255.0.0",
+            "reload": false
+          }
+        },
+        "nfs_exports": {
+          "nfs4_root": {
+            "directory": "/vol",
+            "network": "169.254.0.0/16",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "fsid=0", "no_subtree_check" ]
+          },
+          "music_b": {
+            "directory": "/vol/music",
+            "network": "169.254.0.0/16",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "music_f": {
+            "directory": "/vol/music",
+            "network": "192.168.62.0/23",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "video_b": {
+            "directory": "/vol/video",
+            "network": "169.254.0.0/16",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "video_f": {
+            "directory": "/vol/video",
+            "network": "192.168.62.0/23",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "torrent_b": {
+            "directory": "/vol/torrent",
+            "network": "169.254.0.0/16",
+            "writeable": true,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "torrent_f": {
+            "directory": "/vol/torrent",
+            "network": "192.168.62.0/23",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "img_b": {
+            "directory": "/vol/img",
+            "network": "169.254.0.0/16",
+            "writeable": true,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "img_f": {
+            "directory": "/vol/img",
+            "network": "192.168.62.0/23",
+            "writeable": false,
+	    "sync": true,
+            "options": [ "no_subtree_check" ]
+          },
+          "pub_b": {
+            "directory": "/vol/pub",
+            "network": "169.254.0.0/16",
+            "writeable": true,
+	    "sync": true,
+            "options": [ "no_subtree_check", "no_root_squash" ]
+          },
+          "pub_f": {
+            "directory": "/vol/pub",
+            "network": "192.168.62.0/23",
+            "writeable": true,
+	    "sync": true,
+            "options": [ "no_subtree_check", "no_root_squash" ]
+          }
+        }
+      },
+      "run_list": [
+        "recipe[hostname]",
+        "recipe[ntp]",
+        "recipe[nfs_export_wrapper]",
+        "recipe[serial_console::ubuntu]",
+        "recipe[network_interfaces_wrapper::ubuntu]"
+      ],
+      "staging_directory": "/etc/chef"
+    },
+    {
+      "type": "shell",
+      "inline": ["rm /root/.ssh/authorized_keys"]
+    }
+  ]
+}

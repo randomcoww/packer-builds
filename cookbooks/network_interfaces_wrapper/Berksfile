@@ -1,5 +1,0 @@
-source "https://supermarket.chef.io"
-
-metadata
-
-cookbook 'network_interfaces_v2', '~> 2.0'
