@@ -4,12 +4,12 @@
     "uid": "10000",
     "password": "password",
     "hostname": "docker01",
+    "domain": "dyn.local",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
-    "set_fqdn": "*.dyn.local",
     "timezone": "Etc/UTC",
     "static_ip": "169.254.62.242"
   },
@@ -42,7 +42,10 @@
         "<esc><esc><enter><wait>",
         "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-ubuntu1404.cfg ",
         "hostname={{user `hostname`}} ",
-          
+
+        "netcfg/get_hostname string {{user `hostname`}} ",
+        "netcfg/get_domain string {{user `domain`}} ",
+
         "passwd/user-fullname={{user `user`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
@@ -73,7 +76,7 @@
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks"],
       "json": {
-        "set_fqdn": "{{user `set_fqdn`}}",
+        "set_fqdn": "*.{{user `domain`}}",
         "network_interfaces": {
           "eth0": {
             "bootproto": "manual",
