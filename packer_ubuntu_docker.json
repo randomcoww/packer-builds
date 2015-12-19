@@ -102,7 +102,7 @@
         "recipe[docker_wrapper::service]",
         "recipe[ntp]",
         "recipe[serial_console::ubuntu]",
-        "recipe[network_interfaces_wrapper::ubuntu]"
+        "recipe[network_interfaces_wrapper::ubuntu-provision]"
       ],
       "staging_directory": "/etc/chef"
     },
