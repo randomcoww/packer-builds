@@ -41,7 +41,7 @@
         "<esc><esc><enter><wait>",
         "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ubuntu1404.cfg ",
  
-	"hostname={{user `hostname`}} ",
+        "hostname={{user `hostname`}} ",
         "time/zone={{user `timezone`}} ",
 
         "passwd/username={{user `user`}} ",
@@ -94,7 +94,7 @@
       },
       "run_list": [
         "recipe[hostname]",
-	"recipe[ntp]",
+        "recipe[ntp]",
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::ubuntu-provision]"
       ],
