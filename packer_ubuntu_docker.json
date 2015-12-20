@@ -35,22 +35,23 @@
 
       "boot_wait": "2s",
       "qemuargs": [
-        [ "-display", "none" ]
+        [ "-display", "none" ],
+        [ "-m", "2048M" ]
       ],
 
       "boot_command": [
         "<esc><esc><enter><wait>",
-        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-ubuntu1404.cfg ",
+        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ubuntu1404.cfg ",
         "hostname={{user `hostname`}} ",
 
         "netcfg/get_hostname string {{user `hostname`}} ",
         "netcfg/get_domain string {{user `domain`}} ",
 
+        "passwd/username={{user `user`}} ",
+        "passwd/user-uid={{user `uid`}} ",
         "passwd/user-fullname={{user `user`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
-        "passwd/user-uid={{user `uid`}} ",
-        "passwd/username={{user `user`}} ",
 
         "initrd=/install/initrd.gz -- <enter>"
       ]
