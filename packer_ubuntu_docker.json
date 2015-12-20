@@ -36,24 +36,25 @@
       "boot_wait": "2s",
       "qemuargs": [
         [ "-display", "none" ],
-        [ "-m", "2048M" ]
+        [ "-m", "1024M" ]
       ],
 
       "boot_command": [
         "<esc><esc><enter><wait>",
         "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ubuntu1404.cfg ",
-        "hostname={{user `hostname`}} ",
-
+        
+	"hostname={{user `hostname`}} ",
         "netcfg/get_hostname string {{user `hostname`}} ",
         "netcfg/get_domain string {{user `domain`}} ",
+        "time/zone={{user `timezone`}} ",
 
         "passwd/username={{user `user`}} ",
-        "passwd/user-uid={{user `uid`}} ",
         "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
 
-        "initrd=/install/initrd.gz -- <enter>"
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
       ]
     }
   ],
@@ -61,16 +62,10 @@
     {
       "type": "shell",
       "inline": [
-        "mkdir /etc/chef",
-        "apt-get -qq -y autoremove",
-        "apt-get clean",
-        "rm -rf /var/cache/apt/*cache.bin",
-        "rm -rf /var/lib/apt/lists/*",
-        "echo \"{{user `timezone`}}\" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata",
-        "apt-get -y remove nano",
         "apt-get -y update",
         "apt-get -y upgrade",
-        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd bridge-utils"
+        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd bridge-utils",
+        "mkdir /etc/chef"
       ]
     },
     {
@@ -103,9 +98,8 @@
       },
       "run_list": [
         "recipe[hostname]",
+	"recipe[ntp]",
         "recipe[docker_wrapper::service]",
-        "recipe[ntp]",
-        "recipe[serial_console::ubuntu]",
         "recipe[network_interfaces_wrapper::ubuntu-provision]"
       ],
       "staging_directory": "/etc/chef"
