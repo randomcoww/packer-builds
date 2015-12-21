@@ -26,11 +26,13 @@
       "iso_checksum_type": "md5",
 
       "http_directory": "http",
+      "disk_size": 20000,
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
+      "output_directory": "/tmp/packer_build_qemu",
 
       "boot_wait": "2s",
       "qemuargs": [
@@ -43,6 +45,8 @@
  
         "hostname={{user `hostname`}} ",
         "time/zone={{user `timezone`}} ",
+        "netcfg/get_hostname={{user `hostname`}} ",
+        "netcfg/get_domain={{user `domain`}} ",
 
         "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
@@ -68,7 +72,6 @@
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks"],
       "json": {
-        "set_fqdn": "*.{{user `domain`}}",
         "network_interfaces": {
           "eth0": {
             "bootproto": "manual",
@@ -93,7 +96,6 @@
         }
       },
       "run_list": [
-        "recipe[hostname]",
         "recipe[ntp]",
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::ubuntu-provision]"
