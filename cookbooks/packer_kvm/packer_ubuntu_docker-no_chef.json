@@ -3,8 +3,8 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "dev",
-    "set_fqdn": "*.dyn.local",
+    "hostname": "docker01",
+    "domain": "dyn.local",
     "timezone": "Etc/UTC"
   },
   "builders": [
@@ -20,28 +20,35 @@
       "iso_checksum_type": "md5",
 
       "http_directory": "http",
+      "disk_size": 20000,
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
+      "output_directory": "/tmp/packer_build_qemu",
 
       "boot_wait": "2s",
       "qemuargs": [
-        [ "-display", "none" ]
+        [ "-display", "none" ],
+        [ "-m", "1024M" ]
       ],
       "boot_command": [
         "<esc><esc><enter><wait>",
-        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-ubuntu1404.cfg ",
+        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ubuntu1404.cfg ",
+ 
         "hostname={{user `hostname`}} ",
-          
+        "time/zone={{user `timezone`}} ",
+        "netcfg/get_hostname={{user `hostname`}} ",
+        "netcfg/get_domain={{user `domain`}} ",
+
+        "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
-        "passwd/user-uid={{user `uid`}} ",
-        "passwd/username={{user `user`}} ",
 
-        "initrd=/install/initrd.gz -- <enter>"
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
       ]
     }
   ],
@@ -49,23 +56,16 @@
     {
       "type": "shell",
       "inline": [
-        "mkdir /etc/chef",
-        "apt-get -qq -y autoremove",
-        "apt-get clean",
-        "rm -rf /var/cache/apt/*cache.bin",
-        "rm -rf /var/lib/apt/lists/*",
-        "echo \"{{user `timezone`}}\" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata",
-        "apt-get -y remove nano",
         "apt-get -y update",
         "apt-get -y upgrade",
-        "apt-get -y install curl vim wget cgroup-bin nfs-common git autofs unzip avahi-autoipd bridge-utils"
+        "apt-get -y install curl vim wget git cgroup-bin nfs-client avahi-autoipd bridge-utils",
+        "mkdir /etc/chef"
       ]
     },
     {
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks"],
       "json": {
-        "set_fqdn": "{{ user `set_fqdn`}}",
         "network_interfaces": {
           "eth0": {
             "bootproto": "manual",
@@ -89,11 +89,9 @@
         }
       },
       "run_list": [
-        "recipe[hostname]",
+        "recipe[ntp]",
         "recipe[docker_wrapper::service]",
-	"recipe[ntp]",
-	"recipe[serial_console::ubuntu]",
-        "recipe[network_interfaces_wrapper::ubuntu]"
+        "recipe[network_interfaces_wrapper::ubuntu-provision]"
       ],
       "staging_directory": "/etc/chef"
     },

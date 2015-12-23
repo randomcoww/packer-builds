@@ -8,10 +8,8 @@
   "platforms": {
   },
   "dependencies": {
-    "hostname": ">= 0.0.0",
     "docker_wrapper": ">= 0.0.0",
     "ntp": ">= 0.0.0",
-    "serial_console": ">= 0.0.0",
     "network_interfaces_wrapper": ">= 0.0.0",
     "nfs_export_wrapper": ">= 0.0.0"
   },
