@@ -10,7 +10,8 @@
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
-    "timezone": "Etc/UTC"
+    "timezone": "Etc/UTC",
+    "static_ip": "169.254.62.242"
   },
   "builders": [
     {
@@ -86,9 +87,10 @@
             "reload": false
           },
           "br1": {
-            "bootproto": "ipv4ll",
+            "bootproto": "static",
             "bridge_ports": [ "eth1" ],
-            "post_up": "ip addr show $IFACE | grep -q \"inet 169.254\"; while [ $? -ne 0 ]; do sleep 1; ip addr show $IFACE | grep -q \"inet 169.254\"; done",
+            "address": "{{user `static_ip`}}",
+            "netmask": "255.255.0.0",
             "reload": false
           }
         }
