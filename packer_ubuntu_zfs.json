@@ -104,63 +104,63 @@
             "directory": "/vol/music",
             "network": "192.168.62.0/23",
             "writeable": false,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "video_b": {
             "directory": "/vol/video",
             "network": "169.254.0.0/16",
             "writeable": false,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "video_f": {
             "directory": "/vol/video",
             "network": "192.168.62.0/23",
             "writeable": false,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "torrent_b": {
             "directory": "/vol/torrent",
             "network": "169.254.0.0/16",
             "writeable": true,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "torrent_f": {
             "directory": "/vol/torrent",
             "network": "192.168.62.0/23",
             "writeable": false,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "img_b": {
             "directory": "/vol/img",
             "network": "169.254.0.0/16",
             "writeable": true,
-	           "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "img_f": {
             "directory": "/vol/img",
             "network": "192.168.62.0/23",
             "writeable": false,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "pub_b": {
             "directory": "/vol/pub",
             "network": "169.254.0.0/16",
             "writeable": true,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check", "no_root_squash" ]
           },
           "pub_f": {
             "directory": "/vol/pub",
             "network": "192.168.62.0/23",
             "writeable": true,
-	          "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check", "no_root_squash" ]
           }
         }
