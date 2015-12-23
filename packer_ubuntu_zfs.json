@@ -4,7 +4,7 @@
     "uid": "10000",
     "password": "password",
     "hostname": "zfs-fs101",
-    "set_fqdn": "*.dyn.local",
+    "domain": "dyn.local",
     "timezone": "Etc/UTC",
     "static_ip": "169.254.127.20"
   },
@@ -21,29 +21,36 @@
       "iso_checksum_type": "md5",
 
       "http_directory": "http",
+      "disk_size": 20000,
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
+      "output_directory": "/tmp/packer_build_qemu",
 
       "boot_wait": "2s",
       "qemuargs": [
-        [ "-display", "none" ]
+        [ "-display", "none" ],
+        [ "-m", "1024M" ]
       ],
 
       "boot_command": [
         "<esc><esc><enter><wait>",
-        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-ubuntu1404.cfg ",
+        "/install/vmlinuz ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ubuntu1404.cfg ",
+
         "hostname={{user `hostname`}} ",
-          
+        "time/zone={{user `timezone`}} ",
+        "netcfg/get_hostname={{user `hostname`}} ",
+        "netcfg/get_domain={{user `domain`}} ",
+
+        "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
-        "passwd/user-uid={{user `uid`}} ",
-        "passwd/username={{user `user`}} ",
 
-        "initrd=/install/initrd.gz -- <enter>"
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
       ]
     }
   ],
@@ -51,13 +58,6 @@
     {
       "type": "shell",
       "inline": [
-        "mkdir /etc/chef",
-        "apt-get -qq -y autoremove",
-        "apt-get clean",
-        "rm -rf /var/cache/apt/*cache.bin",
-        "rm -rf /var/lib/apt/lists/*",
-        "echo \"{{user `timezone`}}\" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata",
-        "apt-get -y remove nano",
         "apt-get -y update",
         "apt-get -y install software-properties-common python-software-properties",
         "apt-get -y update",
@@ -65,14 +65,14 @@
         "apt-get -y update",
         "apt-get -y upgrade",
         "apt-get -y install build-essential curl vim wget cgroup-bin nfs-server iftop screen pigz avahi-autoipd",
-        "apt-get -y install ubuntu-zfs"
+        "apt-get -y install ubuntu-zfs",
+        "mkdir /etc/chef"
       ]
     },
     {
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks"],
       "json": {
-        "set_fqdn": "{{user `set_fqdn`}}",
         "network_interfaces": {
           "eth0": {
             "bootproto": "dhcp",
@@ -90,87 +90,85 @@
             "directory": "/vol",
             "network": "169.254.0.0/16",
             "writeable": false,
-	    "sync": true,
+            "sync": true,
             "options": [ "fsid=0", "no_subtree_check" ]
           },
           "music_b": {
             "directory": "/vol/music",
             "network": "169.254.0.0/16",
             "writeable": false,
-	    "sync": true,
+            "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "music_f": {
             "directory": "/vol/music",
             "network": "192.168.62.0/23",
             "writeable": false,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "video_b": {
             "directory": "/vol/video",
             "network": "169.254.0.0/16",
             "writeable": false,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "video_f": {
             "directory": "/vol/video",
             "network": "192.168.62.0/23",
             "writeable": false,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "torrent_b": {
             "directory": "/vol/torrent",
             "network": "169.254.0.0/16",
             "writeable": true,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "torrent_f": {
             "directory": "/vol/torrent",
             "network": "192.168.62.0/23",
             "writeable": false,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "img_b": {
             "directory": "/vol/img",
             "network": "169.254.0.0/16",
             "writeable": true,
-	    "sync": true,
+	           "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "img_f": {
             "directory": "/vol/img",
             "network": "192.168.62.0/23",
             "writeable": false,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check" ]
           },
           "pub_b": {
             "directory": "/vol/pub",
             "network": "169.254.0.0/16",
             "writeable": true,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check", "no_root_squash" ]
           },
           "pub_f": {
             "directory": "/vol/pub",
             "network": "192.168.62.0/23",
             "writeable": true,
-	    "sync": true,
+	          "sync": true,
             "options": [ "no_subtree_check", "no_root_squash" ]
           }
         }
       },
       "run_list": [
-        "recipe[hostname]",
         "recipe[ntp]",
         "recipe[nfs_export_wrapper]",
-        "recipe[serial_console::ubuntu]",
-        "recipe[network_interfaces_wrapper::ubuntu]"
+        "recipe[network_interfaces_wrapper::ubuntu-provision]"
       ],
       "staging_directory": "/etc/chef"
     },
