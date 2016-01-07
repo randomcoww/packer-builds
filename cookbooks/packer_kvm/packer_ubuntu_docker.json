@@ -71,6 +71,11 @@
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks"],
       "json": {
+        "docker_service": {
+          "instance": "docker",
+          "icc": false,
+          "bridge": "br0"
+        },
         "network_interfaces": {
           "eth0": {
             "bootproto": "manual",
