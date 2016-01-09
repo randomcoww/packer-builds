@@ -168,7 +168,8 @@
       "run_list": [
         "recipe[ntp]",
         "recipe[nfs_export_wrapper]",
-        "recipe[network_interfaces_wrapper::ubuntu-provision]"
+        "recipe[network_interfaces_wrapper::module_hack]",
+        "recipe[network_interfaces_wrapper::debian]"
       ],
       "staging_directory": "/etc/chef"
     },

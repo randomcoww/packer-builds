@@ -96,7 +96,8 @@
       "run_list": [
         "recipe[ntp]",
         "recipe[docker_wrapper::service]",
-        "recipe[network_interfaces_wrapper::ubuntu-provision]"
+        "recipe[network_interfaces_wrapper::module_hack]",
+        "recipe[network_interfaces_wrapper::debian]"
       ],
       "staging_directory": "/etc/chef"
     },
