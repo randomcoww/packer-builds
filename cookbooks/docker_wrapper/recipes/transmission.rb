@@ -54,12 +54,6 @@ docker_container service_vpn do
   notifies :redeploy, "docker_container[#{service}]", :delayed
 end
 
-## create startup service and script
-docker_wrapper_container_service service_vpn do
-  container_name service_vpn
-  action :enable
-end
-
 docker_image service do
   repo repo
   tag tag
@@ -71,7 +65,7 @@ docker_container service do
   repo repo
   tag tag
   network_mode "container:#{service_vpn}"
-  restart_policy 'on-failure'
+  restart_policy 'unless-stopped'
   binds [
     "#{mount_path}/transmission:/var/lib/transmission-daemon"
   ]

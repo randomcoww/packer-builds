@@ -10,6 +10,7 @@
   "dependencies": {
     "docker_wrapper": ">= 0.0.0",
     "ntp": ">= 0.0.0",
+    "resolver": ">= 0.0.0",
     "network_interfaces_wrapper": ">= 0.0.0",
     "nfs_export_wrapper": ">= 0.0.0"
   },
