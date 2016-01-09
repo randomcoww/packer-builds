@@ -132,7 +132,7 @@
         }
       },
       "run_list": [
-        "recipe[chef-client]",
+        "recipe[chef-client::systemd_service]",
         "recipe[chef-client::config]"
       ]
     },
