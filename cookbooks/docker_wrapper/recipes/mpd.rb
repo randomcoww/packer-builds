@@ -50,15 +50,9 @@ docker_container service do
   hostname "#{node.hostname}-#{service}"
   repo repo
   tag tag
-  restart_policy 'on-failure'
+  restart_policy 'unless-stopped'
   volumes_from service_store
   binds ["#{mount_path}:/var/lib/mpd/music"]
   port ['8000:8000', '6600:6600']
   action :run
-end
-
-## create startup service and script
-docker_wrapper_container_service service do
-  container_name service
-  action :enable
 end

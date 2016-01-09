@@ -49,7 +49,7 @@ docker_container service_vpn do
     "#{mount_path}/openvpn/auth.conf:/openvpn/auth-user-pass.conf",
     "#{mount_path}/openvpn/ca.crt:/openvpn/ca.crt"
   ]
-  restart_policy 'on-failure'
+  restart_policy 'unless-stopped'
   action :run
   notifies :redeploy, "docker_container[#{service}]", :delayed
 end
@@ -76,11 +76,4 @@ docker_container service do
     "#{mount_path}/transmission:/var/lib/transmission-daemon"
   ]
   action :run
-end
-
-## create startup service and script
-docker_wrapper_container_service service do
-  container_name service
-  container_dependencies [service_vpn]
-  action :enable
 end

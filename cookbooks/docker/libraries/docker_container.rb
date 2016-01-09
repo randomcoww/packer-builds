@@ -53,7 +53,8 @@ module DockerCookbook
     property :exposed_ports, PartialHashType
     property :force, Boolean, desired_state: false
     property :host, [String], default: lazy { default_host }, desired_state: false
-    property :hostname, [String, nil]
+    property :hostname, String
+    property :ipc_mode, String
     property :labels, [String, Array, Hash], coerce: proc { |v| coerce_labels(v) }
     property :links, [Array, nil], coerce: proc { |v| coerce_links(v) }
     property :log_driver, %w( json-file syslog journald gelf fluentd none ), default: 'json-file'
@@ -66,6 +67,7 @@ module DockerCookbook
     property :open_stdin, Boolean, desired_state: false
     property :outfile, [String, nil], default: nil
     property :port_bindings, PartialHashType
+    property :pid_mode, String
     property :privileged, Boolean
     property :publish_all_ports, Boolean
     property :remove_volumes, Boolean
@@ -109,9 +111,6 @@ module DockerCookbook
 
     ########################################################
     # Load Current Value
-    #
-    # FIXME: put words here about how this is different that
-    # load_current_resource in the classic provider system.
     ########################################################
 
     load_current_value do
@@ -129,9 +128,6 @@ module DockerCookbook
 
         # Image => image
         # Set exposed_ports = ExposedPorts (etc.)
-        #
-        # TODO: ^ Explain in more detail (or remove) metprogramming magic.
-        # We don't like magic in operations.
         property_name = to_snake_case(key)
         public_send(property_name, value) if respond_to?(property_name)
       end
@@ -215,6 +211,11 @@ module DockerCookbook
       end
     end
 
+    def parsed_hostname
+      return nil if network_mode == 'host'
+      hostname
+    end
+
     action :create do
       validate_container_create
 
@@ -234,7 +235,7 @@ module DockerCookbook
             'Entrypoint'      => to_shellwords(entrypoint),
             'Env'             => env,
             'ExposedPorts'    => exposed_ports,
-            'Hostname'        => hostname,
+            'Hostname'        => parsed_hostname,
             'MacAddress'      => mac_address,
             'NetworkDisabled' => network_disabled,
             'OpenStdin'       => open_stdin,
@@ -254,12 +255,14 @@ module DockerCookbook
               'Dns'             => dns,
               'DnsSearch'       => dns_search,
               'ExtraHosts'      => extra_hosts,
+              'IpcMode'         => ipc_mode,
               'Links'           => links,
               'LogConfig'       => log_config,
               'Memory'          => memory,
               'MemorySwap'      => memory_swap,
               'NetworkMode'     => network_mode,
               'Privileged'      => privileged,
+              'PidMode'         => pid_mode,
               'PortBindings'    => port_bindings,
               'PublishAllPorts' => publish_all_ports,
               'RestartPolicy'   => {

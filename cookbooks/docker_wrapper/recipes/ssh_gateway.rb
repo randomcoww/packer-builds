@@ -13,7 +13,7 @@ docker_container service do
   hostname "#{node.hostname}-#{service}"
   repo repo
   tag tag
-  restart_policy 'on-failure'
+  restart_policy 'unless-stopped'
   env [
     'SSH_USER=madcoww',
     'SSH_GROUP=madcoww',
@@ -23,10 +23,4 @@ docker_container service do
   ]
   port ['2222:22']
   action :run
-end
-
-## create startup service and script
-docker_wrapper_container_service service do
-  container_name service
-  action :enable
 end

@@ -1,3 +1,25 @@
+v2.4.0
+--------------------
+- Adding support for pid_mode and ipc_mode to docker_container
+
+v2.3.23
+--------------------
+- Changing bridge property validation to String
+
+v2.3.22
+--------------------
+- using parsed_hostname to force nil value to Docker API when
+  network_mode is host
+
+v2.3.21
+--------------------
+- reverting hostname coerce
+
+v2.3.20
+--------------------
+- adding coerce_hostname
+- Fixing github issues #542 and #572
+
 v2.3.19
 --------------------
 switching systemd unit MountFlags from slave to private

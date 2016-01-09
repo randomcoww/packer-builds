@@ -15,7 +15,7 @@ docker_container service do
   network_mode 'host'
   repo repo
   tag tag
-  restart_policy 'on-failure'
+  restart_policy 'unless-stopped'
   #dns ['127.0.0.1']
   env [
     'GIT_REPO=https://github.com/randomcoww/bind-static_zones.git',
@@ -23,10 +23,4 @@ docker_container service do
   ]
   #port ['53:53/udp']
   action :run
-end
-
-## create startup service and script
-docker_wrapper_container_service service do
-  container_name service
-  action :enable
 end
