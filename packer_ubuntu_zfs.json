@@ -6,7 +6,8 @@
     "hostname": "zfs-fs101",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
-    "static_ip": "169.254.127.20"
+    "static_ip_b": "169.254.127.20",
+    "netmask_b": "255.255.0.0"
   },
   "builders": [
     {
@@ -80,8 +81,8 @@
           },
           "eth1": {
             "bootproto": "static",
-            "address": "{{user `static_ip`}}",
-            "netmask": "255.255.0.0",
+            "address": "{{user `static_ip_b`}}",
+            "netmask": "{{user `netmask_b`}}",
             "reload": false
           }
         },
