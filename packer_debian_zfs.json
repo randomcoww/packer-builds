@@ -64,9 +64,9 @@
       "inline": [
         "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils screen pigz iftop lsb-release",
 	"wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
-	"echo y | dpkg -i zfsonlinux_6_all.deb",
-	"apt-get update",
-	"apt-get install debian-zfs",
+	"dpkg -i zfsonlinux_6_all.deb",
+	"apt-get -y update",
+	"apt-get -y install debian-zfs",
         "mkdir /etc/chef"
       ]
     },
