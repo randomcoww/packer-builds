@@ -4,15 +4,19 @@
     "uid": "10000",
     "password": "password",
     "hostname": "docker01",
-    "domain": "dyn.local",
+    "domain": "static.local",
+    "search": "dyn.local",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
     "timezone": "Etc/UTC",
-    "static_ip_f": "192.168.63.242",
-    "static_ip_b": "169.254.62.242"
+    "static_ip_f": "192.168.63.241",
+    "netmask_f": "255.255.254.0",
+    "static_ip_b": "169.254.63.241",
+    "netmask_b": "255.255.0.0",
+    "gateway_ip": "192.168.62.241"
   },
   "builders": [
     {
@@ -89,21 +93,22 @@
             "bootproto": "static",
             "bridge_ports": [ "ens2" ],
             "address": "{{user `static_ip_f`}}",
-            "netmask": "255.255.0.0",
+            "netmask": "{{user `netmask_f`}}",
+	    "gateway": "{{user `gateway_ip`}}",
             "reload": false
           },
           "br1": {
             "bootproto": "static",
             "bridge_ports": [ "ens3" ],
             "address": "{{user `static_ip_b`}}",
-            "netmask": "255.255.0.0",
+            "netmask": "{{user `netmask_b`}}",
             "reload": false
           }
         },
         "resolver": {
-          "nameservers": ["192.168.63.242", "192.168.62.241"],
-          "domain": "static.local",
-          "search": "dyn.local",
+          "nameservers": ["{{user `static_ip_f`}}", "{{user `gateway_ip`}}"],
+          "domain": "{{user `domain`}}",
+          "search": "{{user `search`}}",
           "options": {
             "timeout": 2
           }
