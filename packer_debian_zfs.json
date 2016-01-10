@@ -75,11 +75,11 @@
       "cookbook_paths": ["cookbooks"],
       "json": {
         "network_interfaces": {
-          "ens2": {
+          "eth0": {
             "bootproto": "dhcp",
             "reload": false
           },
-          "ens3": {
+          "eth1": {
             "bootproto": "static",
             "address": "{{user `static_ip`}}",
             "netmask": "255.255.0.0",
