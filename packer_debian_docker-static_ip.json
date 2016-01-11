@@ -5,7 +5,7 @@
     "password": "password",
     "hostname": "docker01",
     "domain": "static.local",
-    "search": "dyn.local",
+    "search": "static.local dyn.local",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
