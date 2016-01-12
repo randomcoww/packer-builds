@@ -26,7 +26,7 @@
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
-      "ssh_wait_timeout": "600s",
+      "ssh_wait_timeout": "3600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
 
