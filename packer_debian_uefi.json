@@ -25,10 +25,9 @@
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
-      "ssh_wait_timeout": "600s",
+      "ssh_wait_timeout": "10000s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "{{user `image_directory`}}",
-      "disk_interface": "scsi",
 
       "boot_wait": "2s",
       "qemuargs": [
@@ -44,7 +43,7 @@
 	"setparams 'preseed UEFI'<enter>",
 	"linux /install.amd/vmlinuz --- ",
 	"auto=true ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
  
         "time/zone={{user `timezone`}} ",
