@@ -29,8 +29,8 @@
       "ssh_wait_timeout": "3600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
-
       "disk_interface": "scsi",
+
       "boot_wait": "2s",
       "qemuargs": [
         [ "-display", "none" ],
