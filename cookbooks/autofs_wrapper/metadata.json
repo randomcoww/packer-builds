@@ -1,0 +1,32 @@
+{
+  "name": "autofs_wrapper",
+  "description": "Installs/Configures autofs_wrapper",
+  "long_description": "Installs/Configures autofs_wrapper",
+  "maintainer": "YOUR_NAME",
+  "maintainer_email": "YOUR_EMAIL",
+  "license": "All rights reserved",
+  "platforms": {
+  },
+  "dependencies": {
+    "autofs": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0",
+  "source_url": "",
+  "issues_url": ""
+}

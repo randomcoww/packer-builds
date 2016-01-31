@@ -6,7 +6,8 @@
     "hostname": "zfs-fs101",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
-    "static_ip": "169.254.127.20"
+    "static_ip_b": "169.254.127.20",
+    "netmask_b": "255.255.0.0"
   },
   "builders": [
     {
@@ -25,11 +26,11 @@
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
-      "ssh_wait_timeout": "600s",
+      "ssh_wait_timeout": "3600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
-
       "disk_interface": "scsi",
+
       "boot_wait": "2s",
       "qemuargs": [
         [ "-display", "none" ],
@@ -38,7 +39,7 @@
       "boot_command": [
         "<esc><wait><wait>",
 	"install auto ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_testing.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
  
         "hostname={{user `hostname`}} ",
@@ -62,11 +63,11 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils screen pigz iftop lsb-release",
+        "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils screen pigz iftop lsb-release build-essential",
 	"wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
-	"echo y | dpkg -i zfsonlinux_6_all.deb",
-	"apt-get update",
-	"apt-get install debian-zfs",
+	"dpkg -i zfsonlinux_6_all.deb",
+	"apt-get -y update",
+	"apt-get -y install debian-zfs",
         "mkdir /etc/chef"
       ]
     },
@@ -75,14 +76,14 @@
       "cookbook_paths": ["cookbooks"],
       "json": {
         "network_interfaces": {
-          "ens2": {
+          "eth0": {
             "bootproto": "dhcp",
             "reload": false
           },
-          "ens3": {
+          "eth1": {
             "bootproto": "static",
-            "address": "{{user `static_ip`}}",
-            "netmask": "255.255.0.0",
+            "address": "{{user `static_ip_b`}}",
+            "netmask": "{{user `netmask_b`}}",
             "reload": false
           }
         },

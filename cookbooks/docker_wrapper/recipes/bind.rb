@@ -3,11 +3,11 @@ enable = true
 repo = 'randomcoww/bind'
 tag = 'latest'
 
-docker_image service do
+di = docker_image service do
   repo repo
   tag tag
-  action :pull
-  notifies :redeploy, "docker_container[#{service}]"  
+  #action :pull
+  #notifies :redeploy, "docker_container[#{service}]"  
 end
 
 docker_container service do
@@ -23,4 +23,11 @@ docker_container service do
   ]
   #port ['53:53/udp']
   action :run
+end
+
+di.run_action(:pull_if_missing)
+
+unless di.updated_by_last_action?
+  di.notifies(:redeploy, "docker_container[#{service}]")
+  di.run_action(:pull)
 end

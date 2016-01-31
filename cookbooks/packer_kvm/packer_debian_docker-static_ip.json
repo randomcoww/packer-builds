@@ -4,15 +4,19 @@
     "uid": "10000",
     "password": "password",
     "hostname": "docker01",
-    "domain": "dyn.local",
+    "domain": "static.local",
+    "search": "static.local dyn.local",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/etc/chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
     "validation_key_path": "/etc/chef/madcoww-validator.pem",
     "validation_client_name": "madcoww-validator",
     "timezone": "Etc/UTC",
-    "static_ip_f": "192.168.63.242",
-    "static_ip_b": "169.254.62.242"
+    "static_ip_f": "192.168.63.241",
+    "netmask_f": "255.255.254.0",
+    "static_ip_b": "169.254.63.241",
+    "netmask_b": "255.255.0.0",
+    "gateway_ip": "192.168.62.241"
   },
   "builders": [
     {
@@ -23,7 +27,7 @@
       "accelerator": "kvm",
 
       "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
-      "iso_checksum": "53eaad7a9121d513db1f8d9c679bc91bc7c3355d8b17789255002be954bb9b1f",
+      "iso_checksum": "da8426177a848795de08011a95cff61b4a3de1c5360b3adba2fea1af5231750b",
       "iso_checksum_type": "sha256",
 
       "http_directory": "http",
@@ -34,8 +38,8 @@
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
-
       "disk_interface": "scsi",
+
       "boot_wait": "2s",
       "qemuargs": [
         [ "-display", "none" ],
@@ -44,7 +48,7 @@
       "boot_command": [
         "<esc><wait><wait>",
 	"install auto ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_testing.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
  
         "hostname={{user `hostname`}} ",
@@ -89,21 +93,22 @@
             "bootproto": "static",
             "bridge_ports": [ "ens2" ],
             "address": "{{user `static_ip_f`}}",
-            "netmask": "255.255.0.0",
+            "netmask": "{{user `netmask_f`}}",
+	    "gateway": "{{user `gateway_ip`}}",
             "reload": false
           },
           "br1": {
             "bootproto": "static",
             "bridge_ports": [ "ens3" ],
             "address": "{{user `static_ip_b`}}",
-            "netmask": "255.255.0.0",
+            "netmask": "{{user `netmask_b`}}",
             "reload": false
           }
         },
         "resolver": {
-          "nameservers": ["192.168.63.242", "192.168.62.241"],
-          "domain": "static.local",
-          "search": "dyn.local",
+          "nameservers": ["{{user `static_ip_f`}}", "{{user `gateway_ip`}}"],
+          "domain": "{{user `domain`}}",
+          "search": "{{user `search`}}",
           "options": {
             "timeout": 2
           }

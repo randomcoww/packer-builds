@@ -32,14 +32,12 @@ docker_image service do
   notifies :redeploy, "docker_container[#{service}]", :delayed
 end
 
-## host network to allow discovery to work
 docker_container service do
-  #hostname "#{node.hostname}-#{service}"
-  network_mode 'host'
+  hostname "#{node.hostname}-#{service}"
   repo repo
   tag tag
   restart_policy 'unless-stopped'
   volumes_from service_store
-  #port ['8080:8080', '8443:8443']
+  port ['8080:8080', '8443:8443']
   action :run
 end
