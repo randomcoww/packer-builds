@@ -38,11 +38,10 @@
         [ "-drive", "if=pflash,format=raw,file=ovmf/OVMF_VARS-pure-efi.fd" ]
       ],
       "boot_command": [
-        "<wait><wait><wait><wait><wait><wait>e<wait><wait>",
-	"<del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del>",
-	"setparams 'preseed UEFI'<enter>",
-	"linux /install.amd/vmlinuz --- ",
-	"auto=true ",
+        "<wait><wait><wait><wait><wait><wait>e<wait>",
+        "<del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del>",
+        "kernel /install.amd/vmlinuz<enter>",
+        "append auto=true ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
@@ -57,8 +56,11 @@
         "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}}<enter>",
+        "tasks=standard,ssh-server,gnome-desktop ",
 
-        "initrd /install.amd/initrd.gz<wait><f10><wait>"
+        "initrd=/install.amd/initrd.gz -- ",
+        "console=tty0 console=ttyS0,115200n8",
+        "<wait><f10><wait>",
       ]
     }
   ],
@@ -66,9 +68,14 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils build-essential autofs",
-        "apt-get -y install chromium mpv youtube-dl libav-tools",
-        "mkdir /etc/chef"
+        "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils build-essential",
+        "apt-get -y install autofs chromium mpv youtube-dl libav-tools",
+        "mkdir /etc/chef",
+        "echo '/auto /etc/auto.misc --timeout=600 --ghost' >> /etc/auto.master",
+        "echo 'img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img >> /etc/auto.misc",
+        "echo 'music -fstype=nfs,rw,hard,noatime,nodiratime fs:/music >> /etc/auto.misc",
+        "echo 'video -fstype=nfs,rw,hard,noatime,nodiratime fs:/video >> /etc/auto.misc",
+        "echo 'torrent -fstype=nfs,rw,hard,noatime,nodiratime fs:/torrent >> /etc/auto.misc"
       ]
     },
     {
@@ -95,74 +102,12 @@
             "post_up": "ip addr show $IFACE | grep -q \"inet 169.254\"; while [ $? -ne 0 ]; do sleep 1; ip addr show $IFACE | grep -q \"inet 169.254\"; done",
             "reload": false
           }
-        },
-        "autofs": {
-          "/auto": {
-            "config_file": "/etc/auto.misc",
-            "master_options": [
-              "--timeout=600",
-              "--ghost"
-            ],
-            "maps": {
-              "pub": {
-                "location": "fs:/pub",
-                "fstype": "nfs",
-                "options": [
-                  "rw",
-                  "hard",
-                  "noatime",
-                  "nodiratime"
-                ]
-              },
-              "music": {
-                "location": "fs:/music",
-                "fstype": "nfs",
-                "options": [
-                  "rw",
-                  "hard",
-                  "noatime",
-                  "nodiratime"
-                ]
-              },
-              "video": {
-                "location": "fs:/video",
-                "fstype": "nfs",
-                "options": [
-                  "rw",
-                  "hard",
-                  "noatime",
-                  "nodiratime"
-                ]
-              },
-              "img": {
-                "location": "fs:/img",
-                "fstype": "nfs",
-                "options": [
-                  "rw",
-                  "hard",
-                  "noatime",
-                  "nodiratime"
-                ]
-              },
-              "torrent": {
-                "location": "fs:/torrent",
-                "fstype": "nfs",
-                "options": [
-                  "rw",
-                  "hard",
-                  "noatime",
-                  "nodiratime"
-                ]
-              }
-            }
-          }
         }
       },
       "run_list": [
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::module_hack]",
-        "recipe[network_interfaces_wrapper::debian]",
-        "recipe[autofs::attr]"
+        "recipe[network_interfaces_wrapper::debian]"
       ],
       "staging_directory": "/etc/chef"
     },
