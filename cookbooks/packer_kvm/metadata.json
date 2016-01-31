@@ -13,7 +13,7 @@
     "resolver": ">= 0.0.0",
     "network_interfaces_wrapper": ">= 0.0.0",
     "nfs_export_wrapper": ">= 0.0.0",
-    "autofs_wrapper": ">= 0.0.0"
+    "autofs": ">= 0.0.0"
   },
   "recommendations": {
   },

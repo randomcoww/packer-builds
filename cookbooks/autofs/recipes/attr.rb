@@ -1,12 +1,3 @@
-#
-# Cookbook Name:: autofs_wrapper
-# Recipe:: default
-#
-# Copyright (C) 2016 YOUR_NAME
-#
-# All rights reserved - Do Not Redistribute
-#
-
 node['autofs'].each do |path, o|
   automaster_entry path, o['config_file'] do
     options o['master_options'].join(' ')

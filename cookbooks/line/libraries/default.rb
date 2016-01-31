@@ -2,7 +2,7 @@
 # Cookbook Name:: line
 # Library:: default
 #
-# Author:: Sean OMeara <someara@chef.io>
+# Author:: Sean OMeara <someara@chef.io>                                  
 # Copyright 2012-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+#    
 
 def escape_string(string)
-  pattern = /(\+|\'|\"|\.|\*|\/|\-|\\|\(|\)|\{|\}|\^|\$|\[|\])/
-  string.gsub(pattern) { |match| '\\' + match }
-end
-
-def escape_regex(string)
-  pattern = /(\+|\'|\"|\.|\*|\/|\-|\\|\(|\)|\{|\}|\^|\$|\[|\])/
-  string.gsub(pattern) { |match| '\\' + match }
+  pattern = /(\+|\'|\"|\.|\*|\/|\-|\\|\(|\)|\{|\}|\^|\$)/
+  string.gsub(pattern){|match|"\\" + match}
 end
