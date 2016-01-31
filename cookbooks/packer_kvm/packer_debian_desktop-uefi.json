@@ -162,7 +162,8 @@
       "run_list": [
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::module_hack]",
-        "recipe[network_interfaces_wrapper::debian]"
+        "recipe[network_interfaces_wrapper::debian]",
+        "recipe[autofs::attr]"
       ],
       "staging_directory": "/etc/chef"
     },

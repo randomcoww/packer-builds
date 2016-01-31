@@ -2,7 +2,7 @@ Chef.resource :automaster_entry do
   property :mount_point, String, identity: true
   property :map, Path, identity: true
   property :master_config, Path do
-    default { '/erc/auto.master' }
+    default { '/etc/auto.master' }
   end
   property :options, String
 
