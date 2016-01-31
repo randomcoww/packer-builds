@@ -43,7 +43,7 @@
 	"setparams 'preseed UEFI'<enter>",
 	"linux /install.amd/vmlinuz --- ",
 	"auto=true ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
         "time/zone={{user `timezone`}} ",
@@ -67,7 +67,6 @@
       "type": "shell",
       "inline": [
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils build-essential autofs",
-        "tasksel install gnome-desktop --new-install",
         "apt-get -y install chromium mpv youtube-dl libav-tools",
         "mkdir /etc/chef"
       ]
