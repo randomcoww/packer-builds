@@ -40,27 +40,29 @@
       "boot_command": [
         "<wait><wait><wait><wait><wait><wait>e<wait>",
         "<del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del>",
-        "kernel /install.amd/vmlinuz<enter>",
-        "append auto=true ",
+        "serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1<enter>",
+        "terminal_input console serial<enter>",
+        "terminal_output console serial<enter>",
+
+        "kernel /install.amd/vmlinuz ",
+        "auto=true ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
-
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
         "netcfg/get_domain={{user `domain`}} ",
-
         "fb=false debconf/frontend=noninteractive ",
-
         "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
         "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
-        "passwd/user-password={{user `password`}}<enter>",
+        "passwd/user-password={{user `password`}} ",
         "tasks=standard,ssh-server,gnome-desktop ",
+        "console=tty0 console=ttyS0,115200n8 ",
+        "<enter>",
 
-        "initrd=/install.amd/initrd.gz -- ",
-        "console=tty0 console=ttyS0,115200n8",
-        "<wait><f10><wait>",
+        "initrd /install.amd/initrd.gz",
+        "<wait><f10><wait>"
       ]
     }
   ],
