@@ -46,7 +46,7 @@
 
         "kernel /install.amd/vmlinuz ",
         "auto=true ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
