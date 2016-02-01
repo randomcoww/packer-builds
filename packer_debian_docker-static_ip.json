@@ -50,7 +50,7 @@
 	"install auto ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
- 
+
         "hostname={{user `hostname`}} ",
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
@@ -63,6 +63,7 @@
         "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
+        "tasks=standard,ssh-server ",
 
         "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
       ]

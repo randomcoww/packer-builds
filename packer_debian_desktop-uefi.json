@@ -38,12 +38,12 @@
         [ "-drive", "if=pflash,format=raw,file=ovmf/OVMF_VARS-pure-efi.fd" ]
       ],
       "boot_command": [
-        "<wait><wait><wait><wait><wait><wait>e<wait>",
+        "<wait><wait><wait><wait><wait>e<wait>",
         "<del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del><del>",
 
         "linux /install.amd/vmlinuz ",
         "auto=true ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian_de.cfg ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
@@ -67,7 +67,7 @@
       "type": "shell",
       "inline": [
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils build-essential",
-        "apt-get -y install autofs chromium mpv youtube-dl libav-tools",
+        "apt-get -y install autofs chromium mpv youtube-dl libav-tools xtightvncviewer",
         "mkdir /etc/chef",
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' >> /etc/auto.master",
         "echo 'img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img >> /etc/auto.misc",
