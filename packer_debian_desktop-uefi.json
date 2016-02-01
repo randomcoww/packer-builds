@@ -67,7 +67,7 @@
       "type": "shell",
       "inline": [
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils",
-        "apt-get -y install build-essential autofs chromium mpv youtube-dl libav-tools xtightvncviewer",
+        "apt-get -y install build-essential openvpn resolvconf autofs chromium mpv youtube-dl libav-tools xtightvncviewer",
         "mkdir /etc/chef",
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' >> /etc/auto.master",
         "echo 'pub -fstype=nfs,rw,hard,noatime,nodiratime fs:/pub' >> /etc/auto.misc",
