@@ -70,10 +70,10 @@
         "apt-get -y install build-essential autofs chromium mpv youtube-dl libav-tools xtightvncviewer",
         "mkdir /etc/chef",
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' >> /etc/auto.master",
-        "echo 'img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img >> /etc/auto.misc",
-        "echo 'music -fstype=nfs,rw,hard,noatime,nodiratime fs:/music >> /etc/auto.misc",
-        "echo 'video -fstype=nfs,rw,hard,noatime,nodiratime fs:/video >> /etc/auto.misc",
-        "echo 'torrent -fstype=nfs,rw,hard,noatime,nodiratime fs:/torrent >> /etc/auto.misc"
+        "echo 'img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img' >> /etc/auto.misc",
+        "echo 'music -fstype=nfs,rw,hard,noatime,nodiratime fs:/music' >> /etc/auto.misc",
+        "echo 'video -fstype=nfs,rw,hard,noatime,nodiratime fs:/video' >> /etc/auto.misc",
+        "echo 'torrent -fstype=nfs,rw,hard,noatime,nodiratime fs:/torrent' >> /etc/auto.misc"
       ]
     },
     {
