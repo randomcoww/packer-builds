@@ -149,7 +149,6 @@
         }
       },
       "run_list": [
-        "recipe[ntp]",
         "recipe[chef-client::systemd_service]",
         "recipe[chef-client::config]"
       ]
