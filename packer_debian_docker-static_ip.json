@@ -116,7 +116,6 @@
 	}
       },
       "run_list": [
-        "recipe[ntp]",
 	"recipe[resolver]",
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::module_hack]",

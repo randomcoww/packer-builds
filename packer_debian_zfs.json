@@ -143,7 +143,7 @@
             "network": "169.254.0.0/16",
             "writeable": true,
             "sync": true,
-            "options": [ "no_subtree_check" ]
+            "options": [ "no_subtree_check", "no_root_squash" ]
           },
           "img_f": {
             "directory": "/vol/img",
@@ -169,7 +169,6 @@
         }
       },
       "run_list": [
-        "recipe[ntp]",
         "recipe[nfs_export_wrapper]",
         "recipe[network_interfaces_wrapper::module_hack]",
         "recipe[network_interfaces_wrapper::debian]"
