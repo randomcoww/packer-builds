@@ -64,7 +64,7 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils screen pigz iftop lsb-release build-essential",
+        "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils ntp screen pigz iftop lsb-release build-essential",
 	"wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
 	"dpkg -i zfsonlinux_6_all.deb",
 	"apt-get -y update",

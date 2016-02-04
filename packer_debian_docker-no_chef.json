@@ -62,7 +62,7 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils",
+        "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp",
         "mkdir /etc/chef"
       ]
     },
