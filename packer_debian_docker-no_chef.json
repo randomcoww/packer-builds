@@ -52,7 +52,6 @@
         "passwd/user-uid={{user `uid`}} ",
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
-        "tasks=standard,ssh-server ",
 
         "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
       ]
