@@ -47,7 +47,7 @@
       ],
       "boot_command": [
         "<esc><wait><wait>",
-	"install auto ",
+        "install auto ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 

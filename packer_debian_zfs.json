@@ -38,7 +38,7 @@
       ],
       "boot_command": [
         "<esc><wait><wait>",
-	"install auto ",
+        "install auto ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
@@ -65,10 +65,10 @@
       "type": "shell",
       "inline": [
         "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils ntp screen pigz iftop lsb-release build-essential",
-	"wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
-	"dpkg -i zfsonlinux_6_all.deb",
-	"apt-get -y update",
-	"apt-get -y install debian-zfs",
+        "wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
+        "dpkg -i zfsonlinux_6_all.deb",
+        "apt-get -y update",
+        "apt-get -y install debian-zfs",
         "mkdir /etc/chef"
       ]
     },
