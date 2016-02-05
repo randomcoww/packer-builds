@@ -67,7 +67,6 @@
       "type": "shell",
       "inline": [
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp build-essential openvpn resolvconf autofs",
-        "apt-get -y install kde-plasma-desktop",
         "apt-get -y install mpv youtube-dl libav-tools xtightvncviewer",
         "mkdir /etc/chef",
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' >> /etc/auto.master",
