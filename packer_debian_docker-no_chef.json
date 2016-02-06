@@ -16,18 +16,18 @@
       "accelerator": "kvm",
 
       "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
-      "iso_checksum": "da8426177a848795de08011a95cff61b4a3de1c5360b3adba2fea1af5231750b",
+      "iso_checksum": "0c94f92745b1e6821facf925a118064b727d30ba057cfd9b8897e3ed03f8d2a9",
       "iso_checksum_type": "sha256",
 
       "http_directory": "http",
       "disk_size": 20000,
+      "disk_interface": "scsi",
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
-      "disk_interface": "scsi",
 
       "boot_wait": "2s",
       "qemuargs": [
@@ -40,7 +40,6 @@
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
-        "hostname={{user `hostname`}} ",
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
         "netcfg/get_domain={{user `domain`}} ",
@@ -61,6 +60,7 @@
     {
       "type": "shell",
       "inline": [
+        "update-grub",
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp",
         "mkdir /etc/chef"
       ]

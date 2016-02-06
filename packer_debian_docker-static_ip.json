@@ -32,13 +32,13 @@
 
       "http_directory": "http",
       "disk_size": 20000,
+      "disk_interface": "scsi",
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
       "ssh_wait_timeout": "600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "/tmp/packer_build_qemu",
-      "disk_interface": "scsi",
 
       "boot_wait": "2s",
       "qemuargs": [
@@ -51,7 +51,6 @@
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
-        "hostname={{user `hostname`}} ",
         "time/zone={{user `timezone`}} ",
         "netcfg/get_hostname={{user `hostname`}} ",
         "netcfg/get_domain={{user `domain`}} ",
@@ -72,6 +71,7 @@
     {
       "type": "shell",
       "inline": [
+        "update-grub",
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp",
         "mkdir /etc/chef"
       ]

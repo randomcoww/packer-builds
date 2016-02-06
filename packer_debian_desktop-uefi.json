@@ -22,6 +22,7 @@
 
       "http_directory": "http",
       "disk_size": 20000,
+      "disk_interface": "scsi",
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
@@ -66,6 +67,7 @@
     {
       "type": "shell",
       "inline": [
+        "update-grub",
         "apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp build-essential openvpn resolvconf autofs",
         "apt-get -y install mpv youtube-dl libav-tools xtightvncviewer",
         "mkdir /etc/chef",
