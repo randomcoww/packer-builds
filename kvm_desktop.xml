@@ -1,8 +1,8 @@
 <domain type='kvm'>
   <name>__name__</name>
-  <memory unit='KiB'>4194304</memory>
-  <currentMemory unit='KiB'>4194304</currentMemory>
-  <vcpu placement='static'>4</vcpu>
+  <memory unit='GiB'>12</memory>
+  <currentMemory unit='GiB'>12</currentMemory>
+  <vcpu placement='static'>5</vcpu>
   <os>
     <type arch='x86_64' machine='pc'>hvm</type>
     <boot dev='hd'/>
@@ -15,7 +15,7 @@
     <pae/>
   </features>
   <cpu mode='host-passthrough'>
-    <topology sockets='1' cores='4' threads='1'/>
+    <topology sockets='1' cores='5' threads='1'/>
   </cpu>
   <clock offset='utc'/>
   <on_poweroff>destroy</on_poweroff>
