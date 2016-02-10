@@ -62,6 +62,7 @@
     {
       "type": "shell",
       "inline": [
+        "echo 'vm.swappiness = 0' >> /etc/sysctl.conf",
         "update-grub",
         "apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils ntp screen pigz iftop lsb-release build-essential",
         "wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
