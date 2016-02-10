@@ -52,7 +52,7 @@
         "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
 
-        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 elevator=noop <enter>"
       ]
     }
   ],
