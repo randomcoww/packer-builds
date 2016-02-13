@@ -152,8 +152,7 @@
       "run_list": [
         "recipe[chef-client::systemd_service]",
         "recipe[chef-client::config]",
-        "recipe[docker_wrapper::bind]",
-        "recipe[docker_wrapper::ssh_gateway]"
+        "role[ns_core]"
       ]
     },
     {
