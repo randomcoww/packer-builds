@@ -37,7 +37,7 @@
 
       "ssh_username": "root",
       "ssh_key_path": "files/packer.key",
-      "ssh_wait_timeout": "600s",
+      "ssh_wait_timeout": "3600s",
       "shutdown_command": "shutdown -P now",
       "output_directory": "{{user `output_directory`}}",
 
@@ -152,7 +152,7 @@
       "run_list": [
         "recipe[chef-client::systemd_service]",
         "recipe[chef-client::config]",
-        "role[ns_core]"
+        "role[docker_containers]"
       ]
     },
     {
