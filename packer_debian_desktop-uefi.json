@@ -126,6 +126,7 @@
       "encrypted_data_bag_secret_path": "{{user `encrypted_data_bag_secret_path`}}",
       "validation_client_name": "{{user `validation_client_name`}}",
       "validation_key_path": "{{user `validation_key_path`}}",
+      "staging_directory": "/etc/chef",
       "run_list": [
         "recipe[docker_wrapper::service]",
         "recipe[vpn_config::default]"
