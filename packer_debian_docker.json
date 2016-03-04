@@ -142,6 +142,7 @@
       "node_name": "{{user `hostname`}}",
       "skip_clean_node": true,
       "skip_clean_client": true,
+      "client_key": "/etc/chef/client.pem",
       "validation_client_name": "{{user `validation_client_name`}}",
       "json": {
         "chef_client": {
