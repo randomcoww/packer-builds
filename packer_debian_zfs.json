@@ -3,7 +3,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs-fs101",
+    "hostname": "zfs101",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
     "static_ip_b": "169.254.127.20",
