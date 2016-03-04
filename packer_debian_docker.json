@@ -107,7 +107,7 @@
             "bridge_ports": [ "ens2" ],
             "address": "{{user `static_ip_f`}}",
             "netmask": "{{user `netmask_f`}}",
-	    "gateway": "{{user `gateway_ip`}}",
+            "gateway": "{{user `gateway_ip`}}",
             "reload": false
           },
           "br1": {
@@ -125,10 +125,10 @@
           "options": {
             "timeout": 2
           }
-	}
+	      }
       },
       "run_list": [
-	"recipe[resolver]",
+        "recipe[resolver]",
         "recipe[docker_wrapper::service]",
         "recipe[network_interfaces_wrapper::module_hack]",
         "recipe[network_interfaces_wrapper::debian]"
