@@ -27,7 +27,6 @@
 
       "http_directory": "http",
       "disk_size": 40000,
-      "disk_interface": "scsi",
 
       "ssh_username": "{{user `user`}}",
       "ssh_password": "{{user `password`}}",
@@ -122,7 +121,8 @@
       },
       "run_list": [
         "recipe[network_interfaces_wrapper::module_hack]",
-        "recipe[network_interfaces_wrapper::debian]"
+        "recipe[network_interfaces_wrapper::debian]",
+        "recipe[docker_wrapper::service]"
       ]
     },
     {
@@ -135,7 +135,6 @@
       "validation_key_path": "{{user `validation_key_path`}}",
       "staging_directory": "/etc/chef",
       "run_list": [
-        "recipe[docker_wrapper::service]",
         "recipe[vpn_config::default]"
       ]
     }
