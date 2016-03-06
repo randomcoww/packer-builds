@@ -33,6 +33,7 @@
 
       "http_directory": "http",
       "disk_size": 20000,
+      "disk_interface": "virtio-scsi",
 
       "ssh_username": "{{user `user`}}",
       "ssh_password": "{{user `password`}}",
