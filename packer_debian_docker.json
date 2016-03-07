@@ -43,6 +43,7 @@
 
       "boot_wait": "2s",
       "qemuargs": [
+        [ "-cpu", "host" ],
         [ "-display", "none" ],
         [ "-m", "1024M" ]
       ],

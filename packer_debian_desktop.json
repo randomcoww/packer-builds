@@ -38,6 +38,7 @@
 
       "boot_wait": "2s",
       "qemuargs": [
+        [ "-cpu", "host" ],
         [ "-display", "none" ],
         [ "-m", "2048M" ],
         [ "-drive", "if=virtio,id=drive0,file={{user `output_directory`}}/packer-{{user `hostname`}},format=raw" ],
