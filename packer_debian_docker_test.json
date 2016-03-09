@@ -1,0 +1,94 @@
+{
+  "variables": {
+    "user": "randomcoww",
+    "uid": "10000",
+    "password": "password",
+    "hostname": "docker01",
+    "domain": "static.local",
+    "search": "static.local dyn.local",
+    "timezone": "Etc/UTC",
+    "output_directory": "/img/build/packer_build_qemu"
+  },
+  "builders": [
+    {
+      "name": "{{user `hostname`}}",
+
+      "type": "qemu",
+      "format": "raw",
+      "accelerator": "kvm",
+
+      "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
+      "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA256SUMS",
+      "iso_checksum_type": "sha256",
+
+      "http_directory": "http",
+      "disk_size": 20000,
+      "disk_interface": "virtio-scsi",
+
+      "ssh_username": "{{user `user`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_wait_timeout": "3600s",
+      "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
+      "output_directory": "{{user `output_directory`}}",
+
+      "boot_wait": "2s",
+      "qemuargs": [
+        [ "-cpu", "host" ],
+        [ "-display", "none" ],
+        [ "-m", "1024M" ]
+      ],
+      "boot_command": [
+        "<esc><wait><wait>",
+        "install auto ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
+        "debian-installer=en_US locale=en_US keymap=us ",
+
+        "time/zone={{user `timezone`}} ",
+        "netcfg/get_hostname={{user `hostname`}} ",
+        "netcfg/get_domain={{user `domain`}} ",
+
+        "fb=false debconf/frontend=noninteractive ",
+
+        "passwd/username={{user `user`}} ",
+        "passwd/user-fullname={{user `user`}} ",
+        "passwd/user-uid={{user `uid`}} ",
+        "passwd/user-password-again={{user `password`}} ",
+        "passwd/user-password={{user `password`}} ",
+
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 elevator=noop <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
+        "sudo update-grub",
+        "sudo apt-get -y install curl wget git cgroup-bin bridge-utils ntp"
+      ]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks"],
+      "json": {
+        "network_interfaces": {
+          "ens2": {
+            "bootproto": "manual",
+            "reload": false
+          },
+          "br0": {
+            "bootproto": "dhcp",
+            "bridge_ports": [ "ens2" ],
+            "reload": false
+          }
+        }
+      },
+      "run_list": [
+        "recipe[docker_wrapper::service]",
+        "recipe[network_interfaces_wrapper::module_hack]",
+        "recipe[network_interfaces_wrapper::debian]"
+      ]
+    }
+  ]
+}
