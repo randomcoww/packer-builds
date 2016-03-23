@@ -7,7 +7,8 @@
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
     "static_ip_b": "169.254.127.20",
-    "netmask_b": "255.255.0.0"
+    "netmask_b": "255.255.0.0",
+    "output_directory": "/img/build/packer_build_qemu"
   },
   "builders": [
     {
@@ -29,7 +30,7 @@
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "3600s",
       "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
-      "output_directory": "/tmp/packer_build_qemu",
+      "output_directory": "{{user `output_directory`}}",
 
       "boot_wait": "2s",
       "qemuargs": [
