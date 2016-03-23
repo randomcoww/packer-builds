@@ -6,7 +6,7 @@
     "hostname": "desktop01",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
-    "output_directory": "/tmp/packer_build_qemu",
+    "output_directory": "/img/build/packer_build_qemu",
     "chef_environment": "testing",
     "encrypted_data_bag_secret_path": "/home/randomcoww/.chef/encrypted_data_bag_secret",
     "server_url": "https://api.opscode.com/organizations/madcoww",
@@ -27,7 +27,6 @@
 
       "http_directory": "http",
       "disk_size": 40000,
-      "disk_interface": "virtio-scsi",
 
       "ssh_username": "{{user `user`}}",
       "ssh_password": "{{user `password`}}",
@@ -80,6 +79,7 @@
         "sudo update-grub",
 
         "sudo apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp build-essential openvpn resolvconf autofs",
+        "sudo apt-get -y install xorg alsa-utils pulseaudio i3 rxvt-unicode",
         "sudo apt-get -y install mpv youtube-dl libav-tools xtightvncviewer htop feh ncmpcpp screen tmux cups",
         "sudo apt-get -y install fonts-takao fonts-takao-gothic fonts-takao-mincho",
 
