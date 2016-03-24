@@ -7,11 +7,23 @@
     <hugepages/>
     <nosharepages/>
   </memoryBacking>
+  <sysinfo type='smbios'>
+    <bios>
+      <entry name='vendor'>Supermicro</entry>
+    </bios>
+    <system>
+      <entry name='manufacturer'>Supermicro</entry>
+    </system>
+    <baseBoard>
+      <entry name='manufacturer'>Supermicro</entry>
+    </baseBoard>
+  </sysinfo>
   <os>
     <type arch='x86_64' machine='pc'>hvm</type>
     <boot dev='hd'/>
     <loader readonly='yes' type='pflash'>/img/kvm/firmware/usr/share/edk2.git/ovmf-x64/OVMF-pure-efi.fd</loader>
     <nvram template='/img/kvm/firmware/usr/share/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd'></nvram>
+    <smbios mode='sysinfo'/>
   </os>
   <features>
     <acpi/>
