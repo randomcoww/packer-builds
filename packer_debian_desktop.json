@@ -81,7 +81,7 @@
         "sudo apt-get -y install curl wget git cgroup-bin nfs-client avahi-autoipd bridge-utils ntp build-essential openvpn resolvconf autofs",
         "sudo apt-get -y install xorg alsa-utils pulseaudio i3 i3status rxvt-unicode compton iceweasel",
         "sudo apt-get -y install mpv youtube-dl libav-tools xtightvncviewer htop feh ncmpcpp screen tmux cups",
-        "sudo apt-get -y install fonts-takao fonts-takao-gothic fonts-takao-mincho",
+        "sudo apt-get -y install fonts-dejavu fonts-takao fonts-takao-gothic fonts-takao-mincho",
 
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' | sudo tee -a /etc/auto.master",
         "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/common/autofs_auto.misc | sudo tee /etc/auto.misc",
