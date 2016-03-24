@@ -84,16 +84,13 @@
         "sudo apt-get -y install fonts-takao fonts-takao-gothic fonts-takao-mincho",
 
         "echo '/auto /etc/auto.misc --timeout=600 --ghost' | sudo tee -a /etc/auto.master",
-        "echo 'pub -fstype=nfs,rw,hard,noatime,nodiratime fs:/pub' | sudo tee -a /etc/auto.misc",
-        "echo 'img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img' | sudo tee -a /etc/auto.misc",
-        "echo 'music -fstype=nfs,rw,hard,noatime,nodiratime fs:/music' | sudo tee -a /etc/auto.misc",
-        "echo 'video -fstype=nfs,rw,hard,noatime,nodiratime fs:/video' | sudo tee -a /etc/auto.misc",
-        "echo 'torrent -fstype=nfs,rw,hard,noatime,nodiratime fs:/torrent' | sudo tee -a /etc/auto.misc",
+        "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/common/autofs_auto.misc | sudo tee /etc/auto.misc",
+        "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/desktop/pulseaudio_daemon.conf | sudo tee -a /etc/pulse/daemon.conf",
 
-        "echo 'resample-method = soxr-vhq' | sudo tee -a /etc/pulse/daemon.conf",
-        "echo 'default-sample-format = s24le' | sudo tee -a /etc/pulse/daemon.conf",
-        "echo 'default-sample-rate = 192000' | sudo tee -a /etc/pulse/daemon.conf",
-        "echo 'alternate-sample-rate = 176200' | sudo tee -a /etc/pulse/daemon.conf"
+        "mkdir -p ~/.config/i3",
+        "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/desktop/xorg_.Xdefaults -o ~/.Xdefaults",
+        "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/desktop/xorg_.xinitrc -o ~/.xinitrc",
+        "curl https://raw.githubusercontent.com/randomcoww/packer-kvm_provision/master/files/config/desktop/i3_config -o ~/.config/i3/config"
       ]
     },
     {
