@@ -71,7 +71,7 @@
         "sudo dpkg -i zfsonlinux_6_all.deb",
         "sudo apt-get -y update",
         "sudo apt-get -y install debian-zfs",
-	"echo '0 3 * * 1 zpool scrub `zpool list |tail -1 |cut -d' ' -f1`' | sudo crontab -"
+        "echo '0 3 * * 1 zpool scrub `zpool list |tail -1 |cut -d' ' -f1`' | sudo crontab -"
       ]
     },
     {
