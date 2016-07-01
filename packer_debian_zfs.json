@@ -1,12 +1,16 @@
 {
   "variables": {
+    "debian_version": "8.5.0",
+    "zol_version": "8",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs101",
+    "hostname": "zfs204",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
-    "static_ip_b": "169.254.127.20",
+    "static_ip_f": "192.168.63.21",
+    "netmask_f": "255.255.254.0",
+    "static_ip_b": "169.254.127.21",
     "netmask_b": "255.255.0.0",
     "output_directory": "/img/build/packer_build_qemu"
   },
@@ -18,8 +22,8 @@
       "format": "raw",
       "accelerator": "kvm",
 
-      "iso_url": "http://cdimage.debian.org/debian-cd/8.4.0/amd64/iso-cd/debian-8.4.0-amd64-netinst.iso",
-      "iso_checksum_url": "http://cdimage.debian.org/debian-cd/8.4.0/amd64/iso-cd/SHA256SUMS",
+      "iso_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version`}}/amd64/iso-cd/debian-{{user `debian_version`}}-amd64-netinst.iso",
+      "iso_checksum_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version`}}/amd64/iso-cd/SHA256SUMS",
       "iso_checksum_type": "sha256",
 
       "http_directory": "http",
@@ -67,11 +71,11 @@
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
         "sudo update-grub",
         "sudo apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils ntp screen pigz iftop lsb-release build-essential",
-        "wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb",
-        "sudo dpkg -i zfsonlinux_6_all.deb",
+        "wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_{{user `zol_version`}}_all.deb",
+        "sudo dpkg -i zfsonlinux_{{user `zol_version`}}_all.deb || sudo apt-get install -f",
+        "sudo gpg --quiet --with-fingerprint /etc/apt/trusted.gpg.d/zfsonlinux.gpg",
         "sudo apt-get -y update",
-        "sudo apt-get -y install debian-zfs",
-        "echo '0 3 * * 1 zpool scrub `zpool list |tail -1 |cut -d\" \" -f1`' | sudo crontab -"
+        "sudo apt-get -y install debian-zfs"
       ]
     },
     {
@@ -81,6 +85,12 @@
         "network_interfaces": {
           "eth0": {
             "bootproto": "dhcp",
+            "reload": false
+          },
+          "eth0:0": {
+            "bootproto": "static",
+            "address": "{{user `static_ip_f`}}",
+            "netmask": "{{user `netmask_f`}}",
             "reload": false
           },
           "eth1": {
