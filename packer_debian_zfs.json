@@ -5,13 +5,8 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs204",
+    "hostname": "zfs205",
     "domain": "dyn.local",
-    "timezone": "Etc/UTC",
-    "static_ip_f": "192.168.63.21",
-    "netmask_f": "255.255.254.0",
-    "static_ip_b": "169.254.127.21",
-    "netmask_b": "255.255.0.0",
     "output_directory": "/img/build/packer_build_qemu"
   },
   "builders": [
@@ -48,7 +43,7 @@
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
-        "time/zone={{user `timezone`}} ",
+        "time/zone=Etc/UTC ",
         "netcfg/get_hostname={{user `hostname`}} ",
         "netcfg/get_domain={{user `domain`}} ",
 
@@ -75,116 +70,18 @@
         "sudo dpkg -i zfsonlinux_{{user `zol_version`}}_all.deb || sudo apt-get install -f",
         "sudo gpg --quiet --with-fingerprint /etc/apt/trusted.gpg.d/zfsonlinux.gpg",
         "sudo apt-get -y update",
-        "sudo apt-get -y install debian-zfs"
+        "sudo apt-get -y install debian-zfs",
       ]
     },
     {
-      "type": "chef-solo",
-      "cookbook_paths": ["cookbooks"],
-      "json": {
-        "network_interfaces": {
-          "eth0": {
-            "bootproto": "dhcp",
-            "reload": false
-          },
-          "eth0:0": {
-            "bootproto": "static",
-            "address": "{{user `static_ip_f`}}",
-            "netmask": "{{user `netmask_f`}}",
-            "reload": false
-          },
-          "eth1": {
-            "bootproto": "static",
-            "address": "{{user `static_ip_b`}}",
-            "netmask": "{{user `netmask_b`}}",
-            "reload": false
-          }
-        },
-        "nfs_exports": {
-          "nfs4_root": {
-            "directory": "/vol",
-            "network": "169.254.0.0/16",
-            "writeable": false,
-            "sync": true,
-            "options": [ "fsid=0", "no_subtree_check" ]
-          },
-          "music_b": {
-            "directory": "/vol/music",
-            "network": "169.254.0.0/16",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "music_f": {
-            "directory": "/vol/music",
-            "network": "192.168.62.0/23",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "video_b": {
-            "directory": "/vol/video",
-            "network": "169.254.0.0/16",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "video_f": {
-            "directory": "/vol/video",
-            "network": "192.168.62.0/23",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "torrent_b": {
-            "directory": "/vol/torrent",
-            "network": "169.254.0.0/16",
-            "writeable": true,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "torrent_f": {
-            "directory": "/vol/torrent",
-            "network": "192.168.62.0/23",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "img_b": {
-            "directory": "/vol/img",
-            "network": "169.254.0.0/16",
-            "writeable": true,
-            "sync": true,
-            "options": [ "no_subtree_check", "no_root_squash" ]
-          },
-          "img_f": {
-            "directory": "/vol/img",
-            "network": "192.168.62.0/23",
-            "writeable": false,
-            "sync": true,
-            "options": [ "no_subtree_check" ]
-          },
-          "pub_b": {
-            "directory": "/vol/pub",
-            "network": "169.254.0.0/16",
-            "writeable": true,
-            "sync": true,
-            "options": [ "no_subtree_check", "no_root_squash" ]
-          },
-          "pub_f": {
-            "directory": "/vol/pub",
-            "network": "192.168.62.0/23",
-            "writeable": true,
-            "sync": true,
-            "options": [ "no_subtree_check", "no_root_squash" ]
-          }
-        }
-      },
-      "run_list": [
-        "recipe[nfs_export_wrapper]",
-        "recipe[network_interfaces_wrapper::module_hack]",
-        "recipe[network_interfaces_wrapper::debian]"
-      ]
+      "type": "file",
+      "source": "files/config/zfs/network-interfaces",
+      "destination": "/etc/network/interfaces.d/net"
+    },
+    {
+      "type": "file",
+      "source": "files/config/zfs/nfs-exports",
+      "destination": "/etc/exports"
     }
   ]
 }

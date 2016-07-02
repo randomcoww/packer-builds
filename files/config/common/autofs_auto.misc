@@ -1,5 +1,0 @@
-pub -fstype=nfs,rw,hard,noatime,nodiratime fs:/pub
-img -fstype=nfs,rw,hard,noatime,nodiratime fs:/img
-music -fstype=nfs,rw,hard,noatime,nodiratime fs:/music
-video -fstype=nfs,rw,hard,noatime,nodiratime fs:/video
-torrent -fstype=nfs,rw,hard,noatime,nodiratime fs:/torrent

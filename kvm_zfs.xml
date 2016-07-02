@@ -24,6 +24,7 @@
       <source file='/img/kvm/__name__.img'/>
       <target dev='sda' bus='scsi'/>
     </disk>
+    <controller type='usb' index='0' model='none'/>
     <controller type='scsi' index='0' model='virtio-scsi'/>
     <interface type='bridge'>
       <source bridge='br0'/>
