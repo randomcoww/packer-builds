@@ -1,1 +1,3 @@
 Berksfile.lock
+cookbooks/*
+packer_cache/*
