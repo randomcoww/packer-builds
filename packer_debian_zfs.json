@@ -62,14 +62,20 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "files/config/zfs/network-interfaces",
-      "destination": "/tmp/network-interfaces"
+      "source": "files/config/zfs/10-eth0.network",
+      "destination": "/tmp/10-eth0.network"
+    },
+    {
+      "type": "file",
+      "source": "files/config/zfs/10-eth1.network",
+      "destination": "/tmp/10-eth1.network"
     },
     {
       "type": "file",
       "source": "files/config/zfs/nfs-exports",
       "destination": "/tmp/nfs-exports"
     },
+
     {
       "type": "shell",
       "inline": [
@@ -81,8 +87,13 @@
         "sudo gpg --quiet --with-fingerprint /etc/apt/trusted.gpg.d/zfsonlinux.gpg",
         "sudo apt-get -y update",
         "sudo apt-get -y install debian-zfs",
-        "sudo mv /tmp/network-interfaces /etc/network/interfaces.d/net",
-        "sudo mv /tmp/nfs-exports /etc/exports"
+        "sudo mv /tmp/*.network /etc/systemd/network/",
+        "sudo mv /tmp/nfs-exports /etc/exports",
+
+        "sudo systemctl enable systemd-resolved",
+        "sudo systemctl enable systemd-networkd",
+        "sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf",
+        "sudo systemctl disable networking"
       ]
     }
   ]
