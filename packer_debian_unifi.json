@@ -61,7 +61,7 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "files/config/unifi/10-eth0.network",
+      "source": "files/config/unifi/10-ens2.network",
       "destination": "/tmp/10-eth0.network"
     },
     {
