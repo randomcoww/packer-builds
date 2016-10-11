@@ -3,7 +3,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "unifi01",
+    "hostname": "unifi",
     "domain": "dyn.local",
     "timezone": "Etc/UTC",
     "output_directory": "/img/build/packer_build_qemu"
