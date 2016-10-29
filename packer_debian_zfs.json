@@ -6,7 +6,7 @@
     "uid": "10000",
     "password": "password",
     "hostname": "zfs205",
-    "domain": "dyn.local",
+    "domain": "dyn.lan",
     "output_directory": "/img/build/packer_build_qemu"
   },
   "builders": [
