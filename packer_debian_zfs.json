@@ -2,16 +2,17 @@
   "variables": {
     "debian_version": "8.6.0",
     "zol_version": "8",
+    "instance": "1",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs2",
+    "hostname": "zfs",
     "domain": "local",
     "output_directory": "/img/build/packer_build_qemu"
   },
   "builders": [
     {
-      "name": "{{user `hostname`}}",
+      "name": "{{user `hostname`}}-{{user `instance`}}",
 
       "type": "qemu",
       "format": "raw",
@@ -44,7 +45,7 @@
         "debian-installer=en_US locale=en_US keymap=us ",
 
         "time/zone=Etc/UTC ",
-        "netcfg/get_hostname={{user `hostname`}} ",
+        "netcfg/get_hostname={{user `hostname`}}-{{user `instance`}} ",
         "netcfg/get_domain={{user `domain`}} ",
 
         "fb=false debconf/frontend=noninteractive ",
@@ -62,12 +63,12 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "files/config/zfs/10-eth0.network",
+      "source": "files/config/zfs/{{user `instance`}}/10-eth0.network",
       "destination": "/tmp/10-eth0.network"
     },
     {
       "type": "file",
-      "source": "files/config/zfs/10-eth1.network",
+      "source": "files/config/zfs/{{user `instance`}}/10-eth1.network",
       "destination": "/tmp/10-eth1.network"
     },
     {
