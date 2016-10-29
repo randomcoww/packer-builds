@@ -1,12 +1,12 @@
 {
   "variables": {
-    "debian_version": "8.5.0",
+    "debian_version": "8.6.0",
     "zol_version": "8",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs205",
-    "domain": "dyn.lan",
+    "hostname": "zfs2",
+    "domain": "local",
     "output_directory": "/img/build/packer_build_qemu"
   },
   "builders": [
