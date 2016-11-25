@@ -1,3 +1,2 @@
-Berksfile.lock
-cookbooks/*
-packer_cache/*
+output-qemu
+packer_cache
