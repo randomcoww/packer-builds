@@ -1,51 +1,42 @@
 {
   "variables": {
-    "debian_version": "8.6.0",
-    "zol_version": "8",
     "instance": "1",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
     "hostname": "zfs",
-    "domain": "local",
-    "output_directory": "/img/build/packer_build_qemu"
+    "domain": "lan",
+    "timezone": "Etc/UTC"
   },
   "builders": [
     {
-      "name": "{{user `hostname`}}-{{user `instance`}}",
-
       "type": "qemu",
+      "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
+      "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA256SUMS",
+      "iso_checksum_type": "sha256",
+      "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
+
       "format": "raw",
       "accelerator": "kvm",
-
-      "iso_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version`}}/amd64/iso-cd/debian-{{user `debian_version`}}-amd64-netinst.iso",
-      "iso_checksum_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version`}}/amd64/iso-cd/SHA256SUMS",
-      "iso_checksum_type": "sha256",
-
       "http_directory": "http",
       "disk_size": 20000,
       "disk_interface": "virtio-scsi",
+      "net_device": "virtio-net",
+
+      "headless": true,
+      "vm_name": "{{user `hostname`}}-{{user `instance`}}",
 
       "ssh_username": "{{user `user`}}",
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "3600s",
-      "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
-      "output_directory": "{{user `output_directory`}}",
-
-      "boot_wait": "2s",
-      "qemuargs": [
-        [ "-cpu", "host" ],
-        [ "-display", "none" ],
-        [ "-m", "1024M" ]
-      ],
       "boot_command": [
         "<esc><wait><wait>",
         "install auto ",
         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian.cfg ",
         "debian-installer=en_US locale=en_US keymap=us ",
 
-        "time/zone=Etc/UTC ",
-        "netcfg/get_hostname={{user `hostname`}}-{{user `instance`}} ",
+        "time/zone={{user `timezone`}} ",
+        "netcfg/get_hostname={{user `hostname`}} ",
         "netcfg/get_domain={{user `domain`}} ",
 
         "fb=false debconf/frontend=noninteractive ",
@@ -53,41 +44,39 @@
         "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
         "passwd/user-uid={{user `uid`}} ",
-        "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
+        "passwd/user-password-again={{user `password`}} ",
 
-        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 <enter>"
+        "initrd=/install/initrd.gz -- console=ttyS0,115200n8 elevator=noop <enter>"
       ]
     }
   ],
   "provisioners": [
     {
       "type": "file",
-      "source": "files/config/zfs/{{user `instance`}}/10-eth0.network",
-      "destination": "/tmp/10-eth0.network"
+      "source": "files/config/zfs/{{user `instance`}}/10-ens2.network",
+      "destination": "/tmp/10-ens2.network"
     },
     {
       "type": "file",
-      "source": "files/config/zfs/{{user `instance`}}/10-eth1.network",
-      "destination": "/tmp/10-eth1.network"
+      "source": "files/config/zfs/{{user `instance`}}/10-ens3.network",
+      "destination": "/tmp/10-ens3.network"
     },
     {
       "type": "file",
       "source": "files/config/zfs/nfs-exports",
       "destination": "/tmp/nfs-exports"
     },
-
     {
       "type": "shell",
       "inline": [
+        "echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf",
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
         "sudo update-grub",
-        "sudo apt-get -y install curl wget cgroup-bin nfs-server avahi-autoipd bridge-utils ntp screen pigz iftop lsb-release build-essential",
-        "wget http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_{{user `zol_version`}}_all.deb",
-        "sudo dpkg -i zfsonlinux_{{user `zol_version`}}_all.deb || sudo apt-get install -fy",
-        "sudo gpg --quiet --with-fingerprint /etc/apt/trusted.gpg.d/zfsonlinux.gpg",
+        "echo deb http://ftp.debian.org/debian stretch contrib | sudo tee -a /etc/apt/sources.list.d/contrib.list",
         "sudo apt-get -y update",
-        "sudo apt-get -y install debian-zfs",
+        "sudo apt-get -y install linux-headers-$(uname -r)",
+        "sudo apt-get -y install zfs-dkms zfsutils-linux nfs-kernel-server ntp",
         "sudo mv /tmp/*.network /etc/systemd/network/",
         "sudo mv /tmp/nfs-exports /etc/exports",
 

@@ -1,41 +1,34 @@
 {
   "variables": {
+    "instance": "1",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
     "hostname": "unifi",
-    "domain": "local",
-    "timezone": "Etc/UTC",
-    "output_directory": "/img/build/packer_build_qemu"
+    "domain": "lan",
+    "timezone": "Etc/UTC"
   },
   "builders": [
     {
-      "name": "{{user `hostname`}}",
-
       "type": "qemu",
-      "format": "raw",
-      "accelerator": "kvm",
-
       "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
       "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA256SUMS",
       "iso_checksum_type": "sha256",
+      "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
 
+      "format": "raw",
+      "accelerator": "kvm",
       "http_directory": "http",
       "disk_size": 20000,
       "disk_interface": "virtio-scsi",
+      "net_device": "virtio-net",
+
+      "headless": true,
+      "vm_name": "{{user `hostname`}}-{{user `instance`}}",
 
       "ssh_username": "{{user `user`}}",
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "3600s",
-      "shutdown_command": "sudo bash -c 'rm /etc/sudoers.d/00_provisioning_temp && shutdown -P now'",
-      "output_directory": "{{user `output_directory`}}",
-
-      "boot_wait": "2s",
-      "qemuargs": [
-        [ "-cpu", "host" ],
-        [ "-display", "none" ],
-        [ "-m", "1024M" ]
-      ],
       "boot_command": [
         "<esc><wait><wait>",
         "install auto ",
@@ -51,8 +44,8 @@
         "passwd/username={{user `user`}} ",
         "passwd/user-fullname={{user `user`}} ",
         "passwd/user-uid={{user `uid`}} ",
-        "passwd/user-password-again={{user `password`}} ",
         "passwd/user-password={{user `password`}} ",
+        "passwd/user-password-again={{user `password`}} ",
 
         "initrd=/install/initrd.gz -- console=ttyS0,115200n8 elevator=noop <enter>"
       ]
@@ -67,10 +60,11 @@
     {
       "type": "shell",
       "inline": [
+        "echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf",
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
         "sudo update-grub",
         "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50",
-	"echo deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti | sudo tee -a /etc/apt/sources.list.d/100-ubnt.list",
+        "echo deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti | sudo tee -a /etc/apt/sources.list.d/100-ubnt.list",
         "sudo apt-get -y update",
         "sudo apt-get -y install unifi ntp",
         "sudo mv /tmp/*.network /etc/systemd/network/",
