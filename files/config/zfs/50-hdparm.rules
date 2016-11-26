@@ -1,0 +1,1 @@
+ACTION=="add|change", KERNEL=="sd*", RUN+="/sbin/hdparm -B 127 -S 241 /dev/%k"

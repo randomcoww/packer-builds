@@ -20,7 +20,7 @@
       "accelerator": "kvm",
       "http_directory": "http",
       "disk_size": 20000,
-      "disk_interface": "virtio-scsi",
+      "disk_interface": "virtio",
       "net_device": "virtio-net",
 
       "headless": true,
@@ -64,8 +64,13 @@
     },
     {
       "type": "file",
+      "source": "files/config/zfs/50-hdparm.rules",
+      "destination": "/tmp/50-hdparm.rules"
+    },
+    {
+      "type": "file",
       "source": "files/config/zfs/nfs-exports",
-      "destination": "/tmp/nfs-exports"
+      "destination": "/tmp/exports"
     },
     {
       "type": "shell",
@@ -78,7 +83,8 @@
         "sudo apt-get -y install linux-headers-$(uname -r)",
         "sudo apt-get -y install zfs-dkms zfsutils-linux nfs-kernel-server ntp",
         "sudo mv /tmp/*.network /etc/systemd/network/",
-        "sudo mv /tmp/nfs-exports /etc/exports",
+        "sudo mv /tmp/*.rules /etc/udev/rules.d/",
+        "sudo mv /tmp/exports /etc/",
 
         "sudo systemctl enable systemd-resolved",
         "sudo systemctl enable systemd-networkd",
