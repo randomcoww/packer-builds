@@ -1,7 +1,7 @@
 <domain type='kvm'>
   <name>__name__</name>
-  <memory unit='GiB'>8</memory>
-  <currentMemory unit='GiB'>8</currentMemory>
+  <memory unit='GiB'>12</memory>
+  <currentMemory unit='GiB'>12</currentMemory>
   <memoryBacking>
     <hugepages/>
   </memoryBacking>
@@ -66,13 +66,13 @@
       <source file='/img/kvm/__name__.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
-    <controller type='usb' model='none'/>
     <interface type='bridge'>
       <mac address='52:54:00:ac:da:f3'/>
       <source bridge='br0'/>
       <model type='virtio-net'/>
     </interface>
     <graphics type='vnc'/>
+    <sound model='usb'>
     <video>
       <model type='qxl'/>
     </video>
