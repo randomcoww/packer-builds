@@ -4,7 +4,6 @@
   <currentMemory unit='GiB'>12</currentMemory>
   <memoryBacking>
     <hugepages/>
-    <nosharepages/>
   </memoryBacking>
   <vcpu placement='static'>4</vcpu>
   <iothreads>1</iothreads>
