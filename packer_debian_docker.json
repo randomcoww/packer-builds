@@ -1,6 +1,6 @@
 {
   "variables": {
-    "instance": "router",
+    "instance": "nftables",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
@@ -60,14 +60,14 @@
     {
       "type": "file",
       "source": "files/config/docker/systemd",
-      "destination": "/tmp/systemd"
+      "destination": "/tmp/system"
     },
     {
       "type": "shell",
       "inline": [
         "echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf",
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
-        "echo blacklist iptable-nat | sudo tee -a /etc/modprobe.d/blacklist.conf",
+        "echo blacklist iptable_nat | sudo tee -a /etc/modprobe.d/iptables-blacklist.conf",
         "sudo update-initramfs -u",
         "sudo update-grub",
         "sudo apt-get -y install apt-transport-https ca-certificates gnupg2",
@@ -76,7 +76,7 @@
         "sudo apt-get -y update",
         "sudo sudo apt-get -y install docker-engine ntp",
         "sudo mv /tmp/network/* /etc/systemd/network/",
-        "sudo mv /tmp/systemd/* /etc/systemd/system/",
+        "sudo mv /tmp/system/* /etc/systemd/system/",
 
         "sudo systemctl enable systemd-resolved",
         "sudo systemctl enable systemd-networkd",
