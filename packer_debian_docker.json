@@ -1,10 +1,10 @@
 {
   "variables": {
-    "instance": "1",
+    "instance": "router",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "unifi",
+    "hostname": "docker",
     "domain": "lan",
     "timezone": "Etc/UTC"
   },
@@ -58,17 +58,25 @@
       "destination": "/tmp/network"
     },
     {
+      "type": "file",
+      "source": "files/config/docker/systemd",
+      "destination": "/tmp/systemd"
+    },
+    {
       "type": "shell",
       "inline": [
         "echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf",
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
+        "echo blacklist iptable-nat | sudo tee -a /etc/modprobe.d/blacklist.conf",
+        "sudo update-initramfs -u",
         "sudo update-grub",
         "sudo apt-get -y install apt-transport-https ca-certificates gnupg2",
-	"sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D",
-	"echo deb https://apt.dockerproject.org/repo debian-stretch main | sudo tee -a /etc/apt/sources.list.d/docker.list",
+        "sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D",
+        "echo deb https://apt.dockerproject.org/repo debian-stretch main | sudo tee -a /etc/apt/sources.list.d/docker.list",
         "sudo apt-get -y update",
-	"sudo sudo apt-get install docker-engine ntp",
+        "sudo sudo apt-get -y install docker-engine ntp",
         "sudo mv /tmp/network/* /etc/systemd/network/",
+        "sudo mv /tmp/systemd/* /etc/systemd/system/",
 
         "sudo systemctl enable systemd-resolved",
         "sudo systemctl enable systemd-networkd",
