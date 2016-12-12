@@ -1,0 +1,16 @@
+[Unit]
+Description=dhcpd-container
+After=docker.service
+BindsTo=docker.service
+
+[Service]
+User=core
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=20
+ExecStartPre=/usr/bin/docker volume create --name rndc-key
+ExecStartPre=-/usr/bin/docker kill dhcpd
+ExecStartPre=/usr/bin/docker pull randomcoww/dhcpd
+ExecStartPre=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStart=/usr/bin/docker run --rm --name dhcpd --net host -v rndc-key:/etc/dhcp/key randomcoww/dhcpd -r https://github.com/randomcoww/dhcpd_config.git -b master -i "ens2 ens3"
+ExecStop=/usr/bin/docker stop dhcpd
