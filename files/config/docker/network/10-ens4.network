@@ -1,8 +1,8 @@
 [Match]
-Name=ens2
+Name=ens4
 
 [Network]
 DHCP=no
 
 [Address]
-Address=192.168.62.241/23
+Address=192.168.30.241/23

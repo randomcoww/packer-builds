@@ -2,4 +2,4 @@
 Name=ens3
 
 [Address]
-Address=169.254.63.241/16
+DHCP=yes

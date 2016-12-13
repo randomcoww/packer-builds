@@ -4,12 +4,15 @@ After=docker.service
 BindsTo=docker.service
 
 [Service]
-User=core
 TimeoutStartSec=0
 Restart=on-failure
 RestartSec=20
 ExecStartPre=-/usr/bin/docker kill nftables
+ExecStartPre=-/usr/bin/docker rm nftables
 ExecStartPre=/usr/bin/docker pull randomcoww/nftables
 ExecStartPre=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
 ExecStart=/usr/bin/docker run --rm --name nftables --net host --cap-add=NET_ADMIN randomcoww/nftables -r https://github.com/randomcoww/nftables-router_config.git -b master
 ExecStop=/usr/bin/docker stop nftables
+
+[Install]
+WantedBy=multi-user.target
