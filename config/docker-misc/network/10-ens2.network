@@ -1,0 +1,6 @@
+[Match]
+Name=ens2
+
+[Network]
+DHCP=yes
+Address=192.168.63.241/23

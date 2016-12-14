@@ -54,17 +54,17 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "files/config/common/ssh",
+      "source": "config/common/ssh",
       "destination": "/tmp/ssh"
     },
     {
       "type": "file",
-      "source": "files/config/docker/network",
+      "source": "config/{{user `hostname`}}-{{user `instance`}}/network",
       "destination": "/tmp/network"
     },
     {
       "type": "file",
-      "source": "files/config/docker/system",
+      "source": "config/{{user `hostname`}}-{{user `instance`}}/system",
       "destination": "/tmp/system"
     },
     {

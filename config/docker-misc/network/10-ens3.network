@@ -1,0 +1,6 @@
+[Match]
+Name=ens3
+
+[Network]
+DHCP=yes
+Address=169.254.63.241/23

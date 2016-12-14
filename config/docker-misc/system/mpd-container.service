@@ -1,0 +1,17 @@
+[Unit]
+Description=mpd-container
+After=docker.service
+BindsTo=docker.service
+
+[Service]
+User=core
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=20
+ExecStartPre=-/usr/bin/docker kill mpd
+ExecStartPre=-/usr/bin/docker rm -f mpd
+ExecStartPre=/usr/bin/docker pull randomcoww/mpd:2016120601
+ExecStartPre=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStartPre=/usr/bin/docker volume create --name mpd-cache
+ExecStart=/usr/bin/docker run --rm --name mpd -v mpd-cache:/mpd/cache -v /nfs/music:/mpd/music:ro -p 8000:8000 -p 6600:6600 randomcoww/mpd:2016120601
+ExecStop=/usr/bin/docker stop mpd
