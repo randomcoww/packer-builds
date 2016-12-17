@@ -1,0 +1,18 @@
+[Unit]
+Description=openvpn_proxy-container
+After=docker.service
+BindsTo=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=20
+ExecStartPre=-/usr/bin/docker kill openvpn_proxy
+ExecStartPre=-/usr/bin/docker rm openvpn_proxy
+ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client
+ExecStart=/usr/bin/docker run --rm --name openvpn_proxy --cap-add=NET_ADMIN --device /dev/net/tun -v /media/configvirtfs/chef:/etc/chef -p 9091:9091 randomcoww/chef-client -i 300 -oopenvpn_proxy::run
+ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStop=/usr/bin/docker stop openvpn_proxy
+
+[Install]
+WantedBy=multi-user.target

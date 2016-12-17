@@ -1,0 +1,6 @@
+[Automount]
+Where=/nfs/music
+TimeoutIdleSec=600
+
+[Install]
+WantedBy=multi-user.target

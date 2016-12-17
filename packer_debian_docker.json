@@ -1,6 +1,6 @@
 {
   "variables": {
-    "instance": "nftables",
+    "instance": "ns",
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
@@ -73,19 +73,20 @@
         "echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf",
         "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf",
         "echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf",
+        "echo 'net.ipv6.ip_forward = 1' | sudo tee -a /etc/sysctl.conf",
         "sudo update-grub",
         "sudo apt-get -y install apt-transport-https ca-certificates gnupg2",
         "sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D",
         "echo deb https://apt.dockerproject.org/repo debian-stretch main | sudo tee -a /etc/apt/sources.list.d/docker.list",
         "sudo apt-get -y update",
-        "sudo sudo apt-get -y install docker-engine ntp",
+        "sudo sudo apt-get -y install docker-engine ntp nfs-common",
 
         "sudo mv /tmp/ssh/sshd_config /etc/ssh/sshd_config",
         "mkdir -p ~/.ssh",
         "mv /tmp/ssh/authorized_keys ~/.ssh/authorized_keys",
 
         "sudo mv /tmp/system/* /etc/systemd/system/",
-        "sudo systemctl enable /etc/systemd/system/*-container.service",
+        "sudo systemctl enable $(find /etc/systemd/system -maxdepth 1 -type f)",
 
         "sudo mv /tmp/network/* /etc/systemd/network/",
         "sudo systemctl enable systemd-resolved",

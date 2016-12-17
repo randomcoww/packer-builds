@@ -2,7 +2,4 @@
 Name=ens2
 
 [Network]
-DHCP=no
-
-[Address]
 Address=192.168.62.241/23

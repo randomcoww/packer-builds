@@ -3,6 +3,4 @@ Name=ens2
 
 [Network]
 DHCP=yes
-
-[Address]
 Address=192.168.63.198/23

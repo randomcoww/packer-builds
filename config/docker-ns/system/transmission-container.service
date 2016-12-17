@@ -1,0 +1,18 @@
+[Unit]
+Description=transmission-container
+After=docker.service
+BindsTo=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=20
+ExecStartPre=-/usr/bin/docker kill transmission
+ExecStartPre=-/usr/bin/docker rm transmission
+ExecStartPre=-/usr/bin/docker pull randomcoww/transmission:2016121501
+ExecStart=/usr/bin/docker run --rm --name transmission --cap-add=NET_ADMIN --net container:openvpn_proxy -v /nfs/transmission:/data randomcoww/transmission:2016121501 -d /data/downloads -i /data/incomplete -w /data/watch -c /data/info -b tun*
+ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStop=/usr/bin/docker stop transmission
+
+[Install]
+WantedBy=multi-user.target

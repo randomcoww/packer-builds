@@ -1,0 +1,18 @@
+[Unit]
+Description=ddclient-container
+After=docker.service
+BindsTo=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=20
+ExecStartPre=-/usr/bin/docker kill ddclient
+ExecStartPre=-/usr/bin/docker rm ddclient
+ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client
+ExecStart=/usr/bin/docker run --rm --name ddclient -v /media/configvirtfs/chef:/etc/chef randomcoww/chef-client -i 300 -o ddclient::run
+ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStop=/usr/bin/docker stop ddclient
+
+[Install]
+WantedBy=multi-user.target
