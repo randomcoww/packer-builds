@@ -1,5 +1,5 @@
 [Match]
-Name=ens4
+Name=tap*
 
 [Network]
 DHCP=no
