@@ -1,6 +1,0 @@
-[Automount]
-Where=/nfs/transmission
-TimeoutIdleSec=600
-
-[Install]
-WantedBy=multi-user.target

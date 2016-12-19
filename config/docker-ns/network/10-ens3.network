@@ -2,4 +2,7 @@
 Name=ens3
 
 [Network]
-Address=169.254.63.241/23
+DHCP=ipv4
+
+[Address]
+Address=192.168.63.242/23

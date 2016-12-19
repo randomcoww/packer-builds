@@ -1,7 +1,0 @@
-[Mount]
-What=fs.static.lan:/vol/torrent/transmission
-Where=/nfs/transmission
-Type=nfs
-
-[Install]
-WantedBy=multi-user.target

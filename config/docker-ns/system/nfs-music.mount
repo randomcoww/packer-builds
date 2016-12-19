@@ -1,8 +1,0 @@
-[Mount]
-What=fs.static.lan:/vol/music
-Where=/nfs/music
-Type=nfs
-Options=ro
-
-[Install]
-WantedBy=multi-user.target
