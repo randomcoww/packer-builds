@@ -1,0 +1,50 @@
+<domain type='kvm'>
+  <name>__name__</name>
+  <memory unit='GiB'>2</memory>
+  <currentMemory unit='GiB'>2</currentMemory>
+  <vcpu placement='static'>1</vcpu>
+  <iothreads>1</iothreads>
+  <iothreadids>
+    <iothread id='1'/>
+  </iothreadids>
+  <os>
+    <type arch='x86_64' machine='pc'>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu mode='host-passthrough'>
+    <topology sockets='1' cores='1' threads='1'/>
+  </cpu>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' iothread='1'/>
+      <source file='/img/kvm/__name__.img'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <controller type='usb' model='none'/>
+    <filesystem type='mount' accessmode='squash'>
+      <source dir='/img/secret/chef'/>
+      <target dir='chef-secret'/>
+      <readonly/>
+    </filesystem>
+    <interface type='bridge'>
+      <source bridge='br0'/>
+      <model type='virtio-net'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='br2'/>
+      <model type='virtio-net'/>
+    </interface>
+    <serial type='pty'/>
+    <console type='pty'/>
+    <memballoon model='virtio'/>
+  </devices>
+</domain>
