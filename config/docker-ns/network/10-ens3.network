@@ -5,4 +5,4 @@ Name=ens3
 DHCP=ipv4
 
 [Address]
-Address=192.168.63.242/23
+Address=192.168.63.241/23
