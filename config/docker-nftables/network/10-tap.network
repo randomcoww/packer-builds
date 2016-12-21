@@ -3,4 +3,4 @@ Name=tap*
 
 [Network]
 DHCP=no
-Bridge=br0
+Bridge=brvpn

@@ -3,4 +3,4 @@ Name=ens4
 
 [Network]
 DHCP=no
-Bridge=br0
+Bridge=brvpn
