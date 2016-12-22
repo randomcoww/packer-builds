@@ -59,6 +59,11 @@
     },
     {
       "type": "file",
+      "source": "config/common/modprobe.d",
+      "destination": "/tmp/modprobe.d"
+    },
+    {
+      "type": "file",
       "source": "config/{{user `hostname`}}-{{user `instance`}}/network",
       "destination": "/tmp/network"
     },
@@ -84,6 +89,8 @@
         "sudo mv /tmp/ssh/sshd_config /etc/ssh/sshd_config",
         "mkdir -p ~/.ssh",
         "mv /tmp/ssh/authorized_keys ~/.ssh/authorized_keys",
+
+        "sudo mv /tmp/modprobe.d/* /etc/modprobe.d/",
 
         "sudo mv /tmp/system/* /etc/systemd/system/",
         "sudo systemctl enable $(find /etc/systemd/system -maxdepth 1 -type f)",
