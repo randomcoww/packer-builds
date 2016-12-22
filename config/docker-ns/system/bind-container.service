@@ -11,7 +11,7 @@ ExecStartPre=-/usr/bin/docker kill bind
 ExecStartPre=-/usr/bin/docker rm bind
 ExecStartPre=-/usr/bin/docker pull randomcoww/bind
 ExecStart=/usr/bin/docker run --rm --name bind --net host randomcoww/bind -r https://github.com/randomcoww/bind-static_zones.git -b master
-ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
 ExecStop=/usr/bin/docker stop bind
 
 [Install]

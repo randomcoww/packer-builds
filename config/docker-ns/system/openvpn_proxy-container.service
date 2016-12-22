@@ -13,7 +13,7 @@ ExecStartPre=-/usr/bin/docker kill openvpn_proxy
 ExecStartPre=-/usr/bin/docker rm openvpn_proxy
 ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client:entrypoint
 ExecStart=/usr/bin/docker run --rm --name openvpn_proxy --cap-add=NET_ADMIN --device /dev/net/tun -v chef-secret-volume:/etc/chef -p 9091:9091 randomcoww/chef-client:entrypoint -o openvpn_proxy::run
-ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
 ExecStop=/usr/bin/docker stop openvpn_proxy
 
 [Install]

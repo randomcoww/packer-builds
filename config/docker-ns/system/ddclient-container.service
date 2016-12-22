@@ -13,7 +13,7 @@ ExecStartPre=-/usr/bin/docker kill ddclient
 ExecStartPre=-/usr/bin/docker rm ddclient
 ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client:entrypoint
 ExecStart=/usr/bin/docker run --rm --name ddclient -v chef-secret-volume:/etc/chef randomcoww/chef-client:entrypoint -o ddclient::run
-ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
 ExecStop=/usr/bin/docker stop ddclient
 
 [Install]

@@ -12,7 +12,7 @@ ExecStartPre=-/usr/bin/docker kill dhcpd
 ExecStartPre=-/usr/bin/docker rm dhcpd
 ExecStartPre=-/usr/bin/docker pull randomcoww/dhcpd
 ExecStart=/usr/bin/docker run --rm --name dhcpd --net host -v rndc-key:/etc/dhcp/key randomcoww/dhcpd -r https://github.com/randomcoww/dhcpd_config.git -b master -i "ens2 brvpn"
-ExecStartPre=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
+ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
 ExecStop=/usr/bin/docker stop dhcpd
 
 [Install]
