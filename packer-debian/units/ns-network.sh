@@ -17,9 +17,9 @@ DHCP=yes
 Address=192.168.63.241/23
 EOF
 
-cat > /etc/systemd/network/ens2.network <<EOF
+cat > /etc/systemd/network/eth0.network <<EOF
 [Match]
-Name=ens2
+Name=ens3
 
 [Network]
 DHCP=no
@@ -45,9 +45,9 @@ DHCP=no
 Address=169.254.63.241/16
 EOF
 
-cat > /etc/systemd/network/ens3.network <<EOF
+cat > /etc/systemd/network/eth1.network <<EOF
 [Match]
-Name=ens3
+Name=ens4
 
 [Network]
 DHCP=no

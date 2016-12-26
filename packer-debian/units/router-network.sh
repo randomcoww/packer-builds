@@ -17,7 +17,7 @@ DHCP=no
 Address=192.168.62.241/23
 EOF
 
-cat > /etc/systemd/network/ens2.network <<EOF
+cat > /etc/systemd/network/eth0.network <<EOF
 [Match]
 Name=ens2
 
@@ -28,7 +28,7 @@ EOF
 
 ## WAN
 
-cat > /etc/systemd/network/ens3.network <<EOF
+cat > /etc/systemd/network/eth1.network <<EOF
 [Match]
 Name=ens3
 
@@ -55,7 +55,7 @@ DHCP=no
 Address=192.168.30.241/23
 EOF
 
-cat > /etc/systemd/network/ens4.network <<EOF
+cat > /etc/systemd/network/eth2.network <<EOF
 [Match]
 Name=ens4
 
