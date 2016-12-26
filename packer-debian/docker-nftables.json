@@ -51,7 +51,7 @@
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
         "scripts/base.sh",
-        "scripts/docker.sh",
+        "scripts/install_docker.sh",
         "scripts/ip_forward.sh",
         "scripts/iptables_blacklist.sh",
         "scripts/ssh_sshd_config.sh",

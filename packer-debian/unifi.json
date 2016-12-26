@@ -51,20 +51,10 @@
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
         "scripts/base.sh",
-        "scripts/install_docker.sh",
-        "scripts/ip_forward.sh",
-        "scripts/iptables_blacklist.sh",
+        "scripts/install_unifi.sh",
         "scripts/ssh_sshd_config.sh",
 
-        "dropins/docker-service-disable-iptables.sh",
-        "units/bind_static-container.sh",
-        "units/openvpn_proxy-container.sh",
-        "units/nftables_docker-container.sh",
-        "units/transmission-container.sh",
-        "units/ssh_gateway-container.sh",
-        "units/ddclient-container.sh",
-
-        "units/ns-network.sh",
+        "units/unifi-network.sh",
         "scripts/systemd_networking.sh"
       ]
     },
@@ -80,7 +70,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "docker-ns",
+    "hostname": "unifi",
     "domain": "lan"
   }
 }
