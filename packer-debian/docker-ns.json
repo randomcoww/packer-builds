@@ -50,6 +50,7 @@
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
+        "scripts/resolv_hack.sh",
         "scripts/base.sh",
         "scripts/install_docker.sh",
         "scripts/ip_forward.sh",
