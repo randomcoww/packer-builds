@@ -1,8 +1,0 @@
-[Match]
-Name=ens3
-
-[Network]
-DHCP=ipv4
-
-[Address]
-Address=192.168.63.241/23

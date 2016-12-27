@@ -1,6 +1,0 @@
-[Match]
-Name=ens4
-
-[Network]
-DHCP=no
-Bridge=brvpn

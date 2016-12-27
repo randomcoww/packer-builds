@@ -68,7 +68,11 @@
     </disk>
     <interface type='bridge'>
       <mac address='52:54:00:ac:da:f3'/>
-      <source bridge='br0'/>
+      <source bridge='brlan'/>
+      <model type='virtio-net'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='brvpn'/>
       <model type='virtio-net'/>
     </interface>
     <graphics type='vnc'/>

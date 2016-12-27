@@ -25,22 +25,27 @@
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='raw' iothread='1'/>
-      <source file='/img/kvm/__name__.img'/>
+      <driver name='qemu' type='qcow2' iothread='1'/>
+      <source file='/img/kvm/__name__.qcow2'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <controller type='usb' model='none'/>
+    <filesystem type='mount' accessmode='squash'>
+      <source dir='/img/cloud-init/ns'/>
+      <target dir='config-2'/>
+      <readonly/>
+    </filesystem>
     <filesystem type='mount' accessmode='squash'>
       <source dir='/img/secret/chef'/>
       <target dir='chef-secret'/>
       <readonly/>
     </filesystem>
     <interface type='bridge'>
-      <source bridge='br0'/>
+      <source bridge='brlan'/>
       <model type='virtio-net'/>
     </interface>
     <interface type='bridge'>
-      <source bridge='br2'/>
+      <source bridge='brstore'/>
       <model type='virtio-net'/>
     </interface>
     <serial type='pty'/>

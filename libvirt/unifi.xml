@@ -1,8 +1,8 @@
 <domain type='kvm'>
   <name>__name__</name>
-  <memory unit='GiB'>32</memory>
-  <currentMemory unit='GiB'>32</currentMemory>
-  <vcpu placement='static'>4</vcpu>
+  <memory unit='GiB'>1</memory>
+  <currentMemory unit='GiB'>1</currentMemory>
+  <vcpu placement='static'>1</vcpu>
   <iothreads>1</iothreads>
   <iothreadids>
     <iothread id='1'/>
@@ -17,7 +17,7 @@
     <pae/>
   </features>
   <cpu mode='host-passthrough'>
-    <topology sockets='1' cores='4' threads='1'/>
+    <topology sockets='1' cores='1' threads='1'/>
   </cpu>
   <clock offset='utc'/>
   <on_poweroff>destroy</on_poweroff>
@@ -32,20 +32,9 @@
     </disk>
     <controller type='usb' model='none'/>
     <interface type='bridge'>
-      <source bridge='br0'/>
+      <source bridge='brlan'/>
       <model type='virtio-net'/>
     </interface>
-    <interface type='bridge'>
-      <source bridge='br2'/>
-      <model type='virtio-net'/>
-    </interface>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <driver name='vfio'/>
-      <source>
-        <address domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
-      </source>
-      <rom file='/img/kvm/firmware/mptsas2.rom'/>
-    </hostdev>
     <serial type='pty'/>
     <console type='pty'/>
     <memballoon model='virtio'/>

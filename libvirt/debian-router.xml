@@ -36,16 +36,16 @@
       <readonly/>
     </filesystem>
     <interface type='bridge'>
-      <source bridge='br0'/>
+      <source bridge='brlan'/>
       <model type='virtio-net'/>
     </interface>
     <interface type='bridge'>
       <mac address='52:54:00:63:6e:b0'/>
-      <source bridge='br1'/>
+      <source bridge='brwan'/>
       <model type='virtio-net'/>
     </interface>
     <interface type='bridge'>
-      <source bridge='br3'/>
+      <source bridge='brvpn'/>
       <model type='virtio-net'/>
     </interface>
     <serial type='pty'/>
