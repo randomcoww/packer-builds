@@ -2,7 +2,7 @@
 
 cat > /etc/systemd/network/eth0.network <<EOF
 [Match]
-Name=ens2
+Name=eth0
 
 [Network]
 DHCP=yes
@@ -15,7 +15,7 @@ EOF
 
 cat > /etc/systemd/network/eth1.network <<EOF
 [Match]
-Name=ens3
+Name=eth1
 
 [Network]
 Address=169.254.127.21/16

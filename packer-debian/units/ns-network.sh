@@ -19,7 +19,7 @@ EOF
 
 cat > /etc/systemd/network/eth0.network <<EOF
 [Match]
-Name=ens3
+Name=eth0
 
 [Network]
 DHCP=no
@@ -47,7 +47,7 @@ EOF
 
 cat > /etc/systemd/network/eth1.network <<EOF
 [Match]
-Name=ens4
+Name=eth1
 
 [Network]
 DHCP=no

@@ -2,7 +2,7 @@
 
 cat > /etc/systemd/network/eth0.network <<EOF
 [Match]
-Name=ens2
+Name=eth0
 
 [Network]
 DHCP=yes
