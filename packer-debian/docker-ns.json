@@ -56,6 +56,7 @@
         "scripts/ip_forward.sh",
         "scripts/iptables_blacklist.sh",
         "scripts/ssh_sshd_config.sh",
+        "scripts/unattended_upgrades.sh",
 
         "dropins/docker-service-disable-iptables.sh",
         "units/bind_static-container.sh",

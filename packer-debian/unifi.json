@@ -54,6 +54,7 @@
         "scripts/base.sh",
         "scripts/install_unifi.sh",
         "scripts/ssh_sshd_config.sh",
+        "scripts/unattended_upgrades.sh",
 
         "units/unifi-network.sh",
         "scripts/systemd_networking.sh"
