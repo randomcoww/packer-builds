@@ -61,7 +61,7 @@
         "dropins/docker-service-disable-iptables.sh",
         "units/bind_static-container.sh",
         "units/openvpn_proxy-container.sh",
-        "units/nftables_docker-container.sh",
+        "units/nftables_ns-container.sh",
         "units/transmission-container.sh",
         "units/ssh_gateway-container.sh",
         "units/ddclient-container.sh",

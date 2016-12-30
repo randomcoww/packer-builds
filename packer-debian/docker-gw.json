@@ -62,9 +62,9 @@
         "units/bind_dyn-container.sh",
         "units/dhcpd-container.sh",
         "units/openvpn_server-container.sh",
-        "units/nftables_router-container.sh",
+        "units/nftables_gw-container.sh",
 
-        "units/router-network.sh",
+        "units/gw-network.sh",
         "scripts/systemd_networking.sh"
       ]
     },
@@ -80,7 +80,7 @@
     "user": "randomcoww",
     "uid": "10000",
     "password": "password",
-    "hostname": "docker-router",
+    "hostname": "docker-gw",
     "domain": "lan"
   }
 }
