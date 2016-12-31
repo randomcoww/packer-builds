@@ -34,6 +34,7 @@ Name=eth1
 
 [Network]
 DHCP=yes
+DNS=8.8.8.8
 EOF
 
 ## VPN bridge

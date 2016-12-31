@@ -13,7 +13,7 @@ ExecStartPre=/usr/bin/docker volume create --driver local --opt type=nfs --opt o
 ExecStartPre=-/usr/bin/docker kill transmission
 ExecStartPre=-/usr/bin/docker rm transmission
 ExecStartPre=-/usr/bin/docker pull randomcoww/transmission
-ExecStart=/usr/bin/docker run --rm --name transmission --net container:openvpn_proxy -v transmission-volume:/data randomcoww/transmission -d /data/downloads -i /data/incomplete -w /data/watch -c /data/info
+ExecStart=/usr/bin/docker run --rm --name transmission --net container:transmission_network -v transmission-volume:/data randomcoww/transmission -d /data/downloads -i /data/incomplete -w /data/watch -c /data/info
 ExecStartPost=-/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")
 ExecStop=/usr/bin/docker stop transmission
 

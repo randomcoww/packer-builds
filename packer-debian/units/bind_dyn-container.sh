@@ -12,7 +12,7 @@ ExecStartPre=/usr/bin/docker volume create --name rndc-key-volume
 ExecStartPre=-/usr/bin/docker kill bind_dyn
 ExecStartPre=-/usr/bin/docker rm bind_dyn
 ExecStartPre=-/usr/bin/docker pull randomcoww/bind
-ExecStart=/usr/bin/docker run --rm --name bind_dyn --net host -v rndc-key-volume:/etc/bind/key randomcoww/bind -r https://github.com/randomcoww/bind-dyn_zones.git -b master
+ExecStart=/usr/bin/docker run --rm --name bind_dyn --net container:bind_network -v rndc-key-volume:/etc/bind/key randomcoww/bind -r https://github.com/randomcoww/bind-dyn_zones.git -b master
 ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
 ExecStop=/usr/bin/docker stop bind_dyn
 
