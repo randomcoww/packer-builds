@@ -56,17 +56,15 @@
         "scripts/ip_forward.sh",
         "scripts/iptables_blacklist.sh",
         "scripts/ssh_sshd_config.sh",
-        "scripts/unattended_upgrades.sh",
         "dropins/docker-service-disable-iptables.sh",
 
+        "units/docker-docker1-network.sh",
         "units/nftables_ns-container.sh",
-        "units/bind_network-container.sh",
-        "units/bind_static-container.sh",
         "units/transmission_network-container.sh",
         "units/transmission-container.sh",
-        "units/ssh_gateway-container.sh",
-        "units/ddclient-container.sh",
+        "units/mpd-container.sh",
 
+        "scripts/unattended_upgrades.sh",
         "units/ns-network.sh",
         "scripts/systemd_networking.sh"
       ]

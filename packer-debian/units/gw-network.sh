@@ -33,8 +33,17 @@ cat > /etc/systemd/network/eth1.network <<EOF
 Name=eth1
 
 [Network]
-DHCP=yes
+DNS=192.168.63.251
 DNS=8.8.8.8
+DHCP=yes
+
+[DHCP]
+UseDNS=false
+UseNTP=false
+SendHostname=false
+UseHostname=false
+UseDomains=false
+UseTimezone=no
 EOF
 
 ## VPN bridge

@@ -8,11 +8,12 @@ BindsTo=docker.service
 TimeoutStartSec=0
 Restart=on-failure
 RestartSec=20
+ExecStartPre=-/usr/bin/docker stop bind_static
 ExecStartPre=-/usr/bin/docker kill bind_static
 ExecStartPre=-/usr/bin/docker rm bind_static
 ExecStartPre=-/usr/bin/docker pull randomcoww/bind
 ExecStart=/usr/bin/docker run --rm --name bind_static --net container:bind_network randomcoww/bind -r https://github.com/randomcoww/bind-static_zones.git -b master
-ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf "dangling=true")'
+ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi \$(/usr/bin/docker images -qf dangling=true)'
 ExecStop=/usr/bin/docker stop bind_static
 
 [Install]
