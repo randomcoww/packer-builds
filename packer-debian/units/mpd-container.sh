@@ -16,7 +16,7 @@ ExecStartPre=-/usr/bin/docker stop mpd
 ExecStartPre=-/usr/bin/docker kill mpd
 ExecStartPre=-/usr/bin/docker rm mpd
 ExecStartPre=-/usr/bin/docker pull randomcoww/mpd
-ExecStart=/usr/bin/docker run --rm --name mpd --net=docker1 --ip=172.20.0.4 -v mpd-cache-volume:/var/lib/mpd/cache -v mpd-playlists-volume:/var/lib/mpd/playlists -v mpd-volume:/var/lib/mpd/music randomcoww/mpd
+ExecStart=/usr/bin/docker run --rm --name mpd --net=docker1 --ip=172.20.0.4 -v mpd-cache-volume:/mpd/cache -v mpd-playlists-volume:/mpd/playlists -v mpd-data-volume:/mpd/music randomcoww/mpd
 ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi \$(/usr/bin/docker images -qf dangling=true)'
 ExecStop=/usr/bin/docker stop mpd
 
