@@ -52,24 +52,17 @@
       "scripts": [
         "scripts/resolv_hack.sh",
         "scripts/base.sh",
+        "scripts/unattended_upgrades.sh",
         "scripts/install_docker.sh",
         "scripts/ip_forward.sh",
         "scripts/iptables_blacklist.sh",
         "scripts/ssh_sshd_config.sh",
         "dropins/docker-service-disable-iptables.sh",
 
-        "units/docker-brlan-network.sh",
-        "units/docker-brvpn-network.sh",
-        "units/nftables_gw-container.sh",
-        "units/bind_network-container.sh",
-        "units/bind_dyn-container.sh",
-        "units/bind_static-container.sh",
-        "units/dhcpd-container.sh",
-        "units/openvpn_server-container.sh",
-        "units/ssh_gateway-container.sh",
-        "units/ddclient-container.sh",
+        "scripts/install_chef.sh",
+        "units/etc-chef-mount.sh",
 
-        "scripts/unattended_upgrades.sh",
+        "units/gw-chef_systemd-service.sh",
         "units/gw-network.sh",
         "scripts/systemd_networking.sh"
       ]
