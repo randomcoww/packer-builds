@@ -1,9 +1,7 @@
 cat > /etc/systemd/system/chef_systemd.service <<EOF
 [Unit]
 Description=chef_systemd
-After=docker.service
-BindsTo=docker.service
-Requires=etc-chef.mount
+After=etc-chef.mount
 
 [Service]
 TimeoutStartSec=0

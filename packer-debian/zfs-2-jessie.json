@@ -52,10 +52,11 @@
       "scripts": [
         "scripts/resolv_hack.sh",
         "scripts/base.sh",
+        "scripts/unattended_upgrades.sh",
+        "scripts/ssh_sshd_config.sh",
+
         "scripts/install_zfs-jessie.sh",
         "scripts/nfs_exports.sh",
-        "scripts/ssh_sshd_config.sh",
-        "scripts/unattended_upgrades.sh",
 
         "units/zfs-2-network.sh",
         "scripts/systemd_networking.sh"
