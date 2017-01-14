@@ -40,7 +40,7 @@
       "type": "qemu",
       "qemuargs": [[ "-m", "1024M" ],[ "-smp", "2" ]],
       "accelerator": "kvm",
-      "vm_name": "{{user `hostname`}}",
+      "vm_name": "{{user `hostname`}}.img",
       "format": "raw"
     }
   ],
@@ -71,7 +71,7 @@
     }
   ],
   "variables": {
-    "user": "randomcoww",
+    "user": "debian",
     "uid": "10000",
     "password": "password",
     "hostname": "zfs-2",
