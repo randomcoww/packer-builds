@@ -26,7 +26,7 @@
          "<enter><wait>"
       ],
       "disk_size" : 20000,
-      "headless" : false,
+      "headless" : true,
       "http_directory" : "http",
       "iso_checksum_url": "https://cdimage.debian.org/debian-cd/8.6.0/amd64/iso-cd/SHA512SUMS",
       "iso_checksum_type": "sha512",
