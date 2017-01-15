@@ -42,7 +42,7 @@
       "accelerator": "kvm",
       "vm_name": "{{user `hostname`}}.img",
       "format": "raw",
-      "output_directory": "((user `output_directory`}}"
+      "output_directory": "{{user `output_directory`}}"
     }
   ],
   "provisioners": [
