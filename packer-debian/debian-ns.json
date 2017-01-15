@@ -41,7 +41,8 @@
       "qemuargs": [[ "-m", "1024M" ],[ "-smp", "2" ]],
       "accelerator": "kvm",
       "vm_name": "{{user `hostname`}}.img",
-      "format": "raw"
+      "format": "raw",
+      "output_directory": "((user `output_directory`}}"
     }
   ],
   "provisioners": [
