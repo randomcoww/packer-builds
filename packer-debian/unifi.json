@@ -17,8 +17,8 @@
          "console-keymaps-at/keymap=us <wait>",
          "keyboard-configuration/xkb-keymap=us <wait>",
 
-         "passwd/user-fullname={{user `user`}} <wait>",
-         "passwd/username={{user `user`}} <wait>",
+         "passwd/user-fullname={{user `username`}} <wait>",
+         "passwd/username={{user `username`}} <wait>",
          "passwd/user-uid={{user `uid`}} <wait>",
          "passwd/user-password={{user `password`}} <wait>",
          "passwd/user-password-again={{user `password`}} <wait>",
@@ -34,7 +34,7 @@
       "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
       "disk_interface": "virtio",
       "net_device": "virtio-net",
-      "ssh_username": "{{user `user`}}",
+      "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "3600s",
       "type": "qemu",
@@ -71,7 +71,7 @@
     }
   ],
   "variables": {
-    "user": "debian",
+    "username": "debian",
     "uid": "10000",
     "password": "password",
     "hostname": "unifi",
