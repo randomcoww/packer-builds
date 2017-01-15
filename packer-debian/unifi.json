@@ -75,6 +75,7 @@
     "uid": "10000",
     "password": "password",
     "hostname": "unifi",
-    "domain": "lan"
+    "domain": "lan",
+    "output_directory": "output-qemu"
   }
 }

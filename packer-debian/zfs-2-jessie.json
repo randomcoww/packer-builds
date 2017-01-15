@@ -76,6 +76,7 @@
     "uid": "10000",
     "password": "password",
     "hostname": "zfs-2",
-    "domain": "lan"
+    "domain": "lan",
+    "output_directory": "output-qemu"
   }
 }

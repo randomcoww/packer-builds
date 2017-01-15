@@ -81,6 +81,7 @@
     "uid": "10000",
     "password": "password",
     "hostname": "debian-gw",
-    "domain": "lan"
+    "domain": "lan",
+    "output_directory": "output-qemu"
   }
 }
