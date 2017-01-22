@@ -60,10 +60,6 @@
 
         "scripts/install_unifi.sh",
 
-        "scripts/install_chef.sh",
-        "units/etc-chef-mount.sh",
-        "units/chef-container.sh",
-
         "network/{{user `hostname`}}.sh",
         "scripts/systemd_networking.sh"
       ]
