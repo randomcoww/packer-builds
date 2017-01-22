@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>__name__</name>
+  <name>gamestream</name>
   <memory unit='GiB'>12</memory>
   <currentMemory unit='GiB'>12</currentMemory>
   <memoryBacking>
@@ -63,7 +63,7 @@
     </disk>
     <disk type='file' device='disk'>
       <driver name='qemu' type='raw' iothread='1'/>
-      <source file='/img/kvm/__name__.img'/>
+      <source file='/img/kvm/gamestream.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='bridge'>
@@ -76,14 +76,14 @@
       <model type='virtio-net'/>
     </interface>
     <graphics type='vnc'/>
-    <sound model='usb'>
+    <sound model='usb'/>
     <video>
       <model type='qxl'/>
     </video>
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
-        <address domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+        <address domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
       </source>
     </hostdev>
     <memballoon model='none'/>

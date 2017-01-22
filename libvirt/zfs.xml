@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>__name__</name>
+  <name>zfs-2</name>
   <memory unit='GiB'>32</memory>
   <currentMemory unit='GiB'>32</currentMemory>
   <vcpu placement='static'>4</vcpu>
@@ -27,7 +27,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='raw' iothread='1'/>
-      <source file='/img/kvm/__name__.img'/>
+      <source file='/img/kvm/packer-zfs-2.1/zfs-2.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <controller type='usb' model='none'/>
@@ -42,9 +42,9 @@
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
-        <address domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+        <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </source>
-      <rom file='/img/kvm/firmware/mptsas2.rom'/>
+      <rom file='/img/kvm/firmware/SAS9300_8i_IT.bin'/>
     </hostdev>
     <serial type='pty'/>
     <console type='pty'/>
