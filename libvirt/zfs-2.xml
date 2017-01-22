@@ -27,7 +27,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='raw' iothread='1'/>
-      <source file='/img/kvm/packer-zfs-2.1/zfs-2.img'/>
+      <source file='/img/kvm/packer-zfs-2.2/zfs-2.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <controller type='usb' model='none'/>
