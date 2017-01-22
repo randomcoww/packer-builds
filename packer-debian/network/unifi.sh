@@ -6,9 +6,6 @@ Name=eth0
 
 [Network]
 DHCP=yes
-
-[Address]
-Address=192.168.63.198/23
 EOF
 
 ## load rules (not sure if needed)

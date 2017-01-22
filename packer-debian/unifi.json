@@ -49,16 +49,22 @@
     {
       "pause_before" : "5s",
       "type": "shell",
+      "environment_vars": [
+        "CHEF_ROLE=node-{{user `hostname`}}"
+      ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
         "scripts/resolv_hack.sh",
         "scripts/base.sh",
-        "scripts/unattended_upgrades.sh",
         "scripts/ssh_sshd_config.sh",
 
         "scripts/install_unifi.sh",
 
-        "units/unifi-network.sh",
+        "scripts/install_chef.sh",
+        "units/etc-chef-mount.sh",
+        "units/chef-container.sh",
+
+        "network/{{user `hostname`}}.sh",
         "scripts/systemd_networking.sh"
       ]
     },

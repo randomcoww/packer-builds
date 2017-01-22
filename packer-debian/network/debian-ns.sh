@@ -12,9 +12,6 @@ Name=brlan
 
 [Network]
 DHCP=yes
-
-[Address]
-Address=192.168.63.241/23
 EOF
 
 cat > /etc/systemd/network/eth0.network <<EOF
@@ -39,10 +36,8 @@ cat > /etc/systemd/network/brstore.network <<EOF
 Name=brstore
 
 [Network]
+LinkLocalAddressing=ipv4
 DHCP=no
-
-[Address]
-Address=169.254.63.241/16
 EOF
 
 cat > /etc/systemd/network/eth1.network <<EOF
