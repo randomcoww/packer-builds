@@ -26,7 +26,7 @@
          "<enter><wait>"
       ],
       "disk_size" : 20000,
-      "headless" : true,
+      "headless" : "{{user `headless`}}",
       "http_directory" : "http",
       "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
       "iso_checksum_type": "sha512",
@@ -82,6 +82,7 @@
     "password": "password",
     "hostname": "debian-ns",
     "domain": "lan",
-    "output_directory": "output-qemu"
+    "output_directory": "output-qemu",
+    "headless": false
   }
 }

@@ -1,0 +1,53 @@
+<domain type='kvm'>
+  <name>__name__</name>
+  <memory unit='GiB'>32</memory>
+  <currentMemory unit='GiB'>32</currentMemory>
+  <vcpu placement='static'>4</vcpu>
+  <iothreads>1</iothreads>
+  <iothreadids>
+    <iothread id='1'/>
+  </iothreadids>
+  <os>
+    <type arch='x86_64' machine='pc'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu mode='host-passthrough'>
+    <topology sockets='1' cores='4' threads='1'/>
+  </cpu>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' iothread='1'/>
+      <source file='/img/kvm/__name__.img'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <controller type='usb' model='none'/>
+    <interface type='bridge'>
+      <source bridge='brlan'/>
+      <model type='virtio-net'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='brstore'/>
+      <model type='virtio-net'/>
+    </interface>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <driver name='vfio'/>
+      <source>
+        <address domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+      </source>
+      <rom file='/img/kvm/firmware/mptsas2.rom'/>
+    </hostdev>
+    <serial type='pty'/>
+    <console type='pty'/>
+    <memballoon model='virtio'/>
+  </devices>
+</domain>
