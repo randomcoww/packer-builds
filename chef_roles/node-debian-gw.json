@@ -1,0 +1,51 @@
+{
+  "name": "node-debian-gw",
+  "description": "",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "systemd_units": {
+      "instances": {
+        "docker-network-brlan.service": {
+          "enabled": true
+        },
+        "docker-network-brvpn.service": {
+          "enabled": true
+        },
+        "bind_dyn-container.service": {
+          "enabled": true
+        },
+        "bind_static_network-container.service": {
+          "enabled": true
+        },
+        "bind_static-container.service": {
+          "enabled": true
+        },
+        "ddclient_freedns-container.service": {
+          "enabled": true
+        },
+        "dhcpd-container.service": {
+          "enabled": true
+        },
+        "nftables_gw-container.service": {
+          "enabled": true
+        },
+        "openvpn_server-container.service": {
+          "enabled": true
+        },
+        "ssh_gateway-container.service": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[systemd::run]"
+  ],
+  "env_run_lists": {
+
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "node-debian-ns",
+  "description": "",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "systemd_units": {
+      "instances": {
+        "docker-network-docker1.service": {
+          "enabled": true
+        },
+        "nftables_ns-container.service": {
+          "enabled": true
+        },
+        "mpd-container.service": {
+          "enabled": true
+        },
+        "transmission_network-container.service": {
+          "enabled": true
+        },
+        "transmission-container.service": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[systemd::run]"
+  ],
+  "env_run_lists": {
+
+  }
+}
