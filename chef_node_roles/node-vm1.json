@@ -12,7 +12,6 @@
   },
   "chef_type": "role",
   "run_list": [
-    "role[packer-debian-gw]",
     "role[packer-zfs-1]"
   ],
   "env_run_lists": {
