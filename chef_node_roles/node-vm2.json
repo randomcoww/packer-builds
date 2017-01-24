@@ -1,0 +1,23 @@
+{
+  "name": "node-vm2",
+  "description": "",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "qemu_manager": {
+      "build_path": "/img/kvm"
+    }
+  },
+  "chef_type": "role",
+  "run_list": [
+    "role[packer-zfs-2]",
+    "role[packer-debian-ns]",
+    "role[packer-unifi]",
+    "role[packer-debian-gw]"
+  ],
+  "env_run_lists": {
+
+  }
+}
