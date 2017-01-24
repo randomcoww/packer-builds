@@ -11,8 +11,8 @@ RestartSec=20
 ExecStartPre=-/usr/bin/docker stop bind_static
 ExecStartPre=-/usr/bin/docker kill bind_static
 ExecStartPre=-/usr/bin/docker rm bind_static
-ExecStartPre=-/usr/bin/docker pull randomcoww/bind
-ExecStart=/usr/bin/docker run --rm --name bind_static -v /etc/chef:/etc/chef --net container:bind_network randomcoww/chef-client:entrypoint -o 'role[bind_static]'
+ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client
+ExecStart=/usr/bin/docker run --rm --name bind_static -v /etc/chef:/etc/chef --net container:bind_static_network randomcoww/chef-client:entrypoint -o 'role[bind_static]'
 ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf dangling=true)'
 ExecStop=/usr/bin/docker stop bind_static
 

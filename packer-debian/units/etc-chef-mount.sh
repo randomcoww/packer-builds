@@ -1,7 +1,7 @@
 cat > /etc/systemd/system/etc-chef.mount <<EOF
 [Unit]
 Description=Mount Chef secret
-Before=chef_systemd.service
+Before=chef-client.service
 
 [Mount]
 What=chef-secret

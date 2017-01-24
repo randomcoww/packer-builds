@@ -10,7 +10,7 @@ RestartSec=20
 ExecStartPre=-/usr/bin/docker stop nftables_ns
 ExecStartPre=-/usr/bin/docker kill nftables_ns
 ExecStartPre=-/usr/bin/docker rm nftables_ns
-ExecStartPre=-/usr/bin/docker pull randomcoww/nftables
+ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client:entrypoint
 ExecStart=/usr/bin/docker run --rm --name nftables_ns -v /etc/chef:/etc/chef --net host --cap-add=NET_ADMIN randomcoww/chef-client:entrypoint -o 'role[nftables_ns]'
 ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf dangling=true)'
 ExecStop=/usr/bin/docker stop nftables_ns

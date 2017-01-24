@@ -10,7 +10,7 @@ RestartSec=20
 ExecStartPre=-/usr/bin/docker stop ssh_gateway
 ExecStartPre=-/usr/bin/docker kill ssh_gateway
 ExecStartPre=-/usr/bin/docker rm ssh_gateway
-ExecStartPre=-/usr/bin/docker pull randomcoww/ssh_gateway
+ExecStartPre=-/usr/bin/docker pull randomcoww/chef-client:entrypoint
 ExecStart=/usr/bin/docker run --rm --name ssh_gateway -v /etc/chef:/etc/chef --net=brlan --ip 192.168.63.252 -v /etc/resolv.conf:/etc/resolv.conf:ro randomcoww/chef-client:entrypoint -o 'role[ssh_gateway]'
 ExecStartPost=-/bin/sh -c '/usr/bin/docker rmi $(/usr/bin/docker images -qf dangling=true)'
 ExecStop=/usr/bin/docker stop ssh_gateway
