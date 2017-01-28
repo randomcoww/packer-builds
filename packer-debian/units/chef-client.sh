@@ -8,7 +8,7 @@ TimeoutStartSec=0
 Restart=on-failure
 RestartSec=20
 ExecStartPre=/usr/bin/chef-client -c /etc/chef/client.rb -o 'role[$CHEF_ROLE]'
-ExecStart=/usr/bin/chef-client -c /etc/chef/client.rb -i 600 -s 60 -o 'role[$CHEF_ROLE]'
+ExecStart=/usr/bin/chef-client -c /etc/chef/client.rb -i 1200 -s 60 -o 'role[$CHEF_ROLE]'
 
 [Install]
 WantedBy=multi-user.target

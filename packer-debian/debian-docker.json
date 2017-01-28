@@ -65,7 +65,7 @@
 
         "scripts/install_chef.sh",
         "units/etc-chef-mount.sh",
-        "units/chef-container.sh",
+        "units/chef-client.sh",
 
         "network/{{user `hostname`}}.sh",
         "scripts/systemd_networking.sh"
@@ -74,6 +74,9 @@
     {
       "pause_before" : "5s",
       "type": "shell",
+      "environment_vars": [
+        "SSH_AUTHORIZED_KEYS={{user `ssh_authorized_keys`}}"
+      ],
       "scripts": [
         "scripts/ssh_authorized_keys.sh"
       ]
@@ -85,6 +88,7 @@
     "password": "password",
     "hostname": "debian-ns",
     "domain": "lan",
+    "ssh_authorized_keys": "",
     "output_directory": "output-qemu"
   }
 }

@@ -50,7 +50,8 @@
       "pause_before" : "5s",
       "type": "shell",
       "environment_vars": [
-        "CHEF_ROLE=node-{{user `hostname`}}"
+        "CHEF_ROLE=node-{{user `hostname`}}",
+        "NFS_EXPORTS={{user `nfs_exports`}}"
       ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
@@ -64,7 +65,7 @@
 
         "scripts/install_chef.sh",
         "units/etc-chef-mount.sh",
-        "units/chef-container.sh",
+        "units/chef-client.sh",
 
         "network/{{user `hostname`}}.sh",
         "scripts/systemd_networking.sh"
@@ -73,6 +74,9 @@
     {
       "pause_before" : "5s",
       "type": "shell",
+      "environment_vars": [
+        "SSH_AUTHORIZED_KEYS={{user `ssh_authorized_keys`}}"
+      ],
       "scripts": [
         "scripts/ssh_authorized_keys.sh"
       ]
@@ -85,6 +89,8 @@
     "hostname": "zfs-2",
     "domain": "lan",
     "output_directory": "output-qemu",
-    "debian_version": "8.7.1"
+    "ssh_authorized_keys": "",
+    "debian_version": "8.7.1",
+    "nfs_exports": ""
   }
 }
