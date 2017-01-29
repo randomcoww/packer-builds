@@ -50,7 +50,7 @@
       "pause_before" : "5s",
       "type": "shell",
       "environment_vars": [
-        "CHEF_ROLE=node-{{user `hostname`}}"
+        "CHEF_ROLE={{user `chef_role`}}"
       ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
@@ -89,6 +89,7 @@
     "hostname": "debian-ns",
     "domain": "lan",
     "ssh_authorized_keys": "",
-    "output_directory": "output-qemu"
+    "output_directory": "output-qemu",
+    "chef_role": "node-debian-ns"
   }
 }
