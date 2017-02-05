@@ -40,8 +40,8 @@
       "type": "qemu",
       "qemuargs": [[ "-m", "1024M" ],[ "-smp", "2" ]],
       "accelerator": "kvm",
-      "vm_name": "{{user `hostname`}}.img",
-      "format": "raw",
+      "vm_name": "{{user `vm_name`}}",
+      "format": "qcow2",
       "output_directory": "{{user `output_directory`}}"
     }
   ],
@@ -90,6 +90,7 @@
     "domain": "lan",
     "ssh_authorized_keys": "",
     "output_directory": "output-qemu",
-    "chef_role": "node-debian-ns"
+    "chef_role": "node-debian-ns",
+    "vm_name": "debian"
   }
 }

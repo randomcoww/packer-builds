@@ -40,8 +40,8 @@
       "type": "qemu",
       "qemuargs": [[ "-m", "1024M" ],[ "-smp", "2" ]],
       "accelerator": "kvm",
-      "vm_name": "{{user `hostname`}}.img",
-      "format": "raw",
+      "vm_name": "{{user `vm_name`}}",
+      "format": "qcow2",
       "output_directory": "{{user `output_directory`}}"
     }
   ],
@@ -92,6 +92,7 @@
     "ssh_authorized_keys": "",
     "debian_version": "8.7.1",
     "nfs_exports": "",
-    "chef_role": "node-zfs"
+    "chef_role": "node-zfs",
+    "vm_name": "debian"
   }
 }
