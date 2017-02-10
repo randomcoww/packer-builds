@@ -11,7 +11,7 @@ cat > /etc/systemd/network/brlan.network <<EOF
 Name=brlan
 
 [Network]
-DHCP=no
+DHCP=yes
 
 [Address]
 Address=192.168.62.241/23
