@@ -51,7 +51,9 @@
       "type": "shell",
       "environment_vars": [
         "CHEF_ROLE={{user `chef_role`}}",
-        "NFS_EXPORTS={{user `nfs_exports`}}"
+        "NFS_EXPORTS={{user `nfs_exports`}}",
+        "DISK_POWERSAVE={{user `disk_powersave`}}",
+        "DISK_SPINDOWN={{user `disk_spindown`}}"
       ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
@@ -93,6 +95,8 @@
     "debian_version": "8.7.1",
     "nfs_exports": "",
     "chef_role": "node-zfs",
-    "vm_name": "debian"
+    "vm_name": "debian",
+    "disk_powersave": 127,
+    "disk_spindown": 244
   }
 }
