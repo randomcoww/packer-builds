@@ -33,8 +33,8 @@ cat > /etc/systemd/network/eth1.network <<EOF
 Name=eth1
 
 [Network]
-DNS=192.168.63.249
 DNS=192.168.63.250
+DNS=192.168.63.249
 DNS=8.8.8.8
 DHCP=yes
 
