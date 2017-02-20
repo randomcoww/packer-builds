@@ -67,7 +67,7 @@
         "units/etc-chef-mount.sh",
         "units/chef-client.sh",
 
-        "network/{{user `hostname`}}.sh",
+        "network/docker.sh",
         "scripts/systemd_networking.sh"
       ]
     },
@@ -86,7 +86,7 @@
     "username": "debian",
     "uid": "10000",
     "password": "password",
-    "hostname": "debian-ns",
+    "hostname": "docker",
     "domain": "lan",
     "ssh_authorized_keys": "",
     "output_directory": "output-qemu",
