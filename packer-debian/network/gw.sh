@@ -20,40 +20,15 @@ cat > /etc/systemd/network/brlan.network <<EOF
 Name=brlan
 
 [Network]
+LinkLocalAddressing=no
 DHCP=yes
-EOF
-
-## Storage LAN bridge
-
-cat > /etc/systemd/network/eth1.network <<EOF
-[Match]
-Name=eth1
-
-[Network]
-DHCP=no
-Bridge=brstore
-EOF
-
-cat > /etc/systemd/network/brstore.netdev <<EOF
-[NetDev]
-Kind=bridge
-Name=brstore
-EOF
-
-cat > /etc/systemd/network/brstore.network <<EOF
-[Match]
-Name=brstore
-
-[Network]
-LinkLocalAddressing=ipv4
-DHCP=no
 EOF
 
 ## VPN bridge
 
-cat > /etc/systemd/network/eth2.network <<EOF
+cat > /etc/systemd/network/eth1.network <<EOF
 [Match]
-Name=eth2
+Name=eth1
 
 [Network]
 DHCP=no
@@ -86,14 +61,13 @@ EOF
 
 ## WAN
 
-cat > /etc/systemd/network/eth3.network <<EOF
+cat > /etc/systemd/network/eth2.network <<EOF
 [Match]
-Name=eth3
+Name=eth2
 
 [Network]
-DNS=192.168.63.250
-DNS=192.168.63.249
 DNS=8.8.8.8
+DNS=8.8.4.4
 LinkLocalAddressing=no
 DHCP=yes
 

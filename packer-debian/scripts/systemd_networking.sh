@@ -2,6 +2,13 @@
 echo "enable systemd networking"
 
 systemctl disable networking
+systemctl reset-failed
+
+cat > /etc/systemd/resolved.conf <<EOF
+[Resolve]
+FallbackDNS=
+DNSStubListener=no
+EOF
 
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved

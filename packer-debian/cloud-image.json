@@ -49,33 +49,22 @@
     {
       "pause_before" : "5s",
       "type": "shell",
-      "environment_vars": [
-        "CHEF_ROLE={{user `chef_role`}}"
-      ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
         "scripts/resolv_hack.sh",
         "scripts/base.sh",
         "scripts/ssh_sshd_config.sh",
 
-        "scripts/install_unifi.sh",
+        "scripts/sysctl.sh",
+        "scripts/iptables_blacklist.sh",
 
         "scripts/install_chef.sh",
         "units/etc-chef-mount.sh",
-        "units/chef-client.sh",
+        "scripts/install_cloud-config.sh",
+        "units/cloud-init-mount.sh",
 
-        "network/{{user `hostname`}}.sh",
+        "network/default.sh",
         "scripts/systemd_networking.sh"
-      ]
-    },
-    {
-      "pause_before" : "5s",
-      "type": "shell",
-      "environment_vars": [
-        "SSH_AUTHORIZED_KEYS={{user `ssh_authorized_keys`}}"
-      ],
-      "scripts": [
-        "scripts/ssh_authorized_keys.sh"
       ]
     }
   ],
@@ -83,11 +72,9 @@
     "username": "debian",
     "uid": "10000",
     "password": "password",
-    "hostname": "unifi",
+    "hostname": "cloud-image",
     "domain": "lan",
-    "ssh_authorized_keys": "",
     "output_directory": "output-qemu",
-    "chef_role": "node-unifi",
     "vm_name": "debian"
   }
 }
