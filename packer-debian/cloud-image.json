@@ -59,8 +59,9 @@
         "scripts/iptables_blacklist.sh",
 
         "scripts/install_chef.sh",
-        "units/etc-chef-mount.sh",
-        "scripts/install_cloud-config.sh",
+        "units/chef-secret-mount.sh",
+
+        "scripts/install_cloud-init.sh",
         "units/cloud-init-mount.sh",
 
         "network/default.sh",
