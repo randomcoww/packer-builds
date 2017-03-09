@@ -50,7 +50,6 @@
       "pause_before" : "5s",
       "type": "shell",
       "environment_vars": [
-        "CHEF_ROLE={{user `chef_role`}}",
         "NFS_EXPORTS={{user `nfs_exports`}}",
         "DISK_POWERSAVE={{user `disk_powersave`}}",
         "DISK_SPINDOWN={{user `disk_spindown`}}"
@@ -88,13 +87,12 @@
     "username": "debian",
     "uid": "10000",
     "password": "password",
-    "hostname": "zfs-2",
-    "domain": "lan",
+    "hostname": "zfs",
+    "domain": "local",
     "output_directory": "output-qemu",
     "ssh_authorized_keys": "",
     "debian_version": "8.7.1",
     "nfs_exports": "",
-    "chef_role": "node-zfs",
     "vm_name": "debian",
     "disk_powersave": "127",
     "disk_spindown": "244"

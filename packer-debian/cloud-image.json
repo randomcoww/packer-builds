@@ -60,6 +60,7 @@
 
         "scripts/install_chef.sh",
         "units/chef-secret-mount.sh",
+        "units/chef-client.sh",
 
         "scripts/install_cloud-init.sh",
         "units/cloud-init-mount.sh",
@@ -73,9 +74,9 @@
     "username": "debian",
     "uid": "10000",
     "password": "password",
-    "hostname": "cloud-image",
-    "domain": "lan",
+    "hostname": "debian-cloud-image",
+    "domain": "local",
     "output_directory": "output-qemu",
-    "vm_name": "debian"
+    "vm_name": "debian-cloud-image"
   }
 }

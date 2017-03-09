@@ -5,5 +5,6 @@ cat > /etc/systemd/network/default.network <<EOF
 Name=eth*
 
 [Network]
+LinkLocalAddressing=no
 DHCP=yes
 EOF
