@@ -7,7 +7,7 @@ After=etc-chef.mount
 TimeoutStartSec=0
 Restart=on-failure
 RestartSec=20
-ExecStart=chef-client -c /etc/chef/client.rb -i 600 -s 60 -o 'role[node-\$HOSTNAME]'
+ExecStart=/usr/bin/chef-client -c /etc/chef/client.rb -i 600 -s 60 -o 'role[node-\$HOSTNAME]'
 
 [Install]
 WantedBy=multi-user.target
