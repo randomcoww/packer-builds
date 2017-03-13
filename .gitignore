@@ -1,1 +1,2 @@
-Berksfile.lock
+output-qemu
+packer_cache
