@@ -65,10 +65,11 @@
         "scripts/nfs_exports.sh",
 
         "scripts/install_chef.sh",
-        "units/etc-chef-mount.sh",
-        "units/chef-client.sh",
+        "scripts/etc-chef-mount.sh",
 
-        "network/{{user `hostname`}}.sh",
+        "scripts/install_cloud-init.sh",
+        "scripts/cloud-init-mount.sh",
+
         "scripts/systemd_networking.sh"
       ]
     },
