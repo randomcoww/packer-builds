@@ -61,6 +61,7 @@
 
         "scripts/install_cloud-init.sh",
         "scripts/cloud-init-mount.sh",
+        "scripts/cloud-init-local-module.sh",
 
         "scripts/systemd_networking.sh"
       ]
