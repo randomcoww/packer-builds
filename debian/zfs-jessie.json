@@ -65,11 +65,9 @@
         "scripts/nfs_exports.sh",
 
         "scripts/install_chef.sh",
-        "scripts/etc-chef-mount.sh",
+        "scripts/chef-secret-mount.sh",
 
-        "scripts/install_cloud-init.sh",
-        "scripts/cloud-init-mount.sh",
-
+        "network/{{user `vm_name`}}.sh"
         "scripts/systemd_networking.sh"
       ]
     },
@@ -94,7 +92,7 @@
     "ssh_authorized_keys": "",
     "debian_version": "8.7.1",
     "nfs_exports": "",
-    "vm_name": "debian",
+    "vm_name": "zfs-1",
     "disk_powersave": "127",
     "disk_spindown": "244"
   }
