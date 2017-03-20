@@ -49,10 +49,6 @@
     {
       "pause_before" : "5s",
       "type": "shell",
-      "environment_vars": [
-        "DISK_POWERSAVE={{user `disk_powersave`}}",
-        "DISK_SPINDOWN={{user `disk_spindown`}}"
-      ],
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
         "scripts/resolv_hack.sh",
@@ -79,8 +75,6 @@
     "domain": "local",
     "output_directory": "output-qemu",
     "vm_name": "debian-cloud-image-zfs",
-    "debian_version": "8.7.1",
-    "disk_powersave": "127",
-    "disk_spindown": "244"
+    "debian_version": "8.7.1"
   }
 }
