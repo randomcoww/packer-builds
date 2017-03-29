@@ -67,8 +67,9 @@
         "scripts/install_chef.sh",
         "scripts/chef-secret-mount.sh",
 
-        "network/{{user `vm_name`}}.sh"
-        "scripts/systemd_networking.sh"
+        "network/{{user `vm_name`}}.sh",
+        "scripts/systemd_networking.sh",
+        "scripts/cleanup.sh"
       ]
     },
     {
