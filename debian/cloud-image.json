@@ -63,6 +63,7 @@
         "scripts/cloud-init-mount.sh",
         "scripts/cloud-init-local-module.sh",
 
+        "scripts/install_zfs.sh",
         "scripts/systemd_networking.sh",
         "scripts/cleanup.sh"
       ]

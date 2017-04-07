@@ -7,3 +7,6 @@ echo deb https://apt.dockerproject.org/repo debian-stretch main > /etc/apt/sourc
 apt-get -y update
 ## key fetch frequently fails and breaks the build. add --allow-unauthenticated for convenience
 apt-get -y --allow-unauthenticated install docker-engine
+
+systemctl stop docker
+systemctl disable docker
