@@ -34,6 +34,7 @@
       "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
       "disk_interface": "virtio",
       "net_device": "virtio-net",
+      "communicator": "ssh",
       "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "3600s",
