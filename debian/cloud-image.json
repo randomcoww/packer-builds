@@ -28,9 +28,9 @@
       "disk_size" : 20000,
       "headless" : true,
       "http_directory" : "http",
-      "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
+      "iso_checksum_url": "http://cdimage.debian.org/cdimage/daily-builds/sid_d-i/current/amd64/iso-cd/SHA512SUMS",
       "iso_checksum_type": "sha512",
-      "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/cdimage/daily-builds/sid_d-i/current/amd64/iso-cd/debian-testing-amd64-netinst.iso",
       "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
       "disk_interface": "virtio",
       "net_device": "virtio-net",
@@ -49,6 +49,9 @@
   "provisioners": [
     {
       "pause_before" : "5s",
+      "environment_vars": [
+        "KUBERNETES_VERSION=1.7.0"
+      ],
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
@@ -57,14 +60,13 @@
         "scripts/ssh_sshd_config.sh",
         "scripts/sysctl.sh",
 
-        "scripts/install_chef.sh",
-        "scripts/chef-secret-mount.sh",
-
         "scripts/install_cloud-init.sh",
         "scripts/cloud-init-mount.sh",
         "scripts/cloud-init-local-module.sh",
 
-        "scripts/install_zfs.sh",
+        "scripts/install_chef.sh",
+        "scripts/chef-secret-mount.sh",
+
         "scripts/systemd_networking.sh",
         "scripts/cleanup.sh"
       ]
