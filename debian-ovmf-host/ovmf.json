@@ -5,20 +5,20 @@
          "<down><down><enter>",
          "<down><down><down><down><down><enter>",
          "<wait45s>",
-         "http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-ovmf-preseed.cfg<enter><wait10>",
-         "{{user `username`}}<enter><wait3>",
-         "<enter><wait3>",
-         "{{user `password`}}<enter><wait3>",
+         "http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-ovmf-preseed.cfg<enter><wait10s>",
+         "{{user `username`}}<enter><wait5s>",
+         "<enter><wait5s>",
+         "{{user `password`}}<enter><wait5s>",
          "{{user `password`}}<enter><wait>"
       ],
       "disk_size" : 20000,
       "headless" : true,
       "http_directory" : "http",
-      "iso_checksum_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
+      "iso_checksum_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS",
       "iso_checksum_type": "sha512",
-      "iso_url": "http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
+      "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.0.0-amd64-netinst.iso",
       "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
-      "disk_interface": "virtio",
+      "disk_interface": "{{user `disk_interface`}}",
       "net_device": "virtio-net",
       "communicator": "ssh",
       "ssh_username": "{{user `username`}}",
@@ -30,7 +30,7 @@
         [ "-smp", "2" ],
         [ "-drive", "if=pflash,format=raw,readonly=on,file={{user `ovmf_code`}},unit=0" ],
         [ "-drive", "if=pflash,format=raw,file={{user `ovmf_vars`}},unit=1" ],
-        [ "-drive", "file=output-qemu/{{user `hostname`}},if=virtio,cache=writeback,discard=ignore,format={{user `format`}}" ]
+        [ "-drive", "file={{user `output_directory`}}/{{user `vm_name`}},if={{user `disk_interface`}},cache=writeback,discard=ignore,format={{user `format`}}" ]
       ],
       "accelerator": "kvm",
       "vm_name": "{{user `vm_name`}}",
@@ -49,22 +49,22 @@
       "scripts": [
         "scripts/install_chef.sh",
         "scripts/install_docker.sh",
+        "scripts/install_cloud-init.sh",
+        "scripts/cloud-init-local-module.sh",
         "scripts/download_kubernetes.sh",
         "scripts/install_zfs.sh",
         "scripts/ssh_sshd_config.sh",
-        "scripts/cleanup.sh",
-        "scripts/sysctl.sh"
+        "scripts/sysctl.sh",
+        "scripts/cleanup.sh"
       ]
     }
   ],
   "variables": {
     "format": "qcow2",
     "username": "debian",
-    "uid": "10000",
     "password": "password",
-    "hostname": "debian-ovmf-image",
-    "domain": "local",
     "output_directory": "output-qemu",
+    "disk_interface": "virtio",
     "vm_name": "debian-ovmf-image",
     "ovmf_code": "ovmf/OVMF_CODE.fd",
     "ovmf_vars": "ovmf/OVMF_VARS.fd"
