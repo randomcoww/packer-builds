@@ -47,14 +47,20 @@
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
-        "scripts/install_chef.sh",
-        "scripts/install_docker.sh",
-        "scripts/install_cloud-init.sh",
-        "scripts/cloud-init-local-module.sh",
-        "scripts/download_kubernetes.sh",
-        "scripts/install_zfs.sh",
         "scripts/ssh_sshd_config.sh",
         "scripts/sysctl.sh",
+        "scripts/install_ipmi.sh",
+        "scripts/install_qemu.sh",
+
+        "scripts/install_docker.sh",
+        "scripts/install_kubelet.sh",
+
+        "scripts/install_cloud-init.sh",
+        "scripts/cloud-init-local-module.sh",
+
+        "scripts/install_zfs.sh",
+        "scripts/install_glusterfs.sh",
+
         "scripts/cleanup.sh"
       ]
     }
