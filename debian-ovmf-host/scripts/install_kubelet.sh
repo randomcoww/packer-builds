@@ -23,4 +23,3 @@ EOF
 
 systemctl daemon-reload
 systemctl enable kubelet.service
-systemctl start kubelet.service

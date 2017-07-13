@@ -27,4 +27,3 @@ add-apt-repository \
 
 apt-get -y update
 apt-get -y install docker-ce
-apt-get clean
