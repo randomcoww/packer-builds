@@ -7,7 +7,7 @@ cat > /etc/systemd/system/docker.service.d/10-dropin.conf <<EOF
 Restart=always
 RestartSec=5
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// --log-driver=journald
+ExecStart=/usr/bin/dockerd -H fd:// --log-driver=journald --ip-masq=false --iptables=false
 EOF
 
 apt-get -y update

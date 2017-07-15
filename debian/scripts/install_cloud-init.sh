@@ -3,7 +3,7 @@ echo "install cloud-init"
 
 apt-get update -y
 apt-get -y install cloud-init net-tools
-apt-get clean
+
 mkdir -p /var/lib/cloud/seed/nocloud-net
 
 ## copy this method: https://github.com/coreos/coreos-cloudinit/blob/master/units/90-configdrive.rules

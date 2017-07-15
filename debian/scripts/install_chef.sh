@@ -4,7 +4,6 @@ echo "install Chef"
 apt-get update -y
 apt-get install -y --no-install-recommends wget ca-certificates
 sh -c "wget -q -O - https://www.chef.io/chef/install.sh | bash"
-apt-get clean
 
 ## mount chef secret from host
 ## copy this method: https://github.com/coreos/coreos-cloudinit/blob/master/units/90-configdrive.rules
