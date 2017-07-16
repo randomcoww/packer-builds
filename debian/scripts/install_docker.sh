@@ -7,7 +7,7 @@ cat > /etc/systemd/system/docker.service.d/10-dropin.conf <<EOF
 Restart=always
 RestartSec=5
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// --log-driver=journald --ip-masq=false --iptables=false
+ExecStart=/usr/bin/dockerd -H fd:// --log-driver=journald
 EOF
 
 apt-get -y update
@@ -27,3 +27,5 @@ add-apt-repository \
 
 apt-get -y update
 apt-get -y install docker-ce
+
+systemctl disable docker.service
