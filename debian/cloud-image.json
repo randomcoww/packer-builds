@@ -72,7 +72,7 @@
         "scripts/cloud-init-mount.sh",
         "scripts/cloud-init-local-module.sh",
 
-        "scripts/cleanup.sh"
+        "scripts/finish.sh"
       ]
     }
   ],

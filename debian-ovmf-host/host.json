@@ -62,7 +62,7 @@
         "scripts/install_zfs.sh",
         "scripts/install_glusterfs.sh",
 
-        "scripts/cleanup.sh"
+        "scripts/finish.sh"
       ]
     }
   ],

@@ -44,7 +44,7 @@ write_files:
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],recipe[kubelet-app::master],recipe[gluster-pod]
     ExecReload=/bin/kill -HUP $MAINPID
     SuccessExitStatus=3
 - path: "/etc/systemd/system/chef-client.timer"
@@ -58,30 +58,20 @@ write_files:
     [Timer]
     OnStartupSec=1min
     OnUnitActiveSec=10min
-- path: "/etc/libvirt/qemu/networks/passthrough_lan.xml"
+- path: "/etc/systemd/system/fancontrol.service"
   content: |
-    <network>
-      <name>passthrough_lan</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth0'/>
-      </forward>
-    </network>
-- path: "/etc/libvirt/qemu/networks/passthrough_wan.xml"
-  content: |
-    <network>
-      <name>passthrough_wan</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth1'/>
-      </forward>
-    </network>
-- path: "/etc/libvirt/qemu/networks/passthrough_store.xml"
-  content: |
-    <network>
-      <name>passthrough_store</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth2'/>
-      </forward>
-    </network>
+    [Unit]
+    Description=Fan Control
+    After=ipmievd.service
+
+    [Service]
+    Type=oneshot
+    #ExecStartPre=/usr/bin/ipmitool raw 0x30 0x45 0x01 0x01
+    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x00 0x24
+    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x01 0x24
+
+    [Install]
+    WantedBy=multi-user.target
 password: password
 chpasswd:
   expire: false
@@ -91,14 +81,8 @@ apt_upgrade: true
 manage_etc_hosts: true
 fqdn: vm2.lan
 runcmd:
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_store.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_store.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_store.xml
+- systemctl enable fancontrol.service
+- systemctl start fancontrol.service
 - systemctl enable chef-client.timer
 - systemctl start chef-client.timer
+- grub-install

@@ -1,10 +1,10 @@
 #cloud-config
 ---
 write_files:
-- path: "/etc/systemd/network/50-eth0.network"
+- path: "/etc/systemd/network/50-eno1.network"
   content: |
     [Match]
-    Name=eth0
+    Name=eno1
 
     [Network]
     LinkLocalAddressing=no
@@ -17,18 +17,18 @@ write_files:
 
     [Route]
     Gateway=192.168.62.240
-- path: "/etc/systemd/network/50-eth1.network"
+- path: "/etc/systemd/network/50-eno2.network"
   content: |
     [Match]
-    Name=eth1
+    Name=eno2
 
     [Network]
     LinkLocalAddressing=no
     DHCP=no
-- path: "/etc/systemd/network/50-eth2.network"
+- path: "/etc/systemd/network/50-ens1.network"
   content: |
     [Match]
-    Name=eth2
+    Name=ens1
 
     [Network]
     DHCP=no
@@ -44,7 +44,7 @@ write_files:
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],recipe[kubelet-app::master],recipe[gluster-pod]
     ExecReload=/bin/kill -HUP $MAINPID
     SuccessExitStatus=3
 - path: "/etc/systemd/system/chef-client.timer"
@@ -58,30 +58,20 @@ write_files:
     [Timer]
     OnStartupSec=1min
     OnUnitActiveSec=10min
-- path: "/etc/libvirt/qemu/networks/passthrough_lan.xml"
+- path: "/etc/systemd/system/fancontrol.service"
   content: |
-    <network>
-      <name>passthrough_lan</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth0'/>
-      </forward>
-    </network>
-- path: "/etc/libvirt/qemu/networks/passthrough_wan.xml"
-  content: |
-    <network>
-      <name>passthrough_wan</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth1'/>
-      </forward>
-    </network>
-- path: "/etc/libvirt/qemu/networks/passthrough_store.xml"
-  content: |
-    <network>
-      <name>passthrough_store</name>
-      <forward mode='hostdev' managed='yes'>
-        <pf dev='eth2'/>
-      </forward>
-    </network>
+    [Unit]
+    Description=Fan Control
+    After=ipmievd.service
+
+    [Service]
+    Type=oneshot
+    #ExecStartPre=/usr/bin/ipmitool raw 0x30 0x45 0x01 0x01
+    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x00 0x24
+    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x01 0x24
+
+    [Install]
+    WantedBy=multi-user.target
 password: password
 chpasswd:
   expire: false
@@ -91,14 +81,8 @@ apt_upgrade: true
 manage_etc_hosts: true
 fqdn: vm1.lan
 runcmd:
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-define /etc/libvirt/qemu/networks/passthrough_store.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-start /etc/libvirt/qemu/networks/passthrough_store.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_lan.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_wan.xml
-- virsh net-enable /etc/libvirt/qemu/networks/passthrough_store.xml
+- systemctl enable fancontrol.service
+- systemctl start fancontrol.service
 - systemctl enable chef-client.timer
 - systemctl start chef-client.timer
+- grub-install
