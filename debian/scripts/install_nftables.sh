@@ -9,6 +9,3 @@ nft_nat
 nft_chain_nat_ipv4
 nft_chain_nat_ipv6
 EOF
-
-update-initramfs -u
-update-grub

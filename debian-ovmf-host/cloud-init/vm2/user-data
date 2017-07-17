@@ -1,0 +1,104 @@
+#cloud-config
+---
+write_files:
+- path: "/etc/systemd/network/50-eth0.network"
+  content: |
+    [Match]
+    Name=eth0
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    DNS=192.168.62.230
+    DNS=8.8.8.8
+
+    [Address]
+    Address=192.168.62.252/23
+
+    [Route]
+    Gateway=192.168.62.240
+- path: "/etc/systemd/network/50-eth1.network"
+  content: |
+    [Match]
+    Name=eth1
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+- path: "/etc/systemd/network/50-eth2.network"
+  content: |
+    [Match]
+    Name=eth2
+
+    [Network]
+    DHCP=no
+    LinkLocalAddressing=no
+
+    [Address]
+    Address=169.254.127.252/16
+- path: "/etc/systemd/system/chef-client.service"
+  content: |
+    [Unit]
+    Description=Chef Client daemon
+    After=network.target auditd.service
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o
+    ExecReload=/bin/kill -HUP $MAINPID
+    SuccessExitStatus=3
+- path: "/etc/systemd/system/chef-client.timer"
+  content: |
+    [Unit]
+    Description=chef-client periodic run
+
+    [Install]
+    WantedBy=timers.target
+
+    [Timer]
+    OnStartupSec=1min
+    OnUnitActiveSec=10min
+- path: "/etc/libvirt/qemu/networks/passthrough_lan.xml"
+  content: |
+    <network>
+      <name>passthrough_lan</name>
+      <forward mode='hostdev' managed='yes'>
+        <pf dev='eth0'/>
+      </forward>
+    </network>
+- path: "/etc/libvirt/qemu/networks/passthrough_wan.xml"
+  content: |
+    <network>
+      <name>passthrough_wan</name>
+      <forward mode='hostdev' managed='yes'>
+        <pf dev='eth1'/>
+      </forward>
+    </network>
+- path: "/etc/libvirt/qemu/networks/passthrough_store.xml"
+  content: |
+    <network>
+      <name>passthrough_store</name>
+      <forward mode='hostdev' managed='yes'>
+        <pf dev='eth2'/>
+      </forward>
+    </network>
+password: password
+chpasswd:
+  expire: false
+ssh_pwauth: false
+package_upgrade: true
+apt_upgrade: true
+manage_etc_hosts: true
+fqdn: vm2.lan
+runcmd:
+- virsh net-define /etc/libvirt/qemu/networks/passthrough_lan.xml
+- virsh net-define /etc/libvirt/qemu/networks/passthrough_wan.xml
+- virsh net-define /etc/libvirt/qemu/networks/passthrough_store.xml
+- virsh net-start /etc/libvirt/qemu/networks/passthrough_lan.xml
+- virsh net-start /etc/libvirt/qemu/networks/passthrough_wan.xml
+- virsh net-start /etc/libvirt/qemu/networks/passthrough_store.xml
+- virsh net-enable /etc/libvirt/qemu/networks/passthrough_lan.xml
+- virsh net-enable /etc/libvirt/qemu/networks/passthrough_wan.xml
+- virsh net-enable /etc/libvirt/qemu/networks/passthrough_store.xml
+- systemctl enable chef-client.timer
+- systemctl start chef-client.timer

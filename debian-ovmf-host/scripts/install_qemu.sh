@@ -16,6 +16,3 @@ options vfio-pci ids=1002:ffffffff:ffffffff:ffffffff:00030000:ffff00ff,1002:ffff
 options kvm ignore_msrs=1
 options kvm-intel nested=1
 EOF
-
-update-initramfs -u
-update-grub

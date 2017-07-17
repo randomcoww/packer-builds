@@ -1,3 +1,2 @@
 output-qemu
 packer_cache
-OVMF_VARS.fd
