@@ -1,10 +1,10 @@
 #cloud-config
 ---
 write_files:
-- path: "/etc/systemd/network/50-eth0.network"
+- path: "/etc/systemd/network/50-eno1.network"
   content: |
     [Match]
-    Name=eth0
+    Name=eno1
 
     [Network]
     LinkLocalAddressing=no
@@ -17,18 +17,18 @@ write_files:
 
     [Route]
     Gateway=192.168.62.240
-- path: "/etc/systemd/network/50-eth1.network"
+- path: "/etc/systemd/network/50-eno2.network"
   content: |
     [Match]
-    Name=eth1
+    Name=eno2
 
     [Network]
     LinkLocalAddressing=no
     DHCP=no
-- path: "/etc/systemd/network/50-eth2.network"
+- path: "/etc/systemd/network/50-ens1.network"
   content: |
     [Match]
-    Name=eth2
+    Name=ens1
 
     [Network]
     DHCP=no
@@ -41,6 +41,7 @@ write_files:
     [Unit]
     Description=Chef Client daemon
     After=network.target auditd.service
+    RequiresMountsFor=/data/secret
 
     [Service]
     Type=oneshot
@@ -58,20 +59,6 @@ write_files:
     [Timer]
     OnStartupSec=1min
     OnUnitActiveSec=10min
-- path: "/etc/systemd/system/fancontrol.service"
-  content: |
-    [Unit]
-    Description=Fan Control
-    After=ipmievd.service
-
-    [Service]
-    Type=oneshot
-    #ExecStartPre=/usr/bin/ipmitool raw 0x30 0x45 0x01 0x01
-    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x00 0x24
-    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x01 0x24
-
-    [Install]
-    WantedBy=multi-user.target
 password: password
 chpasswd:
   expire: false
@@ -81,8 +68,6 @@ apt_upgrade: true
 manage_etc_hosts: true
 fqdn: vm2.lan
 runcmd:
-- systemctl enable fancontrol.service
-- systemctl start fancontrol.service
 - systemctl enable chef-client.timer
 - systemctl start chef-client.timer
 - grub-install

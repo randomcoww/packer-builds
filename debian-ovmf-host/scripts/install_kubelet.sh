@@ -22,5 +22,4 @@ ExecStart = /usr/local/bin/kubelet --pod-manifest-path=/etc/kubernetes/manifests
 WantedBy = multi-user.target
 EOF
 
-systemctl daemon-reload
 systemctl enable kubelet.service

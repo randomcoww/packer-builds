@@ -41,6 +41,7 @@ write_files:
     [Unit]
     Description=Chef Client daemon
     After=network.target auditd.service
+    RequiresMountsFor=/data/secret
 
     [Service]
     Type=oneshot
@@ -58,20 +59,6 @@ write_files:
     [Timer]
     OnStartupSec=1min
     OnUnitActiveSec=10min
-- path: "/etc/systemd/system/fancontrol.service"
-  content: |
-    [Unit]
-    Description=Fan Control
-    After=ipmievd.service
-
-    [Service]
-    Type=oneshot
-    #ExecStartPre=/usr/bin/ipmitool raw 0x30 0x45 0x01 0x01
-    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x00 0x24
-    ExecStart=/usr/bin/ipmitool raw 0x30 0x70 0x66 0x01 0x01 0x24
-
-    [Install]
-    WantedBy=multi-user.target
 password: password
 chpasswd:
   expire: false
@@ -81,8 +68,6 @@ apt_upgrade: true
 manage_etc_hosts: true
 fqdn: vm1.lan
 runcmd:
-- systemctl enable fancontrol.service
-- systemctl start fancontrol.service
 - systemctl enable chef-client.timer
 - systemctl start chef-client.timer
 - grub-install
