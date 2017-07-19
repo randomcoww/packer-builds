@@ -1,7 +1,5 @@
 #!/bin/sh
 
-rm /etc/systemd/network/99-fallback.network
-
 systemctl daemon-reload
 
 cat >> /etc/default/grub <<EOF
@@ -14,7 +12,6 @@ update-grub
 
 apt-get -y autoremove
 apt-get clean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ## if these are blank, they are generated on first boot
 echo -n > /var/lib/dbus/machine-id
