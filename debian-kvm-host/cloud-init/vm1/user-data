@@ -45,7 +45,7 @@ write_files:
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],recipe[kubelet-app::master],recipe[gluster-pod]
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],role[vm_pods],recipe[kubelet-app::kubelet]
     ExecReload=/bin/kill -HUP $MAINPID
     SuccessExitStatus=3
 - path: "/etc/systemd/system/chef-client.timer"
@@ -57,8 +57,8 @@ write_files:
     WantedBy=timers.target
 
     [Timer]
-    OnStartupSec=1min
-    OnUnitActiveSec=10min
+    OnStartupSec=10min
+    OnUnitActiveSec=60min
 password: password
 chpasswd:
   expire: false
