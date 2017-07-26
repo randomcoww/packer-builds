@@ -35,7 +35,7 @@ write_files:
     LinkLocalAddressing=no
 
     [Address]
-    Address=169.254.127.251/16
+    Address=192.168.126.251/23
 - path: "/etc/systemd/system/chef-client.service"
   content: |
     [Unit]
@@ -57,15 +57,15 @@ write_files:
     WantedBy=timers.target
 
     [Timer]
-    OnStartupSec=10min
-    OnUnitActiveSec=60min
+    OnStartupSec=1min
+    OnUnitActiveSec=10min
 password: password
 chpasswd:
   expire: false
 ssh_pwauth: false
 package_upgrade: true
 apt_upgrade: true
-manage_etc_hosts: true
+manage_etc_hosts: localhost
 fqdn: vm1.lan
 runcmd:
 - systemctl enable chef-client.timer
