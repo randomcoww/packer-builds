@@ -60,7 +60,6 @@
       "scripts": [
         "scripts/ssh_sshd_config.sh",
         "scripts/sysctl.sh",
-        "scripts/install_nftables.sh",
 
         "scripts/install_chef.sh",
         "scripts/chef-secret-mount.sh",

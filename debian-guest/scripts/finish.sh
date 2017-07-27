@@ -1,5 +1,7 @@
 #!/bin/sh
 
+rm -f /etc/systemd/network/99-fallback.network
+
 systemctl daemon-reload
 
 update-initramfs -u

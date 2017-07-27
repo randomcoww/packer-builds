@@ -9,14 +9,7 @@ write_files:
     [Network]
     LinkLocalAddressing=no
     DHCP=no
-    DNS=192.168.62.230
-    DNS=8.8.8.8
-
-    [Address]
-    Address=192.168.62.252/23
-
-    [Route]
-    Gateway=192.168.62.240
+    MACVLAN=host_lan
 - path: "/etc/systemd/network/50-eno2.network"
   content: |
     [Match]
@@ -29,6 +22,47 @@ write_files:
   content: |
     [Match]
     Name=ens1
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    MACVLAN=host_store
+- path: "/etc/systemd/network/50-host_lan.netdev"
+  content: |
+    [NetDev]
+    Name=host_lan
+    Kind=macvlan
+
+    [MACVLAN]
+    Mode=bridge
+- path: "/etc/systemd/network/50-host_store.netdev"
+  content: |
+    [NetDev]
+    Name=host_store
+    Kind=macvlan
+
+    [MACVLAN]
+    Mode=bridge
+- path: "/etc/systemd/network/50-host_lan.network"
+  content: |
+    [Match]
+    Name=host_lan
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    DNS=192.168.62.230
+    DNS=8.8.8.8
+
+    [Address]
+    Address=192.168.62.252/23
+
+    [Route]
+    Gateway=192.168.62.240
+- path: "/etc/systemd/network/50-host_store.network"
+  content: |
+    [Match]
+    Name=host_store
 
     [Network]
     DHCP=no
