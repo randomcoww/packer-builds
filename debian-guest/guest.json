@@ -53,7 +53,10 @@
     {
       "pause_before" : "5s",
       "environment_vars": [
-        "KUBERNETES_VERSION=1.7.0"
+        "KUBERNETES_VERSION=1.7.0",
+        "ETCD_VERSION=3.2.4",
+        "FLANNEL_VERSION=0.8.0",
+        "CNI_PLUGIN_VERSION=0.6.0-rc1"
       ],
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",

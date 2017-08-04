@@ -42,7 +42,8 @@
     {
       "pause_before" : "5s",
       "environment_vars": [
-        "KUBERNETES_VERSION=1.7.0"
+        "KUBERNETES_VERSION=1.7.0",
+        "ZFS_ARC_MAX=17179869184"
       ],
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
