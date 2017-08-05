@@ -74,7 +74,7 @@
     "output_directory": "output-qemu",
     "disk_interface": "virtio",
     "vm_name": "debian-ovmf-image",
-    "ovmf_code": "ovmf/OVMF_CODE.fd",
-    "ovmf_vars": "ovmf/OVMF_VARS.fd"
+    "ovmf_code": "../ovmf/OVMF_CODE.fd",
+    "ovmf_vars": "../ovmf/OVMF_VARS.fd"
   }
 }
