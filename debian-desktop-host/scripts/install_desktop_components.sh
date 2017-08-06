@@ -2,7 +2,12 @@
 echo "install desktop components"
 
 ## non free
-echo deb http://httpredir.debian.org/debian/ stretch main contrib non-free >> /etc/apt/sources.list
+cat >> /etc/apt/sources.list <<EOF
+deb http://deb.debian.org/debian stretch main contrib non-free
+deb-src http://deb.debian.org/debian stretch main contrib non-free
+deb http://deb.debian.org/debian stretch-backports main contrib non-free
+deb-src http://deb.debian.org/debian stretch-backports main contrib non-free
+EOF
 
 ## chrome
 # echo deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main > /etc/apt/sources.list.d/google-chrome.list
@@ -10,7 +15,7 @@ echo deb http://httpredir.debian.org/debian/ stretch main contrib non-free >> /e
 
 apt-get -y update
 # apt-get -y install firmware-iwlwifi wpasupplicant atom terminix mpv ncmpcpp youtube-dl google-chrome-stable
-apt-get -y install firmware-iwlwifi wpasupplicant nfs-common
+apt-get -y install firmware-iwlwifi wpasupplicant nfs-common tilix mpv ncmpcpp youtube-dl golang-go cups xtightvncviewer
 
 ## packer
 wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_amd64.zip

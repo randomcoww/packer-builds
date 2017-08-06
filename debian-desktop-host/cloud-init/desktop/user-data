@@ -1,10 +1,10 @@
 #cloud-config
 ---
 write_files:
-- path: "/etc/systemd/network/50-wlp.network"
+- path: "/etc/systemd/network/50-wlp2s0.network"
   content: |
     [Match]
-    Name=wlp*
+    Name=wlp2s0
 
     [Network]
     DHCP=yes
@@ -26,8 +26,8 @@ write_files:
     ap_scan=1
     fast_reauth=1
     network={
-    	ssid="$WIFI_SSID"
-    	psk=$WIFI_PSK
+    	ssid="WIFI_SSID"
+    	psk=WIFI_PSK
     }
 password: password
 chpasswd:
@@ -39,6 +39,7 @@ manage_etc_hosts: localhost
 fqdn: desktop.lan
 runcmd:
 - systemctl daemon-reload
-- systemctl enable wpa_supplicant@wlp2s0.service
-- systemctl start wpa_supplicant@wlp2s0.service
-- systemctl restart wpa_supplicant.service
+- systemctl enable wpa_supplicant@wlp2s0
+- systemctl start wpa_supplicant@wlp2s0
+- systemctl restart wpa_supplicant
+- systemctl restart systemd-networkd
