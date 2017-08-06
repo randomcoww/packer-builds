@@ -10,7 +10,7 @@ echo deb http://httpredir.debian.org/debian/ stretch main contrib non-free >> /e
 
 apt-get -y update
 # apt-get -y install firmware-iwlwifi wpasupplicant atom terminix mpv ncmpcpp youtube-dl google-chrome-stable
-apt-get -y install firmware-iwlwifi wpasupplicant
+apt-get -y install firmware-iwlwifi wpasupplicant nfs-common
 
 ## packer
 wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_amd64.zip
