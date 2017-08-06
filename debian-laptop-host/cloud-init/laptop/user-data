@@ -36,6 +36,6 @@ ssh_pwauth: false
 package_upgrade: true
 apt_upgrade: true
 manage_etc_hosts: localhost
-fqdn: desktop.lan
+fqdn: chromebook.lan
 runcmd:
 - systemctl daemon-reload

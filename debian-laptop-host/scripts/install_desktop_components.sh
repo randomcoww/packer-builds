@@ -15,7 +15,7 @@ EOF
 
 apt-get -y update
 # apt-get -y install firmware-iwlwifi wpasupplicant atom terminix mpv ncmpcpp youtube-dl google-chrome-stable
-apt-get -y install firmware-iwlwifi wpasupplicant nfs-common ipmitool tilix mpv ncmpcpp youtube-dl cups xtightvncviewer
+apt-get -y install firmware-realtek wpasupplicant nfs-common ipmitool tilix xtightvncviewer
 
 ## packer
 wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_amd64.zip
