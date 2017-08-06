@@ -1,0 +1,42 @@
+#cloud-config
+---
+write_files:
+- path: "/etc/systemd/network/50-wlp.network"
+  content: |
+    [Match]
+    Name=wlp*
+
+    [Network]
+    DHCP=yes
+    LinkLocalAddressing=no
+
+    [DHCP]
+    RouteMetric=2048
+- path: "/etc/systemd/network/50-enp.network"
+  content: |
+    [Match]
+    Name=enp*
+
+    [Network]
+    DHCP=yes
+    LinkLocalAddressing=no
+- path: "/etc/wpa_supplicant/wpa_supplicant-wlp2s0.conf"
+  content: |
+    update_config=1
+    ap_scan=1
+    fast_reauth=1
+    network={
+    	ssid="$WIFI_SSID"
+    	psk=$WIFI_PSK
+    }
+password: password
+chpasswd:
+  expire: false
+ssh_pwauth: false
+package_upgrade: true
+apt_upgrade: true
+manage_etc_hosts: localhost
+fqdn: desktop.lan
+runcmd:
+- systemctl enable wpa_supplicant@wlp2s0.service
+- systemctl start wpa_supplicant@wlp2s0.service
