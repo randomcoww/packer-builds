@@ -20,6 +20,29 @@ write_files:
     [Network]
     DHCP=yes
     LinkLocalAddressing=no
+- path: "/etc/systemd/system/chef-client.service"
+  content: |
+    [Unit]
+    Description=Chef Client daemon
+    After=network.target auditd.service
+    RequiresMountsFor=/data/secret
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/chef-client -o recipe[system_update::debian]
+    ExecReload=/bin/kill -HUP $MAINPID
+    SuccessExitStatus=3
+- path: "/etc/systemd/system/chef-client.timer"
+  content: |
+    [Unit]
+    Description=chef-client periodic run
+
+    [Install]
+    WantedBy=timers.target
+
+    [Timer]
+    OnStartupSec=1min
+    OnUnitActiveSec=60min
 - path: "/etc/wpa_supplicant/wpa_supplicant-wlp2s0.conf"
   content: |
     update_config=1
