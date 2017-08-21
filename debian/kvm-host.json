@@ -23,7 +23,7 @@
       "communicator": "ssh",
       "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
-      "ssh_wait_timeout": "3600s",
+      "ssh_wait_timeout": "10000s",
       "type": "qemu",
       "qemuargs": [
         [ "-m", "4096M" ],

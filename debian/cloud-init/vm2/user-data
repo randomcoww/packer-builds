@@ -79,7 +79,7 @@ write_files:
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],role[vm_pods],recipe[kubelet-app::kubelet]
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],role[vm_pods],recipe[kubernetes-app::worker_dummy]
     ExecReload=/bin/kill -HUP $MAINPID
     SuccessExitStatus=3
 - path: "/etc/systemd/system/chef-client.timer"

@@ -11,7 +11,7 @@
          "{{user `password`}}<enter><wait5s>",
          "{{user `password`}}<enter><wait>"
       ],
-      "disk_size" : 120000,
+      "disk_size" : 30000,
       "headless" : false,
       "http_directory" : "http",
       "iso_checksum_url": "https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",

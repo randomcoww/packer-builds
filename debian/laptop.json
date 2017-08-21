@@ -26,7 +26,7 @@
         "-- <wait>",
         "<enter><wait>"
       ],
-      "disk_size" : 120000,
+      "disk_size" : 20000,
       "headless" : false,
       "http_directory" : "http",
       "iso_checksum_url": "https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
@@ -41,7 +41,7 @@
       "ssh_wait_timeout": "10000s",
       "type": "qemu",
       "qemuargs": [
-        [ "-m", "4096M" ],
+        [ "-m", "1024M" ],
         [ "-smp", "2" ]
       ],
       "accelerator": "kvm",
