@@ -26,7 +26,7 @@
          "-- biosdevname=0 net.ifnames=0 console=ttyS0,115200n8 elevator=noop <wait>",
          "<enter><wait>"
       ],
-      "disk_size" : 20000,
+      "disk_size" : 10000,
       "headless" : false,
       "http_directory" : "http",
       "iso_checksum_url": "https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
@@ -64,11 +64,6 @@
         "scripts/install_chef.sh",
         "scripts/chef-secret-mount.sh",
 
-        "scripts/install_cloud-init.sh",
-        "scripts/cloud-init-mount.sh",
-        "scripts/cloud-init-local-module.sh",
-
-        "scripts/iptables_blacklist.sh",
         "scripts/finish.sh"
       ]
     }

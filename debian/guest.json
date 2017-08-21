@@ -23,7 +23,7 @@
          "passwd/user-uid={{user `uid`}} <wait>",
          "passwd/user-password={{user `password`}} <wait>",
          "passwd/user-password-again={{user `password`}} <wait>",
-         "-- <wait>",
+         "-- biosdevname=0 net.ifnames=0 console=ttyS0,115200n8 elevator=noop <wait>",
          "<enter><wait>"
       ],
       "disk_size" : 20000,

@@ -52,8 +52,9 @@ write_files:
     	ssid="WIFI_SSID"
     	psk=WIFI_PSK
     }
-password: password
 chpasswd:
+  list: |
+    debian:password
   expire: false
 ssh_pwauth: false
 package_upgrade: true

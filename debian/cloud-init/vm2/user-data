@@ -93,8 +93,9 @@ write_files:
     [Timer]
     OnStartupSec=1min
     OnUnitActiveSec=10min
-password: password
 chpasswd:
+  list: |
+    debian:password
   expire: false
 ssh_pwauth: false
 package_upgrade: true
