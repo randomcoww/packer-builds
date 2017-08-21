@@ -1,0 +1,107 @@
+#cloud-config
+---
+write_files:
+- path: "/etc/systemd/network/50-eno1.network"
+  content: |
+    [Match]
+    Name=eno1
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    MACVLAN=host_lan
+- path: "/etc/systemd/network/50-eno2.network"
+  content: |
+    [Match]
+    Name=eno2
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+- path: "/etc/systemd/network/50-ens1.network"
+  content: |
+    [Match]
+    Name=ens1
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    MACVLAN=host_store
+- path: "/etc/systemd/network/50-host_lan.netdev"
+  content: |
+    [NetDev]
+    Name=host_lan
+    Kind=macvlan
+
+    [MACVLAN]
+    Mode=bridge
+- path: "/etc/systemd/network/50-host_store.netdev"
+  content: |
+    [NetDev]
+    Name=host_store
+    Kind=macvlan
+
+    [MACVLAN]
+    Mode=bridge
+- path: "/etc/systemd/network/50-host_lan.network"
+  content: |
+    [Match]
+    Name=host_lan
+
+    [Network]
+    LinkLocalAddressing=no
+    DHCP=no
+    DNS=192.168.62.230
+    DNS=8.8.8.8
+
+    [Address]
+    Address=192.168.62.252/23
+
+    [Route]
+    Gateway=192.168.62.240
+- path: "/etc/systemd/network/50-host_store.network"
+  content: |
+    [Match]
+    Name=host_store
+
+    [Network]
+    DHCP=no
+    LinkLocalAddressing=no
+
+    [Address]
+    Address=192.168.126.252/23
+- path: "/etc/systemd/system/chef-client.service"
+  content: |
+    [Unit]
+    Description=Chef Client daemon
+    After=network.target auditd.service
+    RequiresMountsFor=/data/secret
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/chef-client -c /data/secret/chef/client.rb -o recipe[system_update::debian],role[vm_pods],recipe[kubelet-app::kubelet]
+    ExecReload=/bin/kill -HUP $MAINPID
+    SuccessExitStatus=3
+- path: "/etc/systemd/system/chef-client.timer"
+  content: |
+    [Unit]
+    Description=chef-client periodic run
+
+    [Install]
+    WantedBy=timers.target
+
+    [Timer]
+    OnStartupSec=1min
+    OnUnitActiveSec=10min
+password: password
+chpasswd:
+  expire: false
+ssh_pwauth: false
+package_upgrade: true
+apt_upgrade: true
+manage_etc_hosts: localhost
+fqdn: vm2.lan
+runcmd:
+- systemctl enable chef-client.timer
+- systemctl start chef-client.timer
+- grub-install
