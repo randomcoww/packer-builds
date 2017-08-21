@@ -42,8 +42,7 @@
     {
       "pause_before" : "5s",
       "environment_vars": [
-        "KUBELET_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kubelet",
-        "KUBE_PROXY_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-proxy",
+        "KUBERNETES_VERSION=1.7.4",
         "ZFS_ARC_MAX=17179869184"
       ],
       "type": "shell",

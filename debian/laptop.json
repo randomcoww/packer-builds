@@ -54,10 +54,7 @@
     {
       "pause_before" : "5s",
       "environment_vars": [
-        "KUBELET_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kubelet",
-        "KUBE_PROXY_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-proxy",
-        "PACKER_URL=https://releases.hashicorp.com/packer/1.0.4/packer_1.0.4_linux_amd64.zip",
-        "CHEFDK_URL=https://packages.chef.io/files/stable/chefdk/2.1.11/debian/8/chefdk_2.1.11-1_amd64.deb",
+        "KUBERNETES_VERSION=1.7.4"
       ],
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",

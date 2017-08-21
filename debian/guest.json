@@ -54,8 +54,10 @@
     {
       "pause_before" : "5s",
       "environment_vars": [
-        "KUBELET_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kubelet",
-        "KUBE_PROXY_URL=https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-proxy"
+        "KUBERNETES_VERSION=1.7.4",
+        "ETCD_VERSION=3.2.5",
+        "FLANNEL_VERSION=0.8.0",
+        "CNI_PLUGIN_VERSION=0.6.0"
       ],
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
@@ -67,6 +69,7 @@
         "scripts/chef-secret-mount.sh",
 
         "scripts/install_docker.sh",
+        "scripts/install_docker_network.sh",
         "scripts/install_kubelet.sh",
 
         "scripts/install_cloud-init.sh",
