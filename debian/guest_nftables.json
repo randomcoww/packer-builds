@@ -66,7 +66,6 @@
 
         "scripts/install_cloud-init.sh",
         "scripts/cloud-init-mount.sh",
-        "scripts/cloud-init-local-module.sh",
 
         "scripts/iptables_blacklist.sh",
         "scripts/finish.sh"

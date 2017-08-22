@@ -61,7 +61,6 @@
         "scripts/install_kubelet.sh",
 
         "scripts/install_cloud-init.sh",
-        "scripts/cloud-init-local-module.sh",
 
         "scripts/install_zfs.sh",
         "scripts/install_glusterfs.sh",

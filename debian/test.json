@@ -64,6 +64,9 @@
         "scripts/install_chef.sh",
         "scripts/chef-secret-mount.sh",
 
+        "scripts/install_cloud-init.sh",
+        "scripts/cloud-init-mount.sh",
+
         "scripts/finish.sh"
       ]
     }
