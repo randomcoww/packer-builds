@@ -1,0 +1,7 @@
+[Match]
+Name=ens1
+
+[Network]
+LinkLocalAddressing=no
+DHCP=no
+MACVLAN=host_store

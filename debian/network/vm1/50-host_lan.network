@@ -1,0 +1,15 @@
+[Match]
+Name=host_lan
+
+[Network]
+LinkLocalAddressing=no
+DHCP=no
+DNS=192.168.62.211
+DNS=192.168.62.212
+DNS=8.8.8.8
+
+[Address]
+Address=192.168.62.251/23
+
+[Route]
+Gateway=192.168.62.240

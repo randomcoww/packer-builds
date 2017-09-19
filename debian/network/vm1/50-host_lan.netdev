@@ -1,0 +1,6 @@
+[NetDev]
+Name=host_lan
+Kind=macvlan
+
+[MACVLAN]
+Mode=bridge

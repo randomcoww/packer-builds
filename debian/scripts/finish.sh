@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -f /etc/systemd/network/99-fallback.network
+echo $HOSTNAME > /etc/hostname
 
 systemctl daemon-reload
 

@@ -23,7 +23,7 @@
          "passwd/user-uid={{user `uid`}} <wait>",
          "passwd/user-password={{user `password`}} <wait>",
          "passwd/user-password-again={{user `password`}} <wait>",
-         "-- biosdevname=0 net.ifnames=0 console=ttyS0,115200n8 elevator=noop <wait>",
+         "-- console=ttyS0,115200n8 elevator=noop <wait>",
          "<enter><wait>"
       ],
       "disk_size" : 20000,
@@ -51,33 +51,7 @@
     }
   ],
   "provisioners": [
-    {
-      "pause_before" : "5s",
-      "environment_vars": [
-        "KUBERNETES_VERSION=1.7.4",
-        "ETCD_VERSION=3.2.5",
-        "FLANNEL_VERSION=0.8.0",
-        "CNI_PLUGIN_VERSION=0.6.0"
-      ],
-      "type": "shell",
-      "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
-      "scripts": [
-        "scripts/ssh_sshd_config.sh",
-        "scripts/sysctl.sh",
 
-        "scripts/install_chef.sh",
-        "scripts/chef-secret-mount.sh",
-
-        "scripts/install_docker.sh",
-        "scripts/install_docker_network.sh",
-        "scripts/install_kubelet.sh",
-
-        "scripts/install_cloud-init.sh",
-        "scripts/cloud-init-mount.sh",
-
-        "scripts/finish.sh"
-      ]
-    }
   ],
   "variables": {
     "username": "debian",
