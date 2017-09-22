@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "enable disk spin down"
 
-apt-get -y update
 apt-get -y install hdparm
 
 cat > /etc/udev/rules.d/91-hdparm.rules <<EOF

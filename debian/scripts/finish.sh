@@ -1,5 +1,4 @@
 #!/bin/sh
-
 echo $HOSTNAME > /etc/hostname
 
 systemctl daemon-reload
