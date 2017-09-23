@@ -5,7 +5,7 @@
          "<down><down><enter>",
          "<down><down><down><down><down><enter>",
          "<wait45s>",
-         "https://raw.githubusercontent.com/randomcoww/environment-config/master/preseed/{{user `vm_name`}}.cfg<enter><wait10s>",
+         "https://raw.githubusercontent.com/randomcoww/environment-config/master/preseed/{{user `vm_name`}}<enter><wait10s>",
          "{{user `username`}}<enter><wait5s>",
          "<enter><wait5s>",
          "{{user `password`}}<enter><wait5s>",
