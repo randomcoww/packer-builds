@@ -10,6 +10,13 @@ ExecStart=
 ExecStart=/usr/bin/dockerd -H fd:// --log-driver=journald
 EOF
 
+apt-get -y install \
+   apt-transport-https \
+   ca-certificates \
+   curl \
+   gnupg2 \
+   software-properties-common
+
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
 add-apt-repository \

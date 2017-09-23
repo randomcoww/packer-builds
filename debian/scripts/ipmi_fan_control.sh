@@ -1,8 +1,6 @@
 #!/bin/sh
 echo "ipmi fan control"
 
-apt-get -y install ipmitool
-
 cat >> /etc/modules <<EOF
 ipmi_devintf
 ipmi_si

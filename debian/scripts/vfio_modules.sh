@@ -1,8 +1,6 @@
 #!/bin/sh
 echo "install qemu and enable modules"
 
-apt-get -y install qemu-kvm libvirt-clients libvirt-daemon-system ovmf ksmtuned
-
 cat >> /etc/initramfs-tools/modules <<EOF
 vfio
 vfio_iommu_type1

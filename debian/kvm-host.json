@@ -5,7 +5,7 @@
          "<down><down><enter>",
          "<down><down><down><down><down><enter>",
          "<wait45s>",
-         "http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<enter><wait10s>",
+         "https://raw.githubusercontent.com/randomcoww/environment-config/master/preseed/{{user `vm_name`}}.cfg<enter><wait10s>",
          "{{user `username`}}<enter><wait5s>",
          "<enter><wait5s>",
          "{{user `password`}}<enter><wait5s>",
@@ -61,14 +61,12 @@
       "type": "shell",
       "execute_command": "echo '{{user `password`}}'| {{.Vars}} sudo --preserve-env --stdin sh '{{.Path}}'",
       "scripts": [
+        "scripts/install_docker.sh",
+        "scripts/install_kubelet.sh",
+
         "scripts/ssh_sshd_config.sh",
         "scripts/ipmi_fan_control.sh",
-
-        "scripts/install_docker.sh",
-        "scripts/install_qemu.sh",
-        "scripts/install_kubelet.sh",
-        "scripts/install_zfs.sh",
-
+        "scripts/vfio_modules.sh",
         "scripts/finish.sh"
       ]
     }
