@@ -4,7 +4,7 @@
       "boot_command" : [
          "<esc><wait>",
          "install <wait>",
-         "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-ifnames.cfg <wait>",
+         "preseed/url=https://raw.githubusercontent.com/randomcoww/environment-config/master/preseed/unifi",
          "auto <wait>",
 
          "debian-installer=en_US <wait>",
@@ -29,9 +29,9 @@
       "disk_size" : 20000,
       "headless" : false,
       "http_directory" : "http",
-      "iso_checksum_url": "https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/SHA512SUMS",
+      "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/9.1.0/amd64/iso-cd/SHA512SUMS",
       "iso_checksum_type": "sha512",
-      "iso_url": "https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-netinst.iso",
+      "iso_url": "https://cdimage.debian.org/cdimage/release/9.1.0/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
       "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
       "disk_interface": "virtio",
       "net_device": "virtio-net",
@@ -58,7 +58,7 @@
     "uid": "1000",
     "password": "password",
     "output_directory": "output-qemu",
-    "vm_name": "debian-cloud-image",
+    "vm_name": "unifi",
     "domain": "lan"
   }
 }
