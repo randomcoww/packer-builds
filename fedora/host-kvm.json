@@ -3,16 +3,8 @@
     {
       "boot_command" : [
         "<tab> ",
-        "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/kickstart.cfg ",
-        "biosdevname=0 ",
-        "net.ifnames=0 ",
+        "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `vm_name`}}.cfg ",
         "inst.gpt ",
-        "console=ttyS1 ",
-        "console=tty0 ",
-        "elevator=noop ",
-        "intel_iommu=on ",
-        "iommu=pt ",
-        "cgroup_enable=memory ",
         "<enter>"
       ],
       "disk_size" : 30000,
@@ -27,7 +19,7 @@
       "type": "qemu",
       "shutdown_timeout": "30m",
       "qemuargs": [
-        [ "-m", "1024M" ],
+        [ "-m", "4096M" ],
         [ "-smp", "2" ]
       ],
       "accelerator": "kvm",
@@ -41,7 +33,7 @@
     "uid": "1000",
     "password": "password",
     "output_directory": "output-qemu",
-    "vm_name": "kvm",
+    "vm_name": "vm2",
     "domain": "lan"
   }
 }
