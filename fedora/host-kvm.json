@@ -1,0 +1,49 @@
+{
+  "builders": [
+    {
+      "boot_command" : [
+        "<tab> ",
+        "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/kickstart.cfg ",
+        "biosdevname=0 ",
+        "net.ifnames=0 ",
+        "inst.gpt ",
+        "console=ttyS1 ",
+        "console=tty0 ",
+        "elevator=noop ",
+        "intel_iommu=on ",
+        "iommu=pt ",
+        "cgroup_enable=memory ",
+        "<enter>"
+      ],
+      "disk_size" : 30000,
+      "headless" : false,
+      "http_directory" : "http",
+      "iso_checksum_type": "none",
+      "iso_url": "http://fedora.mirrors.pair.com/linux/releases/26/Server/x86_64/iso/Fedora-Server-netinst-x86_64-26-1.5.iso",
+      "shutdown_command" : "echo '{{user `password`}}'| sudo --stdin /sbin/halt -p",
+      "disk_interface": "virtio",
+      "net_device": "virtio-net",
+      "communicator": "ssh",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_wait_timeout": "10000s",
+      "type": "qemu",
+      "qemuargs": [
+        [ "-m", "1024M" ],
+        [ "-smp", "2" ]
+      ],
+      "accelerator": "kvm",
+      "vm_name": "{{user `vm_name`}}",
+      "format": "qcow2",
+      "output_directory": "{{user `output_directory`}}"
+    }
+  ],
+  "variables": {
+    "username": "fedora",
+    "uid": "1000",
+    "password": "password",
+    "output_directory": "output-qemu",
+    "vm_name": "kvm",
+    "domain": "lan"
+  }
+}
