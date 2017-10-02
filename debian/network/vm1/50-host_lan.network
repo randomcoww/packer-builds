@@ -3,12 +3,7 @@ Name=host_lan
 
 [Network]
 LinkLocalAddressing=no
-DHCP=no
-DNS=192.168.62.240
-DNS=8.8.8.8
+DHCP=yes
 
 [Address]
 Address=192.168.62.251/23
-
-[Route]
-Gateway=192.168.62.240
