@@ -29,6 +29,6 @@
     }
   ],
   "variables": {
-    "kickstart": "vm1"
+    "kickstart": "vm2"
   }
 }
