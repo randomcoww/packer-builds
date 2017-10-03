@@ -4,7 +4,7 @@
       "boot_command" : [
          "<esc><wait>",
          "install <wait>",
-         "preseed/url=https://raw.githubusercontent.com/randomcoww/environment-config/master/preseed/unifi",
+         "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `vm_name`}}.cfg",
          "auto <wait>",
 
          "debian-installer=en_US <wait>",

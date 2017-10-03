@@ -1,6 +1,0 @@
-[Match]
-Name=host_wan
-
-[Network]
-LinkLocalAddressing=no
-DHCP=no

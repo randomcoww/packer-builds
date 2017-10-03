@@ -1,6 +1,0 @@
-[NetDev]
-Name=host_store
-Kind=macvlan
-
-[MACVLAN]
-Mode=bridge
