@@ -23,12 +23,12 @@
         [ "-smp", "2" ]
       ],
       "accelerator": "kvm",
-      "vm_name": "host-kvm",
+      "vm_name": "{{user `kickstart`}}",
       "format": "qcow2",
       "output_directory": "output-qemu"
     }
   ],
   "variables": {
-    "kickstart": "vm1"
+    "kickstart": "unifi"
   }
 }
