@@ -3,15 +3,16 @@
     {
       "boot_command" : [
         "<tab> ",
-        "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `kickstart`}}.cfg ",
-        "inst.gpt ",
+        "inst.text ",
+        "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/gluster.ks ",
         "<enter>"
       ],
-      "disk_size" : 30000,
+      "disk_size" : 60000,
       "headless" : false,
       "http_directory" : "http",
-      "iso_checksum_type": "none",
-      "iso_url": "https://download.fedoraproject.org/pub/fedora/linux/releases/27/Server/x86_64/iso/Fedora-Server-netinst-x86_64-27-1.6.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "6554404b66d38b89693232966d9290ed62156e32d1edde4074b1d25c97a7b10e",
+      "iso_url": "https://download.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/Fedora-Workstation-netinst-x86_64-29-1.2.iso",
       "shutdown_command" : "",
       "disk_interface": "virtio",
       "net_device": "virtio-net",
@@ -20,15 +21,12 @@
       "shutdown_timeout": "30m",
       "qemuargs": [
         [ "-m", "4096M" ],
-        [ "-smp", "2" ]
+        [ "-smp", "4" ]
       ],
       "accelerator": "kvm",
-      "vm_name": "{{user `kickstart`}}",
+      "vm_name": "gluster",
       "format": "qcow2",
       "output_directory": "output-qemu"
     }
-  ],
-  "variables": {
-    "kickstart": "vm2"
-  }
+  ]
 }

@@ -1,0 +1,42 @@
+<domain type='kvm'>
+  <name>test-1</name>
+  <memory unit='GiB'>4</memory>
+  <currentMemory unit='GiB'>4</currentMemory>
+  <vcpu placement='static'>2</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc'>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu mode='host-passthrough'>
+    <topology sockets='1' cores='2' threads='1'/>
+  </cpu>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none' io='native' discard='unmap'/>
+      <source file='/home/qemu/test-1.qcow2'/>
+      <target dev='sda' bus='scsi'/>
+      <boot order='1'/>
+    </disk>
+    <controller type='scsi' model='virtio-scsi'/>
+    <controller type='usb' model='none'/>
+    <interface type='direct'>
+      <source dev='eno1' mode='bridge'/>
+      <model type='virtio-net'/>
+    </interface>
+    <console>
+      <target type='virtio'/>
+    </console>
+    <channel type='spicevmc'>
+      <target type='virtio' name='com.redhat.spice.0'/>
+      <address type='virtio-serial'/>
+    </channel>
+  </devices>
+</domain>
