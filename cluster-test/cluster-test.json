@@ -4,7 +4,7 @@
       "boot_command" : [
         "<tab> ",
         "inst.text ",
-        "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/gluster.ks ",
+        "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/cluster-test.ks ",
         "<enter>"
       ],
       "disk_size" : 60000,
@@ -24,7 +24,7 @@
         [ "-smp", "4" ]
       ],
       "accelerator": "kvm",
-      "vm_name": "gluster",
+      "vm_name": "cluster-test",
       "format": "qcow2",
       "output_directory": "output-qemu"
     }

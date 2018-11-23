@@ -7,14 +7,15 @@ auth --useshadow --passalgo=sha512
 firewall --disabled
 zerombr
 clearpart --all --disklabel=gpt
-autopart 
+autopart --type=plain --noswap --nohome
 rootpw --lock --iscrypted locked
-network --hostname=test
+network --hostname=cluster-test
 shutdown
 bootloader --append="elevator=noop"
 
 repo --name=fedora --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch
 repo --name=updates --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f$releasever&arch=$basearch
+repo --name=zfs-on-linux --baseurl=http://download.zfsonlinux.org/fedora/$releasever/$basearch/
 url --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch
 
 %packages --excludeWeakdeps
@@ -24,17 +25,11 @@ cronie
 chrony
 logrotate
 nfs-utils
+zfs
+glusterfs-server
+drbd
 
-tmux
-pciutils
-rsync
-vim-enhanced
-nmap
-unzip
-bind-utils
-openssl
-shadow-utils
-glusterfs
+-zfs-fuse
 %end
 
 %post --erroronfail
@@ -78,7 +73,8 @@ EOF
 ##
 
 systemctl enable \
-  systemd-networkd systemd-resolved chronyd crond
+  systemd-networkd systemd-resolved chronyd crond \
+  zfs-import-cache zfs-import-scan zfs-mount zfs-share zfs-zed zfs.target nfs-server
 
 systemctl mask \
   NetworkManager
